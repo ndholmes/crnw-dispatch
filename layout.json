@@ -1,7 +1,7 @@
 {
   "layoutName":"Copper River & Northwestern Railway",
   "connectionType":"mqtt",
-  "gridOn": 1,
+  "gridOn": 0,
   
   "text": [
     { "type": "regular", "value":"Eyak", "x":"10", "y":"8"},

@@ -264,9 +264,9 @@ class SignalBlock(TrackBlock):
       
       
 class SwitchBlock(TrackBlock):
-  switchState = 0
-  switchStatusColor = "#00FF00"
   def __init__(self):
+    self.switchState = 0
+    self.switchStatusColor = "#00FF00"
     pass
 
   def setSwitchPosition(self, pos):
@@ -623,34 +623,30 @@ class Example(wx.Frame):
     block_x = x//16
     block_y = y//16
     
-    ptstr = "LC at %u,%u - block %ux%u" % (x,y, block_x, block_y)
-    self.SetStatusText(ptstr)
-    
-    if self.editMenu.IsChecked(1):
-      # Edit Mode
-      for cell in self.cells:
-        # Remove anything at this position
-        if (block_x,block_y) == cell.getXY():
-          self.blocks.remove(cell)
+    #ptstr = "LC at %u,%u - block %ux%u" % (x,y, block_x, block_y)
+    #self.SetStatusText(ptstr)
 
-      
+    # Go figure out what we clicked - you can click turnouts and signals
+    ptstr = ""
 
-      dc = wx.PaintDC(self)
-      (size_x, size_y) = self.GetSize()
-      dc.SetBackground(wx.Brush('#000'))
-      dc.Clear()
+    m = (block_x, block_y)
+    for switch in self.switches:
+      if m == switch['cells'][0].getXY():
+        # Do switch clicky?
+        ptstr = "Clicked switch %s" % (switch['name'])
+        break
+        
+    for signal in self.signals:
+      if m == signal['cells'][0].getXY():
+        ptstr = "Clicked switch %s" % (signal['name'])
+        break
 
-      dc.SetBrush(wx.Brush('#000'))
-      dc.SetPen(wx.Pen("#FFF", width=2))
+    if ptstr != "":
+      self.SetStatusText(ptstr)
 
-      for cell in self.cells:
-        cell.draw(dc)
-
-      
-    else:
-      dc = wx.PaintDC(self)
-      self.cells[0].setSwitchPosition([1,0][self.cells[0].getSwitchPosition()])
-      self.cells[0].draw(wx.PaintDC(self))
+#      dc = wx.PaintDC(self)
+#      self.cells[0].setSwitchPosition([1,0][self.cells[0].getSwitchPosition()])
+#      self.cells[0].draw(wx.PaintDC(self))
 
   def OnPaint(self, e):
     dc = wx.ClientDC(self)
