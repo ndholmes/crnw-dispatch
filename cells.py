@@ -201,7 +201,7 @@ class SwitchCell(TrackCell):
   def __init__(self):
     super().__init__()
     self.switchState = 0
-    self.switchStatusColor = "#00FF00"
+    self.switchStatusColor = TrackCellColors.getColor('switch_unknown')
     pass
 
   def setSwitchPosition(self, pos):
