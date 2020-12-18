@@ -53,6 +53,7 @@ import re
 import json
 import paho.mqtt.client as mqtt
 import queue
+import socket
 from cells import TrackCell, SignalCell, SwitchCell, TextCell, TrackCellType
 from mrbusUtils import MRBusBit, MRBusPacket
 from switch import Switch
@@ -356,7 +357,8 @@ def main():
     sys.exit(-1)
 
   udata = { 'mrbus':mqttMRBus }
-  mqttClient = mqtt.Client("Dispatch Console", userdata=udata)
+  clientName = socket.getfqdn()
+  mqttClient = mqtt.Client(clientName, userdata=udata)
   mqttClient.on_message=mqtt_onMessage
   mqttClient.on_connect=mqtt_onConnect
   mqttClient.connect("crnw.drgw.net", 1883, 60)
