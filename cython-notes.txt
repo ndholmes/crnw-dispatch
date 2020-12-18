@@ -1,0 +1,2 @@
+cython3 --embed gdtest.pyx
+gcc $(pkg-config --libs --cflags python3) -I /usr/include/python3.6m gdtest.c -lpython3.6m -o gdtest
