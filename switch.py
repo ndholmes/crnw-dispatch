@@ -59,7 +59,11 @@ class Switch:
 #    else:
 #      print("Processed packet for [%s], no change in state" % (self.name))
 
+  def getClickXY(self):
+    return (self.cell.getXY())
+
   def onLeftClick(self):
+    print("Got click on switch [%s]" % self.name)
     if self.occupied or self.locked or self.manualControl:
       return False
 
@@ -90,7 +94,6 @@ class Switch:
     else:
       self.cell.setColor(TrackCellColors.getColor('track_idle'))
 
-    print("checkpoint 2")
     if self.positionNormal:
       self.cell.setSwitchPosition(0)
     elif self.positionReverse:

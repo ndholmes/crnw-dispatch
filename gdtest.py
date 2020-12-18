@@ -54,62 +54,8 @@ import json
 import paho.mqtt.client as mqtt
 import queue
 from cells import TrackCell, SignalCell, SwitchCell, TextCell, TrackCellType
-from mrbusUtils import MRBusBit
+from mrbusUtils import MRBusBit, MRBusPacket
 from switch import Switch
-
-class MRBusPacket:
-  def __init__(self, dest=0, src=0, cmd=0, data=0):
-    self.dest=dest
-    self.src=src
-    self.cmd=cmd
-    self.data=data
-    
-  def __hash__(self):
-    return hash(repr(self))
-
-  def __eq__(self, other):
-    return repr(self)==repr(other)
-
-  def __repr__(self):
-    return "mrbus.packet(0x%02x, 0x%02x, 0x%02x, %s)"%(self.dest, self.src, self.cmd, repr(self.data))
-
-  def __str__(self):
-    c='(0x%02X'%self.cmd
-    if self.cmd >= 32 and self.cmd <= 127:
-      c+=" '%c')"%self.cmd
-    else:
-      c+="    )"
-    return "packet(0x%02X->0x%02X) %s %2d:%s"%(self.src, self.dest, c, len(self.data), ["0x%02X"%d for d in self.data])
-
-  @classmethod
-  def fromJSON(cls, message):
-    self = cls.__new__(cls)
-    retval = self._fromJSON(message)
-    if False == retval:
-      print("packet didn't parse")
-      return None
-    return self    
-
-  def _fromJSON(self, message):
-    try:
-      decodedValues = json.loads(message)
-      if 'type' not in decodedValues or decodedValues['type'] != 'pkt':
-        return False
-      if 'src' not in decodedValues or 'dst' not in decodedValues or 'cmd' not in decodedValues or 'data' not in decodedValues:
-        return False
-      self.src = int(decodedValues['src'])
-      self.dest = int(decodedValues['dst'])
-      self.cmd = int(decodedValues['cmd'])
-      self.data = []
-      for d in decodedValues['data']:
-        self.data.append(int(d))
-
-    except:
-      return False
-      
-    return True
-
-
 
 def relCoord(base_x, newVal):
   newVal = str(newVal)
@@ -129,6 +75,8 @@ def relCoord(base_x, newVal):
 
 import datetime
 
+
+# This class is used to pass packets between the mrbus/mqtt thread and the master gui thread
 class MqttMRBus:
   incomingPkts = queue.Queue(maxsize=500)
   outgoingPkts = queue.Queue(maxsize=500)
@@ -140,6 +88,7 @@ class Example(wx.Frame):
   blocks = [ ]
   signals = []
   switches = []
+  clickables = { }
   menuHeight = 0
   currentBlockType = 0
   gridOn = False
@@ -162,8 +111,6 @@ class Example(wx.Frame):
 
   def doDisplayUpdate(self):
     dc = wx.ClientDC(self)
-    updatesToApply = False
-
     for i in self.cells:
       if i.needsRedraw():
         i.draw(dc)
@@ -266,7 +213,7 @@ class Example(wx.Frame):
       newSwitch = Switch(switchconfig, None)
       self.switches.append(newSwitch)
       self.cells = self.cells + newSwitch.getCells()
-
+      self.clickables[newSwitch.getClickXY()] = newSwitch.onLeftClick
 
     for block in self.layoutData['blocks']:
       newBlock = { }
@@ -352,23 +299,11 @@ class Example(wx.Frame):
     #self.SetStatusText(ptstr)
 
     # Go figure out what we clicked - you can click turnouts and signals
-    ptstr = ""
 
     m = (block_x, block_y)
-    for switch in self.switches:
-      if m == switch['cells'][0].getXY():
-        # Do switch clicky?
-        ptstr = "Clicked switch %s" % (switch['name'])
-        break
-        
-    for signal in self.signals:
-      if m == signal['cells'][0].getXY():
-        ptstr = "Clicked switch %s" % (signal['name'])
-        break
-
-    if ptstr != "":
-      self.SetStatusText(ptstr)
-
+    if m in self.clickables:
+      self.clickables[m]()
+  
 #      dc = wx.PaintDC(self)
 #      self.cells[0].setSwitchPosition([1,0][self.cells[0].getSwitchPosition()])
 #      self.cells[0].draw(wx.PaintDC(self))

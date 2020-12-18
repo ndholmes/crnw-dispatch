@@ -1,5 +1,59 @@
 import re
+import json
 
+class MRBusPacket:
+  def __init__(self, dest=0, src=0, cmd=0, data=0):
+    self.dest=dest
+    self.src=src
+    self.cmd=cmd
+    self.data=data
+    
+  def __hash__(self):
+    return hash(repr(self))
+
+  def __eq__(self, other):
+    return repr(self)==repr(other)
+
+  def __repr__(self):
+    return "mrbus.packet(0x%02x, 0x%02x, 0x%02x, %s)"%(self.dest, self.src, self.cmd, repr(self.data))
+
+  def __str__(self):
+    c='(0x%02X'%self.cmd
+    if self.cmd >= 32 and self.cmd <= 127:
+      c+=" '%c')"%self.cmd
+    else:
+      c+="    )"
+    return "packet(0x%02X->0x%02X) %s %2d:%s"%(self.src, self.dest, c, len(self.data), ["0x%02X"%d for d in self.data])
+
+  @classmethod
+  def fromJSON(cls, message):
+    self = cls.__new__(cls)
+    retval = self._fromJSON(message)
+    if False == retval:
+      print("packet didn't parse")
+      return None
+    return self
+
+  def _fromJSON(self, message):
+    try:
+      decodedValues = json.loads(message)
+      if 'type' not in decodedValues or decodedValues['type'] != 'pkt':
+        return False
+      if 'src' not in decodedValues or 'dst' not in decodedValues or 'cmd' not in decodedValues or 'data' not in decodedValues:
+        return False
+      self.src = int(decodedValues['src'])
+      self.dest = int(decodedValues['dst'])
+      self.cmd = int(decodedValues['cmd'])
+      self.data = []
+      for d in decodedValues['data']:
+        self.data.append(int(d))
+
+    except:
+      return False
+      
+    return True
+    
+    
 class MRBusBit:
   def __init__(self, pattern="", initialState = False):
     self.src = 0
