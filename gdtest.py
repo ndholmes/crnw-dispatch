@@ -56,22 +56,8 @@ import queue
 from cells import TrackCell, SignalCell, SwitchCell, TextCell, TrackCellType
 from mrbusUtils import MRBusBit, MRBusPacket
 from switch import Switch
+from block import Block
 
-def relCoord(base_x, newVal):
-  newVal = str(newVal)
-  m = re.match('^\+([0-9].*)', newVal)
-  if m is not None:
-    retval = base_x + int(m.group(0))
-    #print("relCoord pos base=%d newVal=[%s] newval=%d" % (base_x, newVal, retval))
-    return retval
-
-  m = re.match('^-([0-9].*)', newVal)
-  if m is not None:
-    retval = base_x + int(m.group(0))
-    #print("relCoord neg base=%d newVal=[%s] newval=%d" % (base_x, newVal, retval))
-    return retval
-  
-  return int(newVal)
 
 import datetime
 
@@ -123,18 +109,7 @@ class Example(wx.Frame):
 
   def applyPacket(self, pkt):
     for i in range(0, len(self.blocks)):
-      block = self.blocks[i]
-      #print("block %d [%s] isUpdated = [%s]" % (i, block['name'], block['isUpdated']))
-      if block['occupancy'].testPacket(pkt):
-        if block['occupancy'].getState():
-          color = '#F00'
-        else:
-          color = '#FFF'
-
-        for cell in block['cells']:
-            cell.setColor(color)
-
-        self.blocks[i]['isUpdated'] = True
+      self.blocks[i].processPacket(pkt)
         
     for i in range(0, len(self.switches)):
       #print("Applying packet to %d - [%s]" % (i, self.switches[i].name))
@@ -167,6 +142,11 @@ class Example(wx.Frame):
     return False
     
   def isSwitchCell(self, cellType):
+    if cellType in ['switch_left_up', 'switch_left_down', 'switch_right_up', 'switch_right_down']:
+      return True
+    return False
+    
+  def isTrackCell(self, cellType):
     if cellType in ['switch_left_up', 'switch_left_down', 'switch_right_up', 'switch_right_down']:
       return True
     return False
@@ -221,77 +201,12 @@ class Example(wx.Frame):
       self.cells = self.cells + newSwitch.getCells()
       self.clickables[newSwitch.getClickXY()] = newSwitch.onLeftClick
 
-    for block in self.layoutData['blocks']:
-      newBlock = { }
-      newBlock['cells'] = []
-      newBlock['isUpdated'] = True
-      if "blockName" in block.keys():
-        newBlock['name'] = block['blockName']
-      else:
-        newBlock['name'] = "Unknown"
-
-      if "occupancy" in block.keys():
-        newBlock['occupancy'] = MRBusBit(block['occupancy'])
-
-      base_x = 0
-      base_y = 0
-      
-      if "base_x" in block.keys():
-        newBlock['base_x'] = int(block['base_x'])
-        base_x = newBlock['base_x']
-
-      if "base_y" in block.keys():
-        newBlock['base_y'] = int(block['base_y'])
-        base_y = newBlock['base_y']
-
-
-      for cell in block['cells']:
-        x = relCoord(base_x, cell['x'])
-        y = relCoord(base_y, cell['y'])
-
-        if 'x_end' in cell.keys():
-          x_end = relCoord(base_x, cell['x_end']) + 1
-        else:
-          x_end = x + 1
-
-        if 'y_end' in cell.keys():
-          y_end = relCoord(base_y, cell['y_end']) + 1
-        else:
-          y_end = y + 1
-
-        for cell_x in range(x, x_end):
-          for cell_y in range(y, y_end):
-            if self.isSwitchCell(cell['type']):
-              newCell = SwitchCell()
-            elif self.isSignalCell(cell['type']):
-              newCell = SignalCell()
-            else:
-              newCell = TrackCell()
-              
-              cellType = {
-                'horiz':TrackCellType.HORIZONTAL,
-                'diag_right_up':TrackCellType.DIAG_RIGHT_UP,
-                'diag_left_up':TrackCellType.DIAG_LEFT_UP,
-                'angle_left_down':TrackCellType.ANGLE_LEFT_DOWN,
-                'angle_left_up':TrackCellType.ANGLE_LEFT_UP,
-                'angle_right_down':TrackCellType.ANGLE_RIGHT_DOWN,
-                'angle_right_up':TrackCellType.ANGLE_RIGHT_UP,
-                'horiz_rightgap':TrackCellType.END_HORIZ_RIGHT,
-                'horiz_leftgap':TrackCellType.END_HORIZ_LEFT,
-              }
-
-              newCell.setXY(cell_x, cell_y)
-              if cell['type'] in cellType.keys():
-                print("Placing cell of type [%s] at (%d,%d)" % (cell['type'], cell_x, cell_y))
-                newCell.setType(cellType[cell['type']])
-              else:
-                print("Warnings - cell type %s not known at (%d,%d)" % (cell['type'], x, y))
-
-              self.cells.append(newCell)
-              newBlock['cells'].append(newCell)
+    for blockconfig in self.layoutData['blocks']:
+      newBlock = Block(blockconfig, self.txPacket)
       self.blocks.append(newBlock)
+      self.cells = self.cells + newBlock.getCells()
       
-    # and a status bar
+    # and a status bar in a pear tree! :)
     self.CreateStatusBar()
     self.SetStatusText("Welcome to wxPython!")
 

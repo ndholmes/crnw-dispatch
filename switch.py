@@ -68,7 +68,6 @@ class Switch:
       return False
 
     if self.txCallback == None:
-      print("Can't send packets, refusing to do anything")
       return
     
     # Horrible hack
@@ -86,9 +85,9 @@ class Switch:
 
     pkt = ctrlpkt[self.name]
 
-    print("Trying to send %s" % (pkt))
+    print("Sending switch change pkt to %s\n[%s]" % (self.name, pkt))
     self.txCallback(pkt)
-    print("Succeeded")
+
 
     # Change switch state to indeterminant
     self.positionNormal = False

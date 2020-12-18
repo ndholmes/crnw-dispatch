@@ -75,7 +75,7 @@ class MRBusBit:
 
   # Changes the internal bit state if the packet matches
   # Returns true if this packet applied to us and changed our state
-  def testPacket(self, pkt):
+  def testPacket(self, pkt, debug=False):
     if self.src == 0:
       return False
 

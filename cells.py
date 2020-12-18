@@ -31,6 +31,8 @@ class TrackCellColors:
       'track_occupied':'#ff0000',
       'track_idle'    :'#ffffff',
       'track_lined'   :'#00ff00',
+      'track_manual'  :'#00ccff',
+      'track_unknown' :'#cccccc',
       'switch_locked' :'#ff0000',
       'switch_normal' :'#00ff00',
       'switch_manual' :'#00ccff',
