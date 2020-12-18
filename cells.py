@@ -37,6 +37,9 @@ class TrackCellColors:
       'switch_normal' :'#00ff00',
       'switch_manual' :'#00ccff',
       'switch_unknown':'#cccccc',
+      'signal_lined'  :'#00ff00',
+      'signal_normal' :'#ff0000',
+      'signal_unknown':'#cccccc',
       'default'       :'#cccccc',
     }
     if itemName in colors.keys():

@@ -11,11 +11,11 @@
   ],
 
   "signals": [
-    { "name": "S Eyak Points", "type": "signal_right", "x":3, "y":5 },
+    { "name": "S Eyak Points Signal", "type": "signal_right", "x":3, "y":5 },
     { "name": "S Eyak Siding", "type": "signal_left",  "x":7, "y":1 },
     { "name": "S Eyak Main", "type": "signal_left",  "x":7, "y":3 },
 
-    { "name": "N Eyak Points", "type": "signal_left",  "x":18, "y":3 },
+    { "name": "N Eyak Points Signal", "type": "signal_left",  "x":18, "y":3, "sensorLined":"0x38,S,12:0"},
     { "name": "N Eyak Siding", "type": "signal_right", "x":14, "y":3 },
     { "name": "N Eyak Main", "type": "signal_right",  "x":14, "y":5 },
 
@@ -43,6 +43,7 @@
       "name":"CP S Eyak",
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
       "sensorPower":"0x10,S,7:4",
       "base_x":3,
       "base_y":4,

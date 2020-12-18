@@ -57,7 +57,7 @@ from cells import TrackCell, SignalCell, SwitchCell, TextCell, TrackCellType
 from mrbusUtils import MRBusBit, MRBusPacket
 from switch import Switch
 from block import Block
-
+from signal import Signal
 
 import datetime
 
@@ -116,12 +116,16 @@ class Example(wx.Frame):
       self.switches[i].processPacket(pkt)
       #print("Done")
 
+    for i in range(0, len(self.signals)):
+      self.signals[i].processPacket(pkt)
+
+
     self.doDisplayUpdate()
 
   def OnTimer(self, event):
     self.timerCnt += 1
 #    ptstr = "LC at %u,%u - block %ux%u" % (x,y, block_x, block_y)
-    ptstr = "tmrcnt = %u pktcnt=%d" % (self.timerCnt, self.mqttMRBus.incomingPkts.qsize())
+    #ptstr = "tmrcnt = %u pktcnt=%d" % (self.timerCnt, self.mqttMRBus.incomingPkts.qsize())
 
     while not self.mqttMRBus.incomingPkts.empty():
       try:
@@ -131,10 +135,6 @@ class Example(wx.Frame):
         pass
 
     self.SetStatusText(ptstr)
-    
-    
-    
-    
 
   def isSignalCell(self, cellType):
     if cellType in ['signal_left', 'signal_right']:
@@ -172,28 +172,11 @@ class Example(wx.Frame):
       newCell.setXY(int(text['x']), int(text['y']))
       self.cells.append(newCell)
 
-    for signal in self.layoutData['signals']:
-      newSignal = { }
-      newSignal['cells'] = []
-      newSignal['isUpdated'] = True
-      if "name" in signal.keys():
-        newSignal['name'] = signal['name']
-      else:
-        newSignal['name'] = "Unknown"
-      newCell = SignalCell()
-      newCell.setXY(int(signal['x']), int(signal['y']))
-
-      cellType = {
-        'signal_left':TrackCellType.SIG_SINGLE_LEFT,
-        'signal_right':TrackCellType.SIG_SINGLE_RIGHT,
-      }
-      
-      if signal['type'] in cellType.keys():
-        newCell.setType(cellType[signal['type']])
-
-      self.cells.append(newCell)
-      newSignal['cells'].append(newCell)
+    for signalconfig in self.layoutData['signals']:
+      newSignal = Signal(signalconfig, self.txPacket)
       self.signals.append(newSignal)
+      self.cells = self.cells + newSignal.getCells()
+      self.clickables[newSignal.getClickXY()] = newSignal.onLeftClick
 
     for switchconfig in self.layoutData['switches']:
       newSwitch = Switch(switchconfig, self.txPacket)
