@@ -1,5 +1,5 @@
 from cells import SwitchCell,TrackCellColors,TrackCellType
-from mrbusUtils import MRBusBit
+from mrbusUtils import MRBusBit,MRBusPacket
 
 class Switch:
   def __init__(self, config, txCallback):
@@ -67,10 +67,33 @@ class Switch:
     if self.occupied or self.locked or self.manualControl:
       return False
 
+    if self.txCallback == None:
+      print("Can't send packets, refusing to do anything")
+      return
+    
+    # Horrible hack
+    if self.positionNormal:
+      newPos = 0x44
+    else:
+      newPos = 0x4D
+
+    ctrlpkt = {
+      "S Eyak Points" : MRBusPacket(0x38, 0xFE, 0x43, [0x01, newPos, 0x58]),
+      "N Eyak Points" : MRBusPacket(0x38, 0xFE, 0x43, [0x02, newPos, 0x58]),
+      "S Alaganik Points" : MRBusPacket(0x37, 0xFE, 0x43, [0x01, newPos, 0x58]),
+      "N Alaganik Points" : MRBusPacket(0x37, 0xFE, 0x43, [0x02, newPos, 0x58]),
+    }
+
+    pkt = ctrlpkt[self.name]
+
+    print("Trying to send %s" % (pkt))
+    self.txCallback(pkt)
+    print("Succeeded")
+
     # Change switch state to indeterminant
     self.positionNormal = False
     self.positionReverse = False
-
+    self.recalculateState()
 
   def recalculateState(self):
     print("Recalculating state for [%s]" % (self.name))

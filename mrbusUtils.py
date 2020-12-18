@@ -1,13 +1,16 @@
 import re
 import json
+import datetime
 
 class MRBusPacket:
   def __init__(self, dest=0, src=0, cmd=0, data=0):
-    self.dest=dest
-    self.src=src
-    self.cmd=cmd
-    self.data=data
-    
+    self.dest=int(str(dest), 0)
+    self.src=int(str(src), 0)
+    self.cmd=int(str(cmd), 0)
+    self.data = []
+    for d in data:
+      self.data.append(int(str(d), 0))
+
   def __hash__(self):
     return hash(repr(self))
 
@@ -24,6 +27,12 @@ class MRBusPacket:
     else:
       c+="    )"
     return "packet(0x%02X->0x%02X) %s %2d:%s"%(self.src, self.dest, c, len(self.data), ["0x%02X"%d for d in self.data])
+
+  def toJSON(self):
+    updateTime = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()
+    pktinfo = { 'type': 'pkt', 'src': self.src, 'dst': self.dest, 'cmd': self.cmd, 'data':self.data, 'time': updateTime }
+#    mosquitto_pub -h crnw.drgw.net -t 'crnw/send' -m "{\"cmd\": \"0x43\", \"data\": [\"0x02\", \"0x44\", \"0x57\"], \"dst\": \"0x37\", \"src\": 254, \"time\": \"2020-12-17T05:02:08.280321+00:00\", \"type\": \"pkt\"}"
+    return json.dumps(pktinfo, sort_keys=True)
 
   @classmethod
   def fromJSON(cls, message):

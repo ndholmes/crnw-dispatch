@@ -30,10 +30,10 @@
 
 
   "switches": [
-    { "name": "S Eyak Points", "type": "switch_right_up", "x":4, "y":4, "sensorNormal":"0x38,S,11:4", "sensorReverse":"0x38,S,11:5", "sensorManual":"0x38,S,11:3", "sensorOccupancy":"0x38,S,10:6"},
-    { "name": "N Eyak Points", "type": "switch_left_up",  "x":17, "y":4, "sensorNormal":"0x38,S,12:4", "sensorReverse":"0x38,S,12:5", "sensorManual":"0x38,S,12:3", "sensorOccupancy":"0x38,S,10:7" },
-    { "name": "S Alaganik Points", "type": "switch_right_down", "x":28, "y":4 },
-    { "name": "N Alaganik Points", "type": "switch_left_down", "x":41, "y":4 }
+    { "name": "S Eyak Points", "type": "switch_right_up", "x":4, "y":4, "sensorNormal":"0x38,S,11:4", "sensorReverse":"0x38,S,11:5", "sensorManual":"0x38,S,11:3", "sensorOccupancy":"0x38,S,10:1"},
+    { "name": "N Eyak Points", "type": "switch_left_up",  "x":17, "y":4, "sensorNormal":"0x38,S,12:4", "sensorReverse":"0x38,S,12:5", "sensorManual":"0x38,S,12:3", "sensorOccupancy":"0x38,S,10:0" },
+    { "name": "S Alaganik Points", "type": "switch_right_down", "x":28, "y":4, "sensorNormal":"0x37,S,11:4", "sensorReverse":"0x37,S,11:5", "sensorManual":"0x37,S,11:3", "sensorOccupancy":"0x37,S,10:1" },
+    { "name": "N Alaganik Points", "type": "switch_left_down", "x":41, "y":4, "sensorNormal":"0x37,S,12:4", "sensorReverse":"0x37,S,12:5", "sensorManual":"0x37,S,12:3", "sensorOccupancy":"0x37,S,10:0" }
   ],
 
 
@@ -42,7 +42,7 @@
     {
       "blockName":"CP S Eyak",
       "blockType":"standard",
-      "occupancy":"0x38,S,10:6",
+      "occupancy":"0x38,S,10:1",
       "power":"0x10/7:4",
       "base_x":3,
       "base_y":4,
@@ -59,7 +59,7 @@
     {
       "blockName":"Eyak Main",
       "blockType":"standard",
-      "occupancy":"0x28,S,6:2",
+      "occupancy":"0x38,S,10:3",
       "power":"0x10/7:4",
       "base_x":8,
       "base_y":4,
@@ -72,7 +72,7 @@
     {
       "blockName":"Eyak Siding",
       "blockType":"standard",
-      "occupancy":"0x28,S,6:3",
+      "occupancy":"0x38,S,10:2",
       "power":"0x10/7:4",
       "base_x":8,
       "base_y":2,
@@ -84,7 +84,7 @@
     {
       "blockName":"CP N Eyak",
       "blockType":"standard",
-      "occupancy":"0x38,S,10:7",
+      "occupancy":"0x38,S,10:0",
       "power":"0x10/7:4",
       "base_x":14,
       "base_y":4,

@@ -79,9 +79,9 @@ import datetime
 # This class is used to pass packets between the mrbus/mqtt thread and the master gui thread
 class MqttMRBus:
   incomingPkts = queue.Queue(maxsize=500)
-  outgoingPkts = queue.Queue(maxsize=500)
   def __init__(self):
     pass
+
 
 class Example(wx.Frame):
   cells = []
@@ -96,11 +96,11 @@ class Example(wx.Frame):
   pktTimer = None
   timerCnt = 0
 
-  def __init__(self, railroadLayoutData, mqttMRBus):
+  def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
     super(Example, self).__init__(None)
     self.layoutData = railroadLayoutData
     self.InitUI()
-
+    self.mqttClient = mqttClient
     self.mqttMRBus = mqttMRBus
 
     self.pktTimer = wx.Timer(self, 1)
@@ -108,7 +108,13 @@ class Example(wx.Frame):
     self.pktTimer.Start(100)
     print(wx.version())
 
-
+  def txPacket(self, pkt):
+    message = pkt.toJSON()
+    topic = 'crnw/send'
+    print("Sending [%s]  [%s]" % (topic, message))
+    self.mqttClient.publish(topic=topic, payload=message)
+    print("Sent")
+    
   def doDisplayUpdate(self):
     dc = wx.ClientDC(self)
     for i in self.cells:
@@ -210,7 +216,7 @@ class Example(wx.Frame):
       self.signals.append(newSignal)
 
     for switchconfig in self.layoutData['switches']:
-      newSwitch = Switch(switchconfig, None)
+      newSwitch = Switch(switchconfig, self.txPacket)
       self.switches.append(newSwitch)
       self.cells = self.cells + newSwitch.getCells()
       self.clickables[newSwitch.getClickXY()] = newSwitch.onLeftClick
@@ -443,7 +449,7 @@ def main():
   mqttClient.subscribe("crnw/raw")
 
   app = wx.App()
-  ex = Example(layoutData, mqttMRBus)
+  ex = Example(layoutData, mqttMRBus, mqttClient)
   ex.Show()
   app.MainLoop()
 
