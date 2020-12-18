@@ -30,8 +30,8 @@
 
 
   "switches": [
-    { "name": "S Eyak Points", "type": "switch_right_up", "x":4, "y":4 },
-    { "name": "N Eyak Points", "type": "switch_left_up",  "x":17, "y":4 },
+    { "name": "S Eyak Points", "type": "switch_right_up", "x":4, "y":4, "sensorNormal":"0x38,S,11:4", "sensorReverse":"0x38,S,11:5", "sensorManual":"0x38,S,11:3", "sensorOccupancy":"0x38,S,10:6"},
+    { "name": "N Eyak Points", "type": "switch_left_up",  "x":17, "y":4, "sensorNormal":"0x38,S,12:4", "sensorReverse":"0x38,S,12:5", "sensorManual":"0x38,S,12:3", "sensorOccupancy":"0x38,S,10:7" },
     { "name": "S Alaganik Points", "type": "switch_right_down", "x":28, "y":4 },
     { "name": "N Alaganik Points", "type": "switch_left_down", "x":41, "y":4 }
   ],

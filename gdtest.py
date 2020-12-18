@@ -48,34 +48,14 @@ Basic theory:
 """
 import sys
 import wx
+import wx.adv
+import re
 import json
 import paho.mqtt.client as mqtt
 import queue
-
-from enum import Enum
-
-class TrackBlockType(Enum):
-  HORIZONTAL        = 1,
-  DIAG_RIGHT_UP     = 2,
-  DIAG_LEFT_UP      = 3,
-  ANGLE_LEFT_DOWN   = 4,
-  ANGLE_LEFT_UP     = 5,
-  ANGLE_RIGHT_DOWN  = 6,
-  ANGLE_RIGHT_UP    = 7,
-  END_HORIZ_RIGHT   = 8,
-  END_HORIZ_LEFT    = 9,
-  
-  SWITCH_RIGHT_UP   = 40,
-  SWITCH_RIGHT_DOWN = 41,
-  SWITCH_LEFT_UP    = 42,
-  SWITCH_LEFT_DOWN  = 43,
-  
-  SIG_SINGLE_RIGHT  = 100, 
-  SIG_SINGLE_LEFT   = 101, 
-  SIG_DOUBLE_RIGHT  = 102, 
-  SIG_DOUBLE_LEFT   = 103, 
-# Each "TrackBlock" defines an 16x16 pixel block
-# corresponding to a single track element
+from cells import TrackCell, SignalCell, SwitchCell, TextCell, TrackCellType
+from mrbusUtils import MRBusBit
+from switch import Switch
 
 class MRBusPacket:
   def __init__(self, dest=0, src=0, cmd=0, data=0):
@@ -129,232 +109,7 @@ class MRBusPacket:
       
     return True
 
-class TrackBlock:
-  name = "Unknown"
-  trackType = TrackBlockType.HORIZONTAL
-  x = -1
-  y = -1
-  cell_x = -1
-  cell_y = -1
-  cellSize = 16
-  color = "#FFF"
 
-  def __init__(self):
-    pass
-
-  def setXY(self, x, y):
-    self.x = x * self.cellSize
-    self.y = y * self.cellSize
-    self.cell_x = x
-    self.cell_y = y
-
-  def setColor(self, color):
-    self.color = color
-
-  def getXY(self):
-    return (self.cell_x, self.cell_y)
-
-
-  def setType(self, trackType):
-    self.trackType = trackType
-
-  def draw(self, dc):
-    dc.SetBrush(wx.Brush('#000'))
-    dc.SetPen(wx.Pen("#000"))
-    dc.DrawRectangle(self.x, self.y, self.cellSize, self.cellSize)
-
-    dc.SetPen(wx.Pen(self.color, width=2))
-
-    if self.trackType == TrackBlockType.HORIZONTAL:
-      dc.DrawLine(self.x, self.y + (self.cellSize//2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize//2 - 1))
-
-    elif self.trackType == TrackBlockType.END_HORIZ_RIGHT:
-      dc.DrawLine(self.x, self.y + (self.cellSize//2 - 1), self.x+self.cellSize-5, self.y + (self.cellSize//2 - 1))
-
-    elif self.trackType == TrackBlockType.END_HORIZ_LEFT:
-      dc.DrawLine(self.x+4, self.y + (self.cellSize//2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize//2 - 1))
-
-
-    elif self.trackType == TrackBlockType.DIAG_LEFT_UP:
-      dc.DrawLine(self.x, self.y, self.x+self.cellSize-1, self.y+self.cellSize-1)
-
-    elif self.trackType == TrackBlockType.DIAG_RIGHT_UP:
-      dc.DrawLine(self.x+self.cellSize-1, self.y, self.x, self.y+self.cellSize-1)
-
-    elif self.trackType == TrackBlockType.ANGLE_LEFT_UP:
-      dc.DrawLine(self.x, self.y, self.x+(self.cellSize//2 - 1), self.y+(self.cellSize//2 - 1))
-      dc.DrawLine(self.x+(self.cellSize//2 - 1), self.y + (self.cellSize//2 - 1), self.x + (self.cellSize - 1), self.y + (self.cellSize//2 - 1))
-
-    elif self.trackType == TrackBlockType.ANGLE_LEFT_DOWN:
-      dc.DrawLine(self.x, self.y + self.cellSize-1, self.x+(self.cellSize//2 - 1), self.y+(self.cellSize//2 - 1))
-      dc.DrawLine(self.x+(self.cellSize//2 - 1), self.y + (self.cellSize//2 - 1), self.x + (self.cellSize - 1), self.y + (self.cellSize//2 - 1))
-
-    elif self.trackType == TrackBlockType.ANGLE_RIGHT_UP:
-      dc.DrawLine(self.x + self.cellSize - 1, self.y, self.x+(self.cellSize//2 - 1), self.y+(self.cellSize//2 - 1))
-      dc.DrawLine(self.x+(self.cellSize//2 - 1), self.y + (self.cellSize//2 - 1), self.x, self.y + (self.cellSize//2 - 1))
-
-    elif self.trackType == TrackBlockType.ANGLE_RIGHT_DOWN:
-      dc.DrawLine(self.x + self.cellSize - 1, self.y + self.cellSize-1, self.x+(self.cellSize//2 - 1), self.y+(self.cellSize//2 - 1))
-      dc.DrawLine(self.x+(self.cellSize//2 - 1), self.y + (self.cellSize//2 - 1), self.x, self.y + (self.cellSize//2 - 1))
-
-class TextBlock(TrackBlock):
-  def __init__(self):
-    self.color = '#FFF'
-    self.text = ""
-    pass
-
-  def setType(self, signalType):
-    self.trackType = signalType
-    
-  def setText(self, text):
-    self.text = text
-    
-  def draw(self, dc):
-    dc.SetBrush(wx.Brush('#000'))
-    dc.SetPen(wx.Pen("#000"))
-    dc.DrawRectangle(self.x, self.y, self.cellSize, self.cellSize)
-
-    dc.SetPen(wx.Pen(self.color, width=2))
-    dc.SetBrush(wx.Brush(self.color))
-    dc.SetTextForeground(self.color) 
-    dc.DrawText(self.text, self.x, self.y)
-
-
-class SignalBlock(TrackBlock):
-  def __init__(self):
-    self.color = '#F00'
-    pass
-
-  def setType(self, signalType):
-    self.trackType = signalType
-    
-  def draw(self, dc):
-    dc.SetBrush(wx.Brush('#000'))
-    dc.SetPen(wx.Pen("#000"))
-    dc.DrawRectangle(self.x, self.y, self.cellSize, self.cellSize)
-
-    dc.SetPen(wx.Pen(self.color, width=2))
-    dc.SetBrush(wx.Brush(self.color))
-    
-    if self.trackType == TrackBlockType.SIG_SINGLE_RIGHT:
-      dc.DrawCircle(self.x + self.cellSize - 3, self.y + self.cellSize//2, 3)
-      dc.SetBrush(wx.Brush('#000'))
-      dc.DrawLine(self.x, self.y + self.cellSize//2, self.x + self.cellSize - 7, self.y + self.cellSize//2)
-      dc.DrawLine(self.x, self.y + self.cellSize//2 - 4, self.x, self.y + self.cellSize//2 + 4)
-
-    elif self.trackType == TrackBlockType.SIG_DOUBLE_RIGHT:
-      dc.DrawCircle(self.x + self.cellSize - 3, self.y + self.cellSize//2, 3)
-      dc.DrawCircle(self.x + self.cellSize - 9, self.y + self.cellSize//2, 3)
-      dc.SetBrush(wx.Brush('#000'))
-      dc.DrawLine(self.x, self.y + self.cellSize//2, self.x + self.cellSize - 7, self.y + self.cellSize//2)
-      dc.DrawLine(self.x, self.y + self.cellSize//2 - 4, self.x, self.y + self.cellSize//2 + 4)
-
-    elif self.trackType == TrackBlockType.SIG_SINGLE_LEFT:
-      dc.DrawCircle(self.x + 3, self.y + self.cellSize//2, 3)
-      dc.SetBrush(wx.Brush('#000'))
-      dc.DrawLine(self.x + self.cellSize-1, self.y + self.cellSize//2, self.x + 6, self.y + self.cellSize//2)
-      dc.DrawLine(self.x + self.cellSize-1, self.y + self.cellSize//2 - 4, self.x + self.cellSize-1, self.y + self.cellSize//2 + 4)
-
-    elif self.trackType == TrackBlockType.SIG_DOUBLE_LEFT:
-      dc.DrawCircle(self.x + 3, self.y + self.cellSize//2, 3)
-      dc.DrawCircle(self.x + 9, self.y + self.cellSize//2, 3)
-      dc.SetBrush(wx.Brush('#000'))
-      dc.DrawLine(self.x + self.cellSize-1, self.y + self.cellSize//2, self.x + 6, self.y + self.cellSize//2)
-      dc.DrawLine(self.x + self.cellSize-1, self.y + self.cellSize//2 - 4, self.x + self.cellSize-1, self.y + self.cellSize//2 + 4)
-      
-      
-class SwitchBlock(TrackBlock):
-  def __init__(self):
-    self.switchState = 0
-    self.switchStatusColor = "#00FF00"
-    pass
-
-  def setSwitchPosition(self, pos):
-    self.switchState = pos
-
-  def getSwitchPosition(self):
-    return self.switchState
-
-  def setSwitchStatusColor(self, color):
-    self.switchStatusColor = color
-
-  def draw(self, dc):
-    dc.SetBrush(wx.Brush('#000'))
-#    dc.SetPen(wx.Pen("#E1FCFF", width=1))
-    dc.SetPen(wx.Pen("#000"))
-    dc.DrawRectangle(self.x, self.y, self.cellSize, self.cellSize)
-
-    dc.SetPen(wx.Pen(self.switchStatusColor, width=1))
-    dc.DrawRectangle(self.x+2, self.y+2, self.cellSize-4, self.cellSize-4)
-    dc.SetPen(wx.Pen(self.color, width=2))
-    
-    if self.trackType == TrackBlockType.SWITCH_RIGHT_DOWN:
-      if self.switchState != 0:
-        dc.DrawLine(self.x, self.y+(self.cellSize//2 - 1), self.x+(self.cellSize//2), self.y+(self.cellSize/2 - 1))
-        dc.DrawLine(self.x+(self.cellSize//2), self.y+(self.cellSize/2 - 1), self.x+(self.cellSize - 1), self.y+(self.cellSize - 1))
-      else:
-        dc.DrawLine(self.x, self.y + (self.cellSize/2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize/2 - 1))
-
-    elif self.trackType == TrackBlockType.SWITCH_RIGHT_UP:
-      if self.switchState != 0:
-        dc.DrawLine(self.x, self.y+(self.cellSize//2 - 1), self.x+(self.cellSize//2), self.y+(self.cellSize//2 - 1))
-        dc.DrawLine(self.x+(self.cellSize//2), self.y+(self.cellSize//2 - 1), self.x + (self.cellSize - 1), self.y)
-      else:
-        dc.DrawLine(self.x, self.y + (self.cellSize/2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize/2 - 1))
-
-    elif self.trackType == TrackBlockType.SWITCH_LEFT_DOWN:
-      if self.switchState != 0:
-        dc.DrawLine(self.x + (self.cellSize - 1), self.y+(self.cellSize//2 - 1), self.x+(self.cellSize//2), self.y+(self.cellSize//2 - 1))
-        dc.DrawLine(self.x+(self.cellSize/2 - 1), self.y+(self.cellSize//2 - 1), self.x, self.y+(self.cellSize - 1))
-      else:
-        dc.DrawLine(self.x, self.y + (self.cellSize/2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize/2 - 1))
-
-    elif self.trackType == TrackBlockType.SWITCH_LEFT_UP:
-      if self.switchState != 0:
-        dc.DrawLine(self.x + (self.cellSize - 1), self.y+(self.cellSize//2 - 1), self.x+(self.cellSize//2), self.y+(self.cellSize/2 - 1))
-        dc.DrawLine(self.x+(self.cellSize//2), self.y+(self.cellSize//2 - 1), self.x, self.y)
-      else:
-        dc.DrawLine(self.x, self.y + (self.cellSize/2 - 1), self.x+self.cellSize-1, self.y + (self.cellSize/2 - 1))
-
-import re
-
-class MRBusBit:
-  def __init__(self, pattern=""):
-    self.src = 0
-    self.cmd = 0
-    self.byte = 0
-    self.bit = 0
-    self.state = False
-    if pattern is not "":
-      self.fromPattern(pattern)
-
-  # Changes the internal bit state if the packet matches
-  # Returns true if this packet applied to us and changed our state
-  def testPacket(self, pkt):
-    oldState = self.state
-    if self.src == pkt.src and self.cmd == pkt.cmd and len(pkt.data) >= self.byte:
-      if (pkt.data[self.byte] & (1<<self.bit)) is not 0:
-        self.state = True
-      else:
-        self.state = False
-      if oldState is not self.state:
-        return True
-    return False
-  
-  def getState(self):
-    return self.state
-  
-  def fromPattern(self, pattern):
-    m = re.match("(0x[0-9A-Za-z]{2}),([0-9A-Za-z]{1}),(\d+):(\d+)", pattern)
-    if m is not None:
-      self.src = int(m.group(1), 0)
-      self.cmd = ord(m.group(2))
-      self.byte = int(m.group(3))-6
-      self.bit = int(m.group(4))
-      return True
-
-    print("Pattern did not match")
-    return False
 
 def relCoord(base_x, newVal):
   newVal = str(newVal)
@@ -402,28 +157,17 @@ class Example(wx.Frame):
     self.pktTimer = wx.Timer(self, 1)
     self.Bind(wx.EVT_TIMER, self.OnTimer)
     self.pktTimer.Start(100)
+    print(wx.version())
 
 
   def doDisplayUpdate(self):
     dc = wx.ClientDC(self)
     updatesToApply = False
-    for i in range(0, len(self.blocks)):
-      block = self.blocks[i]
-#      print("block %d [%s] isUpdated = [%s]" % (i, block['name'], block['isUpdated']))
-      if False == block['isUpdated']:
-        continue
-      updatesToApply = True
 
-      for cell in block['cells']:
-        cell.draw(dc)
+    for i in self.cells:
+      if i.needsRedraw():
+        i.draw(dc)
 
-      self.blocks[i]['isUpdated'] = False
-
-    if updatesToApply:
-
-      self.Update()
-   
-  
   def applyPacket(self, pkt):
     for i in range(0, len(self.blocks)):
       block = self.blocks[i]
@@ -438,6 +182,12 @@ class Example(wx.Frame):
             cell.setColor(color)
 
         self.blocks[i]['isUpdated'] = True
+        
+    for i in range(0, len(self.switches)):
+      #print("Applying packet to %d - [%s]" % (i, self.switches[i].name))
+      self.switches[i].processPacket(pkt)
+      #print("Done")
+
     self.doDisplayUpdate()
 
   def OnTimer(self, event):
@@ -484,7 +234,7 @@ class Example(wx.Frame):
         self.gridOn = True
     
     for text in self.layoutData['text']:
-      newCell = TextBlock()
+      newCell = TextCell()
       newCell.setText(text['value'])
       newCell.setXY(int(text['x']), int(text['y']))
       self.cells.append(newCell)
@@ -497,12 +247,12 @@ class Example(wx.Frame):
         newSignal['name'] = signal['name']
       else:
         newSignal['name'] = "Unknown"
-      newCell = SignalBlock()
+      newCell = SignalCell()
       newCell.setXY(int(signal['x']), int(signal['y']))
 
       cellType = {
-        'signal_left':TrackBlockType.SIG_SINGLE_LEFT,
-        'signal_right':TrackBlockType.SIG_SINGLE_RIGHT,
+        'signal_left':TrackCellType.SIG_SINGLE_LEFT,
+        'signal_right':TrackCellType.SIG_SINGLE_RIGHT,
       }
       
       if signal['type'] in cellType.keys():
@@ -512,35 +262,10 @@ class Example(wx.Frame):
       newSignal['cells'].append(newCell)
       self.signals.append(newSignal)
 
-    for switch in self.layoutData['switches']:
-      newSwitch = { }
-      newSwitch['cells'] = []
-      newSwitch['isUpdated'] = True
-      if "name" in switch.keys():
-        newSwitch['name'] = switch['name']
-      else:
-        newSwitch['name'] = "Unknown"
-
-      newCell = SwitchBlock()
-      newCell.setXY(int(switch['x']), int(switch['y']))
-
-      cellType = {
-        'switch_right_down':TrackBlockType.SWITCH_RIGHT_DOWN,
-        'switch_right_up':TrackBlockType.SWITCH_RIGHT_UP,
-        'switch_left_down':TrackBlockType.SWITCH_LEFT_DOWN,
-        'switch_left_up':TrackBlockType.SWITCH_LEFT_UP,
-      }
-      
-      if switch['type'] in cellType.keys():
-        print("Placing cell of type [%s] at (%d,%d)" % (switch['type'], int(switch['x']), int(switch['y'])))
-        newCell.setType(cellType[switch['type']])
-      else:
-        print("Did not understand switch type [%s]" % (switch['type']))
-
-      self.cells.append(newCell)
-      newSwitch['cells'].append(newCell)
+    for switchconfig in self.layoutData['switches']:
+      newSwitch = Switch(switchconfig, None)
       self.switches.append(newSwitch)
-
+      self.cells = self.cells + newSwitch.getCells()
 
 
     for block in self.layoutData['blocks']:
@@ -584,22 +309,22 @@ class Example(wx.Frame):
         for cell_x in range(x, x_end):
           for cell_y in range(y, y_end):
             if self.isSwitchCell(cell['type']):
-              newCell = SwitchBlock()
+              newCell = SwitchCell()
             elif self.isSignalCell(cell['type']):
-              newCell = SignalBlock()
+              newCell = SignalCell()
             else:
-              newCell = TrackBlock()
+              newCell = TrackCell()
               
               cellType = {
-                'horiz':TrackBlockType.HORIZONTAL,
-                'diag_right_up':TrackBlockType.DIAG_RIGHT_UP,
-                'diag_left_up':TrackBlockType.DIAG_LEFT_UP,
-                'angle_left_down':TrackBlockType.ANGLE_LEFT_DOWN,
-                'angle_left_up':TrackBlockType.ANGLE_LEFT_UP,
-                'angle_right_down':TrackBlockType.ANGLE_RIGHT_DOWN,
-                'angle_right_up':TrackBlockType.ANGLE_RIGHT_UP,
-                'horiz_rightgap':TrackBlockType.END_HORIZ_RIGHT,
-                'horiz_leftgap':TrackBlockType.END_HORIZ_LEFT,
+                'horiz':TrackCellType.HORIZONTAL,
+                'diag_right_up':TrackCellType.DIAG_RIGHT_UP,
+                'diag_left_up':TrackCellType.DIAG_LEFT_UP,
+                'angle_left_down':TrackCellType.ANGLE_LEFT_DOWN,
+                'angle_left_up':TrackCellType.ANGLE_LEFT_UP,
+                'angle_right_down':TrackCellType.ANGLE_RIGHT_DOWN,
+                'angle_right_up':TrackCellType.ANGLE_RIGHT_UP,
+                'horiz_rightgap':TrackCellType.END_HORIZ_RIGHT,
+                'horiz_leftgap':TrackCellType.END_HORIZ_LEFT,
               }
 
               newCell.setXY(cell_x, cell_y)
