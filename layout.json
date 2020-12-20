@@ -176,7 +176,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":3,
       "base_y":4,
       "cells": [
@@ -193,7 +193,7 @@
       "name":"Eyak Main",
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:3",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":8,
       "base_y":4,
       "cells": [
@@ -206,7 +206,7 @@
       "name":"Eyak Siding",
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:2",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":8,
       "base_y":2,
       "cells": [
@@ -218,7 +218,7 @@
       "name":"North Eyak",
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":14,
       "base_y":4,
       "cells": [

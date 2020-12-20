@@ -33,6 +33,7 @@ class TrackCellColors:
       'track_lined'   :'#00ff00',
       'track_manual'  :'#00ccff',
       'track_unknown' :'#cccccc',
+      'track_nopower' :'#ffd700',
       'switch_locked' :'#ff0000',
       'switch_normal' :'#00ff00',
       'switch_manual' :'#00ccff',

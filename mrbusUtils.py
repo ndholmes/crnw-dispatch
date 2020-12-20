@@ -69,6 +69,7 @@ class MRBusBit:
     self.cmd = 0
     self.byte = 0
     self.bit = 0
+    self.negate = False
     self.state = initialState
     if pattern is not "":
       self.fromPattern(pattern)
@@ -91,6 +92,10 @@ class MRBusBit:
         self.state = True
       else:
         self.state = False
+
+      if self.negate:
+        self.state = not self.state
+
       if oldState is not self.state:
         return True
     return False
@@ -99,12 +104,17 @@ class MRBusBit:
     return self.state
   
   def fromPattern(self, pattern):
-    m = re.match("(0x[0-9A-Za-z]{2}),([0-9A-Za-z]{1}),(\d+):(\d+)", pattern)
+    m = re.match("(?P<neg>!*)(?P<src>0x[0-9A-Za-z]{2}),(?P<cmd>[0-9A-Za-z]{1}),(?P<byte>\d+):(?P<bit>\d+)", pattern)
     if m is not None:
-      self.src = int(m.group(1), 0)
-      self.cmd = ord(m.group(2))
-      self.byte = int(m.group(3))-6
-      self.bit = int(m.group(4))
+      if m.group('neg') != None and m.group('neg')=='!':
+        self.negate = True
+      else:
+        self.negate = False
+      self.src = int(m.group('src'), 0)
+      self.cmd = ord(m.group('cmd'))
+      self.byte = int(m.group('byte'))-6
+      self.bit = int(m.group('bit'))
+
       return True
 
     print("Pattern did not match")

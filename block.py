@@ -196,7 +196,7 @@ class Block:
 
   def assocControlPoint(self, controlPoint):
     self.cp = controlPoint
-    print("Signal [%s] has associated with CP [%s]" % (self.name, self.cp.name))
+    print("Block [%s] has associated with CP [%s]" % (self.name, self.cp.name))
 
   def onLeftClick(self):
     return False  # Blocks don't respond to clicks
@@ -206,7 +206,10 @@ class Block:
     trackColor = TrackCellColors.getColor('track_unknown')
 
     # Compute track color
-    if self.occupied:
+    
+    if not self.powerOn:
+      trackColor = TrackCellColors.getColor('track_nopower')
+    elif self.occupied:
       trackColor = TrackCellColors.getColor('track_occupied')
       self.lined = False  # if we're occupied, we can't be lined
     elif self.lined:

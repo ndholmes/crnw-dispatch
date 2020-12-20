@@ -153,8 +153,8 @@ class DispatchConsole(wx.Frame):
   
   def realFastClockUpdate(self, pkt):
     print("Doing FC Update")
-    #if pkt.src != self.fcAddress or pkt.cmd != ord('T'):
-    #  return
+    if pkt.src != self.fcAddress or pkt.cmd != ord('T') or len(pkt.data) < 12:
+      return
     
     flags = pkt.data[3]
     try:
@@ -224,14 +224,13 @@ class DispatchConsole(wx.Frame):
       try:
         pkt = self.mqttMRBus.incomingPkts.get_nowait()
         self.pktsLastSecond += 1
+        #print("pkt: %s" % (pkt))
         self.applyPacket(pkt)
       except:
         pass
 
     if self.terminate:
       self.close()
-
-#    self.SetStatusText(ptstr)
 
   def isSignalCell(self, cellType):
     if cellType in ['signal_left', 'signal_right']:
