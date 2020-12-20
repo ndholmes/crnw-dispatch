@@ -59,7 +59,7 @@ from mrbusUtils import MRBusBit, MRBusPacket
 from switch import Switch
 from block import Block
 from signal import Signal
-
+from controlpoint import ControlPoint
 import datetime
 
 
@@ -75,13 +75,18 @@ class Example(wx.Frame):
   blocks = [ ]
   signals = []
   switches = []
+  controlpoints = []
   clickables = { }
+  cellXY = { }
   menuHeight = 0
   currentBlockType = 0
   gridOn = False
   layoutData = None
   pktTimer = None
+  terminate = False
   timerCnt = 0
+  blinkCnt = 0
+  blinkState = False
 
   def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
     super(Example, self).__init__(None)
@@ -104,6 +109,8 @@ class Example(wx.Frame):
     
   def doDisplayUpdate(self):
     dc = wx.ClientDC(self)
+    # Since the cells all know if they changed since last time,
+    # just loop through them and call draw on the ones that changed
     for i in self.cells:
       if i.needsRedraw():
         i.draw(dc)
@@ -113,21 +120,35 @@ class Example(wx.Frame):
       self.blocks[i].processPacket(pkt)
         
     for i in range(0, len(self.switches)):
-      #print("Applying packet to %d - [%s]" % (i, self.switches[i].name))
       self.switches[i].processPacket(pkt)
-      #print("Done")
 
     for i in range(0, len(self.signals)):
       self.signals[i].processPacket(pkt)
 
+    for i in range(0, len(self.controlpoints)):
+      self.controlpoints[i].processPacket(pkt)
 
     self.doDisplayUpdate()
 
+  def updateBlinkyCells(self, blinkState):
+    blinkiesExist = False
+    for signal in self.signals:
+      if signal.cell.isBlinky():
+        blinkiesExist = True
+        signal.cell.setBlinkState(blinkState)
+    return blinkiesExist
+    
   def OnTimer(self, event):
     self.timerCnt += 1
-#    ptstr = "LC at %u,%u - block %ux%u" % (x,y, block_x, block_y)
-    #ptstr = "tmrcnt = %u pktcnt=%d" % (self.timerCnt, self.mqttMRBus.incomingPkts.qsize())
-
+    self.blinkCnt += 1
+    
+    if self.blinkCnt > 5:
+      self.blinkCnt = 0
+      self.blinkState = not self.blinkState
+      blinkiesExist = self.updateBlinkyCells(self.blinkState)
+      if blinkiesExist:
+          self.doDisplayUpdate()
+      
     while not self.mqttMRBus.incomingPkts.empty():
       try:
         pkt = self.mqttMRBus.incomingPkts.get_nowait()
@@ -135,7 +156,10 @@ class Example(wx.Frame):
       except:
         pass
 
-    self.SetStatusText(ptstr)
+    if self.terminate:
+      self.close()
+
+#    self.SetStatusText(ptstr)
 
   def isSignalCell(self, cellType):
     if cellType in ['signal_left', 'signal_right']:
@@ -152,12 +176,24 @@ class Example(wx.Frame):
       return True
     return False
 
+  def getRailroadObject(self, objectType, objectName):
+    objectList = {'switch':self.switches, 'signal':self.signals, 'block':self.blocks}
+    
+    if objectType not in objectList.keys():
+      return None
+    
+    for i in range(0, len(objectList[objectType])):
+      if objectList[objectType][i].name == objectName:
+        return objectList[objectType][i]
+
+    return None
+    
   def InitUI(self):
     self.Bind(wx.EVT_PAINT, self.OnPaint)
     self.Bind(wx.EVT_SIZE, self.OnPaint)
     self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
     self.SetTitle("CRNW Dispatch System")
-    self.SetSize((1000,800))
+    self.SetSize((1200,800))
     self.Centre()
     self.Show(True)
     # create a menu bar
@@ -170,7 +206,9 @@ class Example(wx.Frame):
     for text in self.layoutData['text']:
       newCell = TextCell()
       newCell.setText(text['value'])
-      newCell.setXY(int(text['x']), int(text['y']))
+      x = int(text['x'])
+      y = int(text['y'])
+      newCell.setXY(x, y)
       self.cells.append(newCell)
 
     for signalconfig in self.layoutData['signals']:
@@ -186,10 +224,23 @@ class Example(wx.Frame):
       self.clickables[newSwitch.getClickXY()] = newSwitch.onLeftClick
 
     for blockconfig in self.layoutData['blocks']:
-      newBlock = Block(blockconfig, self.txPacket)
+      newBlock = Block(blockconfig, self.txPacket, self.cellXY)
       self.blocks.append(newBlock)
       self.cells = self.cells + newBlock.getCells()
-      
+
+    for cell in self.cells:
+      # Build a cell finder
+      self.cellXY[(cell.cell_x,cell.cell_y)] = cell
+
+
+
+    for cpconfig in self.layoutData['controlPoints']:
+      newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
+      self.controlpoints.append(newCP)
+
+
+
+
     # and a status bar in a pear tree! :)
     self.CreateStatusBar()
     self.SetStatusText("Welcome to wxPython!")
@@ -199,15 +250,12 @@ class Example(wx.Frame):
     x,y = e.GetPosition()
     block_x = x//16
     block_y = y//16
+
+    ctrlState = wx.GetKeyState(wx.WXK_CONTROL)
     
-    #ptstr = "LC at %u,%u - block %ux%u" % (x,y, block_x, block_y)
-    #self.SetStatusText(ptstr)
-
-    # Go figure out what we clicked - you can click turnouts and signals
-
     m = (block_x, block_y)
     if m in self.clickables:
-      self.clickables[m]()
+      self.clickables[m](ctrl=ctrlState)
   
 #      dc = wx.PaintDC(self)
 #      self.cells[0].setSwitchPosition([1,0][self.cells[0].getSwitchPosition()])
@@ -297,13 +345,13 @@ def mqtt_onMessage(client, userdata, message):
   pkt = MRBusPacket.fromJSON(contents)
   if pkt is not None:
     mqttMRBus.incomingPkts.put(pkt)
-    print("Adding pkt %s" % (pkt))
+    #print("Adding pkt %s" % (pkt))
   else:
     print("Packet failed")
 
 def mqtt_onConnect(client, userdata, flags, rc):
 #  logger = userdata['logger']
-  print("I'M HERE!")
+  print("In mqtt_onConnect")
   if rc == 0:
     # Successful Connection
     #logger.info("Successful MQTT Connection")

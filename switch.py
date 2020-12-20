@@ -4,7 +4,6 @@ from mrbusUtils import MRBusBit,MRBusPacket
 class Switch:
   def __init__(self, config, txCallback):
     self.name = config['name']
-    
     self.positionNormal = True
     self.positionReverse = False
     self.manualControl = False
@@ -12,6 +11,18 @@ class Switch:
     self.locked = False
     self.lined = False
     self.txCallback = txCallback
+    self.cp = None
+
+    self.commandNormal = None
+    self.commandReverse = None
+
+    if 'commandNormal' in config.keys():
+      cmdBytes = config['commandNormal'].split(',')
+      self.commandNormal = MRBusPacket(cmdBytes[0], 0xFE, cmdBytes[1], [int(str(d),0) for d in cmdBytes[2:]])
+
+    if 'commandReverse' in config.keys():
+      cmdBytes = config['commandReverse'].split(',')
+      self.commandReverse = MRBusPacket(cmdBytes[0], 0xFE, cmdBytes[1], [int(str(d),0) for d in cmdBytes[2:]])
     
     pattern = ""
     if "sensorNormal" in config.keys():
@@ -62,7 +73,11 @@ class Switch:
   def getClickXY(self):
     return (self.cell.getXY())
 
-  def onLeftClick(self):
+  def assocControlPoint(self, controlPoint):
+    self.cp = controlPoint
+    print("Switch [%s] has associated with CP [%s]" % (self.name, self.cp.name))
+
+  def onLeftClick(self, ctrl=False):
     print("Got click on switch [%s]" % self.name)
     if self.occupied or self.locked or self.manualControl:
       return False
@@ -70,30 +85,28 @@ class Switch:
     if self.txCallback == None:
       return
     
-    # Horrible hack
     if self.positionNormal:
-      newPos = 0x44
+      pkt = self.commandReverse
     else:
-      newPos = 0x4D
+      pkt = self.commandNormal
 
-    ctrlpkt = {
-      "S Eyak Points" : MRBusPacket(0x38, 0xFE, 0x43, [0x01, newPos, 0x58]),
-      "N Eyak Points" : MRBusPacket(0x38, 0xFE, 0x43, [0x02, newPos, 0x58]),
-      "S Alaganik Points" : MRBusPacket(0x37, 0xFE, 0x43, [0x01, newPos, 0x58]),
-      "N Alaganik Points" : MRBusPacket(0x37, 0xFE, 0x43, [0x02, newPos, 0x58]),
-    }
-
-    pkt = ctrlpkt[self.name]
-
-    print("Sending switch change pkt to %s\n[%s]" % (self.name, pkt))
-    self.txCallback(pkt)
-
+    if None != pkt:
+      print("Sending switch change pkt to %s\n[%s]" % (self.name, pkt))
+      self.txCallback(pkt)
 
     # Change switch state to indeterminant
     self.positionNormal = False
     self.positionReverse = False
     self.recalculateState()
 
+  def setLock(self):
+    self.locked = True
+    self.recalculateState()
+    
+  def clearLock(self):
+    self.locked = False
+    self.recalculateState()
+    
   def recalculateState(self):
     print("Recalculating state for [%s]" % (self.name))
     

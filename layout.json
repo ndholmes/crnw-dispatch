@@ -12,36 +12,164 @@
 
   "signals": [
     { "name": "S Eyak Points Signal", "type": "signal_right", "x":3, "y":5 },
-    { "name": "S Eyak Siding", "type": "signal_left",  "x":7, "y":1 },
-    { "name": "S Eyak Main", "type": "signal_left",  "x":7, "y":3 },
+    { "name": "S Eyak Siding Signal", "type": "signal_left",  "x":7, "y":1 },
+    { "name": "S Eyak Main Signal", "type": "signal_left",  "x":7, "y":3 },
 
-    { "name": "N Eyak Points Signal", "type": "signal_left",  "x":18, "y":3, "sensorLined":"0x38,S,12:0"},
-    { "name": "N Eyak Siding", "type": "signal_right", "x":14, "y":3 },
-    { "name": "N Eyak Main", "type": "signal_right",  "x":14, "y":5 },
+    { "name": "N Eyak Points Signal", "type": "signal_left",  "x":18, "y":3},
+    { "name": "N Eyak Siding Signal", "type": "signal_right", "x":14, "y":3 },
+    { "name": "N Eyak Main Signal", "type": "signal_right",  "x":14, "y":5 },
 
-    { "name": "S Alaganik Points", "type": "signal_right", "x":27, "y":5 },
-    { "name": "S Alaganik Siding", "type": "signal_left",  "x":31, "y":5 },
-    { "name": "S Alaganik Main", "type": "signal_left",  "x":31, "y":3 },
+    { "name": "S Alaganik Points Signal", "type": "signal_right", "x":27, "y":5 },
+    { "name": "S Alaganik Siding Signal", "type": "signal_left",  "x":31, "y":5 },
+    { "name": "S Alaganik Main Signal", "type": "signal_left",  "x":31, "y":3 },
 
-    { "name": "N Alaganik Points", "type": "signal_left", "x":42, "y":3 },
-    { "name": "N Alaganik Siding", "type": "signal_right",  "x":38, "y":7 },
-    { "name": "N Alaganik Main", "type": "signal_right",  "x":38, "y":5 }
+    { "name": "N Alaganik Points Signal", "type": "signal_left", "x":42, "y":3 },
+    { "name": "N Alaganik Siding Signal", "type": "signal_right",  "x":38, "y":7 },
+    { "name": "N Alaganik Main Signal", "type": "signal_right",  "x":38, "y":5 }
   ],
 
 
   "switches": [
-    { "name": "S Eyak Points", "type": "switch_right_up", "x":4, "y":4, "sensorNormal":"0x38,S,11:4", "sensorReverse":"0x38,S,11:5", "sensorManual":"0x38,S,11:3", "sensorOccupancy":"0x38,S,10:1"},
-    { "name": "N Eyak Points", "type": "switch_left_up",  "x":17, "y":4, "sensorNormal":"0x38,S,12:4", "sensorReverse":"0x38,S,12:5", "sensorManual":"0x38,S,12:3", "sensorOccupancy":"0x38,S,10:0" },
-    { "name": "S Alaganik Points", "type": "switch_right_down", "x":28, "y":4, "sensorNormal":"0x37,S,11:4", "sensorReverse":"0x37,S,11:5", "sensorManual":"0x37,S,11:3", "sensorOccupancy":"0x37,S,10:1" },
-    { "name": "N Alaganik Points", "type": "switch_left_down", "x":41, "y":4, "sensorNormal":"0x37,S,12:4", "sensorReverse":"0x37,S,12:5", "sensorManual":"0x37,S,12:3", "sensorOccupancy":"0x37,S,10:0" }
+    { "name": "S Eyak Points", 
+      "type": "switch_right_up", 
+      "x":4, "y":4, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+    { 
+      "name": "N Eyak Points", 
+      "type": "switch_left_up",  
+      "x":17, "y":4, 
+      "sensorNormal":"0x38,S,12:4", 
+      "sensorReverse":"0x38,S,12:5", 
+      "sensorManual":"0x38,S,12:3", 
+      "sensorOccupancy":"0x38,S,10:0",
+      "commandNormal": "0x38,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x02,0x44,0x58"
+    },
+    { 
+      "name": "S Alaganik Points", 
+      "type": "switch_right_down", 
+      "x":28, "y":4, 
+      "sensorNormal":"0x37,S,11:4", 
+      "sensorReverse":"0x37,S,11:5", 
+      "sensorManual":"0x37,S,11:3", 
+      "sensorOccupancy":"0x37,S,10:1",
+      "commandNormal": "0x37,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x01,0x44,0x58"
+    },
+    { 
+      "name": "N Alaganik Points", 
+      "type": "switch_left_down", 
+      "x":41, "y":4, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    }
   ],
 
+  "controlPoints": [
+      { 
+      "name":"CP South Eyak", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"main", "name":"S Eyak Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"South Eyak"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"S Eyak Points Signal", "cmd": "0x38,0x43,0x01,0x58,0x57", "clr_cmd": "0x38,0x43,0x01,0x58,0x58" }, 
+        {"role":"siding", "name":"S Eyak Siding Signal", "cmd": "0x38,0x43,0x01,0x44,0x45", "clr_cmd": "0x38,0x43,0x01,0x58,0x58"},
+        {"role":"main", "name":"S Eyak Main Signal", "cmd": "0x38,0x43,0x01,0x4D,0x45", "clr_cmd": "0x38,0x43,0x01,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x38,S,11:0"},
+        { "role":"sensorLinedRight", "source":"0x38,S,11:1"}
+        ]
+    },
+    
+    { 
+      "name":"CP North Eyak", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",      
+      "switches": [
+        {"role":"main", "name":"N Eyak Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"North Eyak"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"N Eyak Points Signal", "cmd": "0x38,0x43,0x02,0x58,0x45", "clr_cmd": "0x38,0x43,0x02,0x58,0x58" }, 
+        {"role":"siding", "name":"N Eyak Siding Signal", "cmd": "0x38,0x43,0x02,0x44,0x57", "clr_cmd": "0x38,0x43,0x02,0x58,0x58"},
+        {"role":"main", "name":"N Eyak Main Signal", "cmd": "0x38,0x43,0x02,0x4D,0x57", "clr_cmd": "0x38,0x43,0x02,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x38,S,12:0"},
+        { "role":"sensorLinedRight", "source":"0x38,S,12:1"}
+        ]
+    },
+ 
+    { 
+      "name":"CP South Alaganik", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"main", "name":"S Alaganik Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"South Alaganik"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"S Alaganik Points Signal", "cmd": "0x37,0x43,0x01,0x58,0x57", "clr_cmd": "0x37,0x43,0x01,0x58,0x58" }, 
+        {"role":"siding", "name":"S Alaganik Siding Signal", "cmd": "0x37,0x43,0x01,0x44,0x45", "clr_cmd": "0x37,0x43,0x01,0x58,0x58"},
+        {"role":"main", "name":"S Alaganik Main Signal", "cmd": "0x37,0x43,0x01,0x4D,0x45", "clr_cmd": "0x37,0x43,0x01,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x37,S,11:0"},
+        { "role":"sensorLinedRight", "source":"0x37,S,11:1"}
+        ]
+    },
 
+    { 
+      "name":"CP North Alaganik", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",      
+      "switches": [
+        {"role":"main", "name":"N Alaganik Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"North Alaganik"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"N Alaganik Points Signal", "cmd": "0x37,0x43,0x02,0x58,0x45", "clr_cmd": "0x37,0x43,0x02,0x58,0x58" }, 
+        {"role":"siding", "name":"N Alaganik Siding Signal", "cmd": "0x37,0x43,0x02,0x44,0x57", "clr_cmd": "0x37,0x43,0x02,0x58,0x58"},
+        {"role":"main", "name":"N Alaganik Main Signal", "cmd": "0x37,0x43,0x02,0x4D,0x57", "clr_cmd": "0x37,0x43,0x02,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x37,S,12:0"},
+        { "role":"sensorLinedRight", "source":"0x37,S,12:1"}
+        ]
+    }
+  ],
 
   "blocks": [
     {
-      "name":"CP S Eyak",
-      "type":"standard",
+      "name":"South Eyak",
+      "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
       "sensorPower":"0x10,S,7:4",
@@ -83,8 +211,8 @@
     },
 
     {
-      "name":"CP N Eyak",
-      "type":"standard",
+      "name":"North Eyak",
+      "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:0",
       "sensorPower":"0x10,S,7:4",
       "base_x":14,
@@ -104,6 +232,7 @@
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
       "sensorPower":"0x10,S,7:4",
+      "rightAdjoiningBlockName":"Mudhole Block",
       "base_x":19,
       "base_y":4,
       "cells": [
@@ -114,6 +243,7 @@
     {
       "name":"Mudhole Block",
       "type":"standard",
+      "leftAdjoiningBlockName":"Sheridan Block",
       "sensorOccupancy":"0x27,S,7:1",
       "sensorPower":"0x10,S,7:4",
       "base_x":23,
@@ -126,8 +256,8 @@
 
 
     {
-      "name":"CP S Alaganik",
-      "type":"standard",
+      "name":"South Alaganik",
+      "type":"controlpoint",
       "sensorOccupancy":"0x27,S,6:0",
       "sensorPower":"0x10,S,7:4",
       "base_x":27,
@@ -168,8 +298,8 @@
     },
 
     {
-      "name":"CP N Alaganik",
-      "type":"standard",
+      "name":"North Alaganik",
+      "type":"controlpoint",
       "sensorOccupancy":"0x27,S,6:1",
       "sensorPower":"0x10,S,7:4",
       "base_x":38,

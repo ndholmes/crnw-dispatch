@@ -37,6 +37,7 @@ class TrackCellColors:
       'switch_normal' :'#00ff00',
       'switch_manual' :'#00ccff',
       'switch_unknown':'#cccccc',
+      'signal_blinkoff':'#777777',
       'signal_lined'  :'#00ff00',
       'signal_normal' :'#ff0000',
       'signal_unknown':'#cccccc',
@@ -86,6 +87,9 @@ class TrackCell:
       self.changedSinceRefresh = True
       self.trackType = trackType
 
+  def getType(self):
+    return self.trackType
+
   def draw(self, dc):
     dc.SetBrush(wx.Brush('#000'))
     dc.SetPen(wx.Pen("#000"))
@@ -133,7 +137,7 @@ class TextCell(TrackCell):
     self.color = '#FFF'
     self.text = ""
     pass
-
+    
   def setType(self, signalType):
     if self.trackType != signalType:
       self.trackType = signalType
@@ -159,7 +163,24 @@ class SignalCell(TrackCell):
   def __init__(self):
     super().__init__()
     self.color = '#F00'
-    pass
+    self.blinky = False
+    self.blinkState = False
+
+  def setColor(self, color, blinky=False):
+    if color != self.color:
+      self.changedSinceRefresh = True
+      self.color = color
+    if blinky != self.blinky:
+      self.blinky = blinky
+      self.changedSinceRefresh = True
+
+  def isBlinky(self):
+    return self.blinky
+
+  def setBlinkState(self, blinkState):
+    if self.blinkState != blinkState:
+      self.blinkState = blinkState
+      self.changedSinceRefresh = True
 
   def setType(self, signalType):
     if self.trackType != signalType:
@@ -171,9 +192,14 @@ class SignalCell(TrackCell):
     dc.SetPen(wx.Pen("#000"))
     dc.DrawRectangle(self.x, self.y, self.cellSize, self.cellSize)
 
-    dc.SetPen(wx.Pen(self.color, width=2))
-    dc.SetBrush(wx.Brush(self.color))
-    
+    if self.blinky and self.blinkState:
+      color = TrackCellColors.getColor('signal_blinkoff')
+    else:
+      color = self.color
+      
+    dc.SetPen(wx.Pen(color, width=2))
+    dc.SetBrush(wx.Brush(color))
+
     if self.trackType == TrackCellType.SIG_SINGLE_RIGHT:
       dc.DrawCircle(self.x + self.cellSize - 3, self.y + self.cellSize//2, 3)
       dc.SetBrush(wx.Brush('#000'))

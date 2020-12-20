@@ -64,7 +64,7 @@ class MRBusPacket:
     
     
 class MRBusBit:
-  def __init__(self, pattern="", initialState = False):
+  def __init__(self, pattern="", initialState = False, packetApplied = None):
     self.src = 0
     self.cmd = 0
     self.byte = 0
@@ -75,13 +75,19 @@ class MRBusBit:
 
   # Changes the internal bit state if the packet matches
   # Returns true if this packet applied to us and changed our state
+  def packetApplies(self, pkt):
+    if self.src == pkt.src and self.cmd == pkt.cmd and len(pkt.data) >= self.byte:
+      return True
+    return False
+  
+  
   def testPacket(self, pkt, debug=False):
     if self.src == 0:
       return False
 
     oldState = self.state
-    if self.src == pkt.src and self.cmd == pkt.cmd and len(pkt.data) >= self.byte:
-      if (pkt.data[self.byte] & (1<<self.bit)) is not 0:
+    if self.packetApplies(pkt):
+      if (pkt.data[self.byte] & (1<<self.bit)) != 0:
         self.state = True
       else:
         self.state = False
