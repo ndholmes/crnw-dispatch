@@ -87,7 +87,10 @@ class Example(wx.Frame):
   timerCnt = 0
   blinkCnt = 0
   blinkState = False
-
+  fcAddress = 0
+  secondTicker = 0
+  pktsLastSecond = 0
+  
   def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
     super(Example, self).__init__(None)
     self.layoutData = railroadLayoutData
@@ -128,6 +131,9 @@ class Example(wx.Frame):
     for i in range(0, len(self.controlpoints)):
       self.controlpoints[i].processPacket(pkt)
 
+    if 0 != self.fcAddress and pkt.src == self.fcAddress:
+      self.fastClockUpdate(pkt)
+
     self.doDisplayUpdate()
 
   def updateBlinkyCells(self, blinkState):
@@ -137,21 +143,96 @@ class Example(wx.Frame):
         blinkiesExist = True
         signal.cell.setBlinkState(blinkState)
     return blinkiesExist
+
+  def fastClockUpdate(self, pkt):
+    try:
+      self.realFastClockUpdate(pkt)
+    except Exception as e:
+      print(e)
+      
+  
+  def realFastClockUpdate(self, pkt):
+    print("Doing FC Update")
+    #if pkt.src != self.fcAddress or pkt.cmd != ord('T'):
+    #  return
     
+    flags = pkt.data[3]
+    print("FC Checkpoint 1")
+    try:
+      print("FC: %d:%d:%d" % (pkt.data[4], pkt.data[5], pkt.data[6]))
+      fastTime = datetime.time(pkt.data[4], pkt.data[5], pkt.data[6])
+    except Exception as e:
+      print(e)
+      fastTime = None
+    print("FC Checkpoint 2")
+
+    fastHold = False
+    if (flags & 0x02) != 0:
+      fastHold = True
+
+    fastFactor = pkt.data[7] * 256 + pkt.data[8]
+    inFastMode = flags & 0x01
+    print("FC Checkpoint 3")
+    displayRealAMPM = False;
+    if (flags & 0x04) != 0:
+      displayRealAMPM = True
+    
+    displayFastAMPM = False;
+    if (flags & 0x08) != 0:
+      displayFastAMPM = True
+    print("FC Checkpoint 4")
+    try:
+      year = (pkt.data[9] * 16) + ((pkt.data[10]<<4) & 0xF0)
+      month = pkt.data[10] & 0x0F
+      day = pkt.data[11]
+      realTime = datetime.datetime(year, month, day, pkt.data[0], pkt.data[1], pkt.data[2])
+    except Exception as e:
+      print(e)
+      realTime = None
+    print("FC Checkpoint 5")
+    fastTimeStr = ""
+    if None != fastTime:
+      if fastHold:
+        fastTimeStr = fastTime.strftime("FAST: HOLD")
+      elif displayFastAMPM:
+        fastTimeStr = fastTime.strftime("FAST: %I:%M:%S%p")
+      else:
+        fastTimeStr = fastTime.strftime("FAST: %H:%M:%S")
+
+    if None != realTime:
+      fastTimeStr += "   "
+      if displayRealAMPM:
+        fastTimeStr += realTime.strftime("REAL: %I:%M:%S%p")
+      else:
+        fastTimeStr += realTime.strftime("REAL: %H:%M:%S")
+
+
+    print(fastTimeStr)    
+    self.SetStatusText(fastTimeStr)
+    print("End FC Update")
+    
+  
   def OnTimer(self, event):
     self.timerCnt += 1
     self.blinkCnt += 1
+    self.secondTicker += 1
     
     if self.blinkCnt > 5:
       self.blinkCnt = 0
       self.blinkState = not self.blinkState
       blinkiesExist = self.updateBlinkyCells(self.blinkState)
-      if blinkiesExist:
-          self.doDisplayUpdate()
-      
+      if blinkiesExist:  # don't do all the display update stuff if there are no blinking elements
+        self.doDisplayUpdate()
+
+    if self.secondTicker >= 10:
+      self.SetStatusText("PPS: %d" % self.pktsLastSecond, 2)
+      self.secondTicker = 0
+      self.pktsLastSecond = 0
+    
     while not self.mqttMRBus.incomingPkts.empty():
       try:
         pkt = self.mqttMRBus.incomingPkts.get_nowait()
+        self.pktsLastSecond += 1
         self.applyPacket(pkt)
       except:
         pass
@@ -192,7 +273,12 @@ class Example(wx.Frame):
     self.Bind(wx.EVT_PAINT, self.OnPaint)
     self.Bind(wx.EVT_SIZE, self.OnPaint)
     self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-    self.SetTitle("CRNW Dispatch System")
+    
+    titleName = "MRBus Dispatch Console"
+    if 'layoutName' in self.layoutData:
+      titleName = self.layoutData['layoutName']
+    
+    self.SetTitle(titleName)
     self.SetSize((1200,800))
     self.Centre()
     self.Show(True)
@@ -202,6 +288,12 @@ class Example(wx.Frame):
     if "gridOn" in self.layoutData.keys():
       if 1 == self.layoutData['gridOn']:
         self.gridOn = True
+    
+    if "fastClockAddress" in self.layoutData.keys():
+      self.fcAddress = int(str(self.layoutData['fastClockAddress']), 0)
+        
+    
+    
     
     for text in self.layoutData['text']:
       newCell = TextCell()
@@ -232,18 +324,16 @@ class Example(wx.Frame):
       # Build a cell finder
       self.cellXY[(cell.cell_x,cell.cell_y)] = cell
 
-
-
     for cpconfig in self.layoutData['controlPoints']:
       newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
       self.controlpoints.append(newCP)
 
-
-
-
     # and a status bar in a pear tree! :)
-    self.CreateStatusBar()
-    self.SetStatusText("Welcome to wxPython!")
+    self.statusbar = self.CreateStatusBar(3)
+    self.statusbar.SetStatusWidths([-1,-1,200])
+    self.statusbar.SetStatusText("Field 1")
+    self.statusbar.SetStatusText("Field 2", 1)
+    self.statusbar.SetStatusText("Field 3", 2)
 
 
   def OnLeftDown(self, e):
