@@ -203,6 +203,38 @@ class DispatchConsole(wx.Frame):
 
     self.SetStatusText(fastTimeStr)
   
+  def panelToPNG(self):
+    #Create a DC for the whole screen area
+    dcScreen = wx.ClientDC(self)
+    w,h = dcScreen.GetSize()
+    #Create a Bitmap that will later on hold the screenshot image
+    #Note that the Bitmap must have a size big enough to hold the screenshot
+    #-1 means using the current default colour depth
+    bmp = wx.Bitmap(w,h)
+
+    #Create a memory DC that will be used for actually taking the screenshot
+    memDC = wx.MemoryDC()
+
+    #Tell the memory DC to use our Bitmap
+    #all drawing action on the memory DC will go to the Bitmap now
+    memDC.SelectObject(bmp)
+
+    #Blit (in this case copy) the actual screen on the memory DC
+    #and thus the Bitmap
+    memDC.Blit( 0, #Copy to this X coordinate
+      0, #Copy to this Y coordinate
+      w,h,
+      dcScreen, #From where do we copy?
+      0, 0
+    )
+
+    #Select the Bitmap out of the memory DC by selecting a new
+    #uninitialized Bitmap
+    memDC.SelectObject(wx.NullBitmap)
+    img = bmp.ConvertToImage()
+    fileName = "myImage.png"
+    img.SaveFile(fileName, wx.BITMAP_TYPE_PNG) 
+  
   def OnTimer(self, event):
     self.timerCnt += 1
     self.blinkCnt += 1
@@ -219,6 +251,7 @@ class DispatchConsole(wx.Frame):
       self.SetStatusText("PPS: %d" % self.pktsLastSecond, 2)
       self.secondTicker = 0
       self.pktsLastSecond = 0
+      #self.panelToPNG()
     
     while not self.mqttMRBus.incomingPkts.empty():
       try:
