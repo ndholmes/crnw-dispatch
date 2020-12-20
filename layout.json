@@ -260,7 +260,7 @@
     {
       "name":"South Alaganik",
       "type":"controlpoint",
-      "sensorOccupancy":"0x27,S,6:0",
+      "sensorOccupancy":"0x37,S,10:1",
       "sensorPower":"0x10,S,7:4",
       "base_x":27,
       "base_y":4,
@@ -277,7 +277,7 @@
     {
       "name":"Alaganik Main",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,6:2",
+      "sensorOccupancy":"0x37,S,10:3",
       "sensorPower":"0x10,S,7:4",
       "base_x":32,
       "base_y":4,
@@ -290,7 +290,7 @@
     {
       "name":"Alaganik Siding",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,6:3",
+      "sensorOccupancy":"0x37,S,10:2",
       "sensorPower":"0x10,S,7:4",
       "base_x":32,
       "base_y":6,
@@ -302,7 +302,7 @@
     {
       "name":"North Alaganik",
       "type":"controlpoint",
-      "sensorOccupancy":"0x27,S,6:1",
+      "sensorOccupancy":"0x37,S,10:0",
       "sensorPower":"0x10,S,7:4",
       "base_x":38,
       "base_y":4,
