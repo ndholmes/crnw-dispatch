@@ -70,7 +70,7 @@ class MqttMRBus:
     pass
 
 
-class Example(wx.Frame):
+class DispatchConsole(wx.Frame):
   cells = []
   blocks = [ ]
   signals = []
@@ -92,7 +92,7 @@ class Example(wx.Frame):
   pktsLastSecond = 0
   
   def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
-    super(Example, self).__init__(None)
+    super().__init__(None)
     self.layoutData = railroadLayoutData
     self.InitUI()
     self.mqttClient = mqttClient
@@ -157,14 +157,11 @@ class Example(wx.Frame):
     #  return
     
     flags = pkt.data[3]
-    print("FC Checkpoint 1")
     try:
-      print("FC: %d:%d:%d" % (pkt.data[4], pkt.data[5], pkt.data[6]))
       fastTime = datetime.time(pkt.data[4], pkt.data[5], pkt.data[6])
     except Exception as e:
       print(e)
       fastTime = None
-    print("FC Checkpoint 2")
 
     fastHold = False
     if (flags & 0x02) != 0:
@@ -172,7 +169,6 @@ class Example(wx.Frame):
 
     fastFactor = pkt.data[7] * 256 + pkt.data[8]
     inFastMode = flags & 0x01
-    print("FC Checkpoint 3")
     displayRealAMPM = False;
     if (flags & 0x04) != 0:
       displayRealAMPM = True
@@ -180,7 +176,6 @@ class Example(wx.Frame):
     displayFastAMPM = False;
     if (flags & 0x08) != 0:
       displayFastAMPM = True
-    print("FC Checkpoint 4")
     try:
       year = (pkt.data[9] * 16) + ((pkt.data[10]<<4) & 0xF0)
       month = pkt.data[10] & 0x0F
@@ -189,7 +184,6 @@ class Example(wx.Frame):
     except Exception as e:
       print(e)
       realTime = None
-    print("FC Checkpoint 5")
     fastTimeStr = ""
     if None != fastTime:
       if fastHold:
@@ -207,10 +201,7 @@ class Example(wx.Frame):
         fastTimeStr += realTime.strftime("REAL: %H:%M:%S")
 
 
-    print(fastTimeStr)    
     self.SetStatusText(fastTimeStr)
-    print("End FC Update")
-    
   
   def OnTimer(self, event):
     self.timerCnt += 1
@@ -482,12 +473,21 @@ def main():
   mqttClient = mqtt.Client(clientName, userdata=udata)
   mqttClient.on_message=mqtt_onMessage
   mqttClient.on_connect=mqtt_onConnect
-  mqttClient.connect("crnw.drgw.net", 1883, 60)
+  
+  mqttHost = "crnw.drgw.net"
+  mqttPort = 1883
+  
+  if 'mqttHost' in layoutData.keys():
+    mqttHost = layoutData['mqttHost']
+  if 'mqttPort' in layoutData.keys():
+    mqttPort = int(layoutData['mqttPort'])
+  
+  mqttClient.connect(mqttHost, mqttPort, 60)
   mqttClient.loop_start()
   mqttClient.subscribe("crnw/raw")
 
   app = wx.App()
-  ex = Example(layoutData, mqttMRBus, mqttClient)
+  ex = DispatchConsole(layoutData, mqttMRBus, mqttClient)
   ex.Show()
   app.MainLoop()
 

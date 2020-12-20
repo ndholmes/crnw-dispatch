@@ -1,6 +1,8 @@
 {
   "layoutName":"Copper River & Northwestern Railway",
   "connectionType":"mqtt",
+  "mqttHost":"drgwnet.duckdns.org",
+  "mqttPort":"6570",
   "gridOn": 0,
   
   "fastClockAddress":"0x03",
