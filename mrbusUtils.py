@@ -71,7 +71,7 @@ class MRBusBit:
     self.bit = 0
     self.negate = False
     self.state = initialState
-    if pattern is not "":
+    if pattern != "":
       self.fromPattern(pattern)
 
   # Changes the internal bit state if the packet matches
