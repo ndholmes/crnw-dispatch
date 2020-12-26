@@ -8,35 +8,95 @@
   "fastClockAddress":"0x03",
   
   "text": [
-    { "type": "regular", "value":"Eyak", "x":"10", "y":"8"},
-    { "type": "regular", "value":"MP 7.7", "x":"10", "y":"9"},
-    { "type": "regular", "value":"Alaganik", "x":"33", "y":"8" },
-    { "type": "regular", "value":"MP 22.2", "x":"33", "y":"9"}
+    { "type": "regular", "value":"Smelter", "x":"19", "y":"2"},
+    { "type": "regular", "value":"Ore", "x":"1", "y":"1"},
+    { "type": "regular", "value":"Yard", "x":"1", "y":"2"},
+
+    { "type": "regular", "value":"Dock", "x":"1", "y":"4"},
+    { "type": "regular", "value":"Yard", "x":"1", "y":"5"},
+
+    { "type": "regular", "value":"N Cordova", "x":"8", "y":"8"},
+    { "type": "regular", "value":"MP 1.4", "x":"8", "y":"9"},
+
+    { "type": "regular", "value":"Eyak", "x":"31", "y":"8"},
+    { "type": "regular", "value":"MP 7.7", "x":"31", "y":"9"},
+    { "type": "regular", "value":"Alaganik", "x":"58", "y":"8" },
+    { "type": "regular", "value":"MP 22.2", "x":"58", "y":"9"}
   ],
 
   "signals": [
-    { "name": "S Eyak Points Signal", "type": "signal_right", "x":3, "y":5 },
-    { "name": "S Eyak Siding Signal", "type": "signal_left",  "x":7, "y":1 },
-    { "name": "S Eyak Main Signal", "type": "signal_left",  "x":7, "y":3 },
+    { "name": "N Cordova Smelter Signal", "type": "signal_left", "x":14, "y":1 },
+    { "name": "N Cordova Main Signal", "type": "signal_left",  "x":14, "y":3 },
+    { "name": "N Cordova Ore Yard Signal", "type": "signal_right", "x":6, "y":3 },
+    { "name": "N Cordova Yard Signal", "type": "signal_right",  "x":6, "y":5 },
 
-    { "name": "N Eyak Points Signal", "type": "signal_left",  "x":18, "y":3},
-    { "name": "N Eyak Siding Signal", "type": "signal_right", "x":14, "y":3 },
-    { "name": "N Eyak Main Signal", "type": "signal_right",  "x":14, "y":5 },
 
-    { "name": "S Alaganik Points Signal", "type": "signal_right", "x":27, "y":5 },
-    { "name": "S Alaganik Siding Signal", "type": "signal_left",  "x":31, "y":5 },
-    { "name": "S Alaganik Main Signal", "type": "signal_left",  "x":31, "y":3 },
+    { "name": "S Eyak Points Signal", "type": "signal_right", "x":24, "y":5 },
+    { "name": "S Eyak Siding Signal", "type": "signal_left",  "x":28, "y":1 },
+    { "name": "S Eyak Main Signal", "type": "signal_left",  "x":28, "y":3 },
 
-    { "name": "N Alaganik Points Signal", "type": "signal_left", "x":42, "y":3 },
-    { "name": "N Alaganik Siding Signal", "type": "signal_right",  "x":38, "y":7 },
-    { "name": "N Alaganik Main Signal", "type": "signal_right",  "x":38, "y":5 }
+    { "name": "N Eyak Points Signal", "type": "signal_left",  "x":39, "y":3},
+    { "name": "N Eyak Siding Signal", "type": "signal_right", "x":35, "y":3 },
+    { "name": "N Eyak Main Signal", "type": "signal_right",  "x":35, "y":5 },
+
+    { "name": "S Alaganik Points Signal", "type": "signal_right", "x":52, "y":5 },
+    { "name": "S Alaganik Siding Signal", "type": "signal_left",  "x":56, "y":5 },
+    { "name": "S Alaganik Main Signal", "type": "signal_left",  "x":56, "y":3 },
+
+    { "name": "N Alaganik Points Signal", "type": "signal_left", "x":67, "y":3 },
+    { "name": "N Alaganik Siding Signal", "type": "signal_right",  "x":63, "y":7 },
+    { "name": "N Alaganik Main Signal", "type": "signal_right",  "x":63, "y":5 }
   ],
 
 
   "switches": [
+    { "name": "N Cordova Main 1 S Points", 
+      "type": "switch_left_up", 
+      "x":9, "y":4, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+    },
+    { "name": "N Cordova Main 1 N Points", 
+      "type": "switch_right_up", 
+      "x":11, "y":4, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+    { "name": "N Cordova Main 2 S Points", 
+      "type": "switch_right_down", 
+      "x":7, "y":2, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+    },
+    { "name": "N Cordova Main 2 N Points", 
+      "type": "switch_left_down", 
+      "x":13, "y":2, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+
+
     { "name": "S Eyak Points", 
       "type": "switch_right_up", 
-      "x":4, "y":4, 
+      "x":25, "y":4, 
       "sensorNormal":"0x38,S,11:4", 
       "sensorReverse":"0x38,S,11:5", 
       "sensorManual":"0x38,S,11:3", 
@@ -48,7 +108,7 @@
     { 
       "name": "N Eyak Points", 
       "type": "switch_left_up",  
-      "x":17, "y":4, 
+      "x":38, "y":4, 
       "sensorNormal":"0x38,S,12:4", 
       "sensorReverse":"0x38,S,12:5", 
       "sensorManual":"0x38,S,12:3", 
@@ -59,7 +119,7 @@
     { 
       "name": "S Alaganik Points", 
       "type": "switch_right_down", 
-      "x":28, "y":4, 
+      "x":53, "y":4, 
       "sensorNormal":"0x37,S,11:4", 
       "sensorReverse":"0x37,S,11:5", 
       "sensorManual":"0x37,S,11:3", 
@@ -70,7 +130,7 @@
     { 
       "name": "N Alaganik Points", 
       "type": "switch_left_down", 
-      "x":41, "y":4, 
+      "x":66, "y":4, 
       "sensorNormal":"0x37,S,12:4", 
       "sensorReverse":"0x37,S,12:5", 
       "sensorManual":"0x37,S,12:3", 
@@ -172,12 +232,104 @@
 
   "blocks": [
     {
+      "name":"Ore Yard Approach",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":4,
+      "base_y":2,
+      "cells": [
+        { "type": "horiz_rightgap", "x":"+1", "y":"+0"},
+        { "type": "horiz", "x":"+0", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Dock Yard Approach",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":4,
+      "base_y":4,
+      "cells": [
+        { "type": "horiz_rightgap", "x":"+1", "y":"+0"},
+        { "type": "horiz", "x":"+0", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"North Cordova Main 2",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":6,
+      "base_y":2,
+      "cells": [
+        { "type": "diag_left_up", "x":"+2", "y":"+1"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+8", "y":"+0"},
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+6"}
+      ]
+    },
+
+    {
+      "name":"North Cordova Main 1",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":6,
+      "base_y":4,
+      "cells": [
+        { "type": "diag_right_up", "x":"+6", "y":"-1"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
+        { "type": "horiz", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+6", "y":"+0", "x_end":"+7"},
+        { "type": "horiz_rightgap", "x":"+8", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Smelter",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":15,
+      "base_y":2,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"}
+      ]
+    },
+
+
+    {
+      "name":"Eyak River Block",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":15,
+      "base_y":4,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+7"},
+        { "type": "horiz_rightgap", "x":"+8", "y":"+0"}
+      ]
+    },
+
+    {
       "name":"South Eyak",
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
       "sensorPower":"0x10,S,7:5",
-      "base_x":3,
+      "base_x":24,
       "base_y":4,
       "cells": [
         { "type": "diag_right_up", "x":"+2", "y":"-1"},
@@ -194,7 +346,7 @@
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:3",
       "sensorPower":"0x10,S,7:5",
-      "base_x":8,
+      "base_x":29,
       "base_y":4,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
@@ -207,7 +359,7 @@
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:2",
       "sensorPower":"0x10,S,7:5",
-      "base_x":8,
+      "base_x":29,
       "base_y":2,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
@@ -219,7 +371,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:0",
       "sensorPower":"0x10,S,7:5",
-      "base_x":14,
+      "base_x":35,
       "base_y":4,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"-2"},
@@ -237,10 +389,10 @@
       "sensorOccupancy":"0x27,S,7:0",
       "sensorPower":"0x10,S,7:4",
       "rightAdjoiningBlockName":"Mudhole Block",
-      "base_x":19,
+      "base_x":40,
       "base_y":4,
       "cells": [
-        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2" }, { "type": "horiz_rightgap", "x":"+3", "y":"+0"}
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
       ]
     },
 
@@ -250,10 +402,10 @@
       "leftAdjoiningBlockName":"Sheridan Block",
       "sensorOccupancy":"0x27,S,7:1",
       "sensorPower":"0x10,S,7:4",
-      "base_x":23,
+      "base_x":46,
       "base_y":4,
       "cells": [
-        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2" }, { "type": "horiz_rightgap", "x":"+3", "y":"+0"}
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
       ]
     },
 
@@ -264,7 +416,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x37,S,10:1",
       "sensorPower":"0x10,S,7:4",
-      "base_x":27,
+      "base_x":52,
       "base_y":4,
       "cells": [
         { "type": "diag_left_up", "x":"+2", "y":"+1"},
@@ -281,7 +433,7 @@
       "type":"standard",
       "sensorOccupancy":"0x37,S,10:3",
       "sensorPower":"0x10,S,7:4",
-      "base_x":32,
+      "base_x":57,
       "base_y":4,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
@@ -294,7 +446,7 @@
       "type":"standard",
       "sensorOccupancy":"0x37,S,10:2",
       "sensorPower":"0x10,S,7:4",
-      "base_x":32,
+      "base_x":57,
       "base_y":6,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
@@ -306,7 +458,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x37,S,10:0",
       "sensorPower":"0x10,S,7:4",
-      "base_x":38,
+      "base_x":63,
       "base_y":4,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+2"},
