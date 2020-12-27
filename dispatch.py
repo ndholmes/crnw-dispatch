@@ -302,7 +302,7 @@ class DispatchConsole(wx.Frame):
       titleName = self.layoutData['layoutName']
     
     self.SetTitle(titleName)
-    self.SetSize((1200,800))
+    self.SetSize((1200,900))
     self.Centre()
     self.Show(True)
     # create a menu bar
@@ -324,6 +324,8 @@ class DispatchConsole(wx.Frame):
       x = int(text['x'])
       y = int(text['y'])
       newCell.setXY(x, y)
+      if text['type'] == 'blockname':
+        newCell.setColor('#ccffff')
       self.cells.append(newCell)
 
     for signalconfig in self.layoutData['signals']:

@@ -15,13 +15,84 @@
     { "type": "regular", "value":"Dock", "x":"1", "y":"4"},
     { "type": "regular", "value":"Yard", "x":"1", "y":"5"},
 
-    { "type": "regular", "value":"N Cordova", "x":"8", "y":"8"},
-    { "type": "regular", "value":"MP 1.4", "x":"8", "y":"9"},
 
-    { "type": "regular", "value":"Eyak", "x":"31", "y":"8"},
-    { "type": "regular", "value":"MP 7.7", "x":"31", "y":"9"},
+    { "type": "regular", "value":"To Katalla", "x":"15", "y":"14"},
+
+    { "type": "regular", "value":"Yard", "x":"20", "y":"24"},
+
+    { "type": "regular", "value":"N Cordova", "x":"8", "y":"6"},
+    { "type": "regular", "value":"MP 1.4", "x":"8", "y":"7"},
+
+    { "type": "blockname", "value":"Eyak Lake", "x":"17", "y":"6"},
+
+
+    { "type": "regular", "value":"Eyak", "x":"31", "y":"6"},
+    { "type": "regular", "value":"MP 7.7", "x":"31", "y":"7"},
+
+    { "type": "blockname", "value":"Sheridan", "x":"41", "y":"6"},
+    { "type": "blockname", "value":"Mudhole", "x":"47", "y":"6"},
+
     { "type": "regular", "value":"Alaganik", "x":"58", "y":"8" },
-    { "type": "regular", "value":"MP 22.2", "x":"58", "y":"9"}
+    { "type": "regular", "value":"MP 22.2", "x":"58", "y":"9"},
+
+    { "type": "blockname", "value":"Round", "x":"69", "y":"6"},
+    { "type": "blockname", "value":"Island", "x":"69", "y":"7"},
+
+
+    { "type": "regular", "value":"Katalla Jct", "x":"7", "y":18},
+    { "type": "regular", "value":"MP 38.5", "x":"7", "y":19},
+
+    { "type": "blockname", "value":"Miles", "x":"15", "y":"18"},
+    { "type": "blockname", "value":"Glacier", "x":"15", "y":"19"},
+
+    { "type": "blockname", "value":"Copper", "x":"23", "y":"18"},
+    { "type": "blockname", "value":"River", "x":"23", "y":"19"},
+
+
+    { "type": "regular", "value":"Abercrombie", "x":"33", "y":"18"},
+    { "type": "regular", "value":"MP 54.6", "x":"33", "y":"19"},
+
+    { "type": "blockname", "value":"Bremner", "x":"47", "y":"18"},
+    { "type": "blockname", "value":"Tiekel", "x":"58", "y":"18"},
+    { "type": "blockname", "value":"Uranatina", "x":"66", "y":"18"},
+
+    { "type": "regular", "value":"Chitina", "x":"20", "y":"32"},
+    { "type": "regular", "value":"MP 130.7", "x":"20", "y":"33"},
+
+
+    { "type": "blockname", "value":"Third", "x":"39", "y":"30"},
+    { "type": "blockname", "value":"Crossing", "x":"39", "y":"31"},
+
+    { "type": "blockname", "value":"Kotsina", "x":"47", "y":"30"},
+
+
+    { "type": "regular", "value":"Strelna", "x":"58", "y":"30"},
+    { "type": "regular", "value":"MP 146.0", "x":"58", "y":"31"},
+
+
+    { "type": "regular", "value":"McCarthy", "x":"32", "y":"44"},
+    { "type": "regular", "value":"MP 191.0", "x":"32", "y":"45"},
+
+
+    { "type": "regular", "value":"Nicolai Jct", "x":"52", "y":"44"},
+    { "type": "regular", "value":"MP 192.0", "x":"52", "y":"45"},
+
+    { "type": "blockname", "value":"Kuskulana", "x":"5", "y":"42"},
+    { "type": "blockname", "value":"Chokosna", "x":"15", "y":"42"},
+    { "type": "blockname", "value":"Gilahina", "x":"24", "y":"42"},
+
+
+
+    { "type": "regular", "value":"McCarthy Yard", "x":"40", "y":"38"},
+
+
+    { "type": "regular", "value":"Nizina Br", "x":"65", "y":"46"},
+
+    { "type": "regular", "value":"Kennecott", "x":"65", "y":"41"},
+    { "type": "regular", "value":"MP 195.6", "x":"65", "y":"42"}
+
+
+    
   ],
 
   "signals": [
@@ -45,7 +116,56 @@
 
     { "name": "N Alaganik Points Signal", "type": "signal_left", "x":67, "y":3 },
     { "name": "N Alaganik Siding Signal", "type": "signal_right",  "x":63, "y":7 },
-    { "name": "N Alaganik Main Signal", "type": "signal_right",  "x":63, "y":5 }
+    { "name": "N Alaganik Main Signal", "type": "signal_right",  "x":63, "y":5 },
+
+    { "name": "Katalla Jct Points Signal", "type": "signal_right", "x":7, "y":17 },
+    { "name": "Katalla Jct Siding Signal", "type": "signal_left",  "x":11, "y":13 },
+    { "name": "Katalla Jct Main Signal", "type": "signal_left",  "x":11, "y":15 },
+
+
+    { "name": "S Abercrombie Points Signal", "type": "signal_right", "x":28, "y":17 },
+    { "name": "S Abercrombie Siding Signal", "type": "signal_left",  "x":32, "y":13 },
+    { "name": "S Abercrombie Main Signal", "type": "signal_left",  "x":32, "y":15 },
+
+    { "name": "N Abercrombie Points Signal", "type": "signal_left",  "x":43, "y":15},
+    { "name": "N Abercrombie Siding Signal", "type": "signal_right", "x":39, "y":15 },
+    { "name": "N Abercrombie Main Signal", "type": "signal_right",  "x":39, "y":17 },
+
+    { "name": "S Chitina Points Signal", "type": "signal_right",  "x":7, "y":29},
+    { "name": "S Chitina Yard Siding Signal", "type": "signal_left", "x":13, "y":25 },
+    { "name": "S Chitina Main Signal", "type": "signal_left",  "x":13, "y":27 },
+    { "name": "S Chitina Siding Signal", "type": "signal_left",  "x":13, "y":29 },
+
+
+    { "name": "N Chitina Points Signal", "type": "signal_left",  "x":36, "y":27},
+    { "name": "N Chitina Yard Siding Signal", "type": "signal_right", "x":30, "y":27 },
+    { "name": "N Chitina Main Signal", "type": "signal_right",  "x":30, "y":29 },
+    { "name": "N Chitina Siding Signal", "type": "signal_right",  "x":30, "y":31 },
+
+
+    { "name": "S Strelna Points Signal", "type": "signal_right", "x":52, "y":29 },
+    { "name": "S Strelna Siding Signal", "type": "signal_left",  "x":56, "y":25 },
+    { "name": "S Strelna Main Signal", "type": "signal_left",  "x":56, "y":27 },
+
+    { "name": "N Strelna Points Signal", "type": "signal_left",  "x":67, "y":27},
+    { "name": "N Strelna Siding Signal", "type": "signal_right", "x":63, "y":27 },
+    { "name": "N Strelna Main Signal", "type": "signal_right",  "x":63, "y":29 },
+    
+    { "name": "McCarthy Points Signal", "type": "signal_right",  "x":30, "y":41},
+    { "name": "McCarthy Yard Signal", "type": "signal_left", "x":36, "y":37 },
+    { "name": "McCarthy Main 1 Signal", "type": "signal_left",  "x":36, "y":39 },
+    { "name": "McCarthy Main 2 Signal", "type": "signal_left",  "x":36, "y":41 },
+    
+    
+    { "name": "Nicolai Main 1 Signal", "type": "signal_right",  "x":50, "y":41},
+    { "name": "Nicolai Main 2 Signal", "type": "signal_right",  "x":50, "y":43},
+    { "name": "Kennecott Main 1 Signal", "type": "signal_left", "x":62, "y":37 },
+    { "name": "Kennecott Main 2 Signal", "type": "signal_left",  "x":62, "y":39 },
+    { "name": "Nizina Branch Signal", "type": "signal_left",  "x":62, "y":44 }
+
+
+
+
   ],
 
 
@@ -137,7 +257,197 @@
       "sensorOccupancy":"0x37,S,10:0",
       "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
       "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+
+	{
+      "name": "Katalla Jct Points", 
+      "type": "switch_right_up", 
+      "x":8, "y":16, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+
+    { "name": "S Abercrombie Points", 
+      "type": "switch_right_up", 
+      "x":29, "y":16, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+    { 
+      "name": "N Abercrombie Points", 
+      "type": "switch_left_up",  
+      "x":42, "y":16, 
+      "sensorNormal":"0x38,S,12:4", 
+      "sensorReverse":"0x38,S,12:5", 
+      "sensorManual":"0x38,S,12:3", 
+      "sensorOccupancy":"0x38,S,10:0",
+      "commandNormal": "0x38,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x02,0x44,0x58"
+    },
+
+    
+    { 
+      "name": "S Chitina Yard Points", 
+      "type": "switch_right_up", 
+      "x":8, "y":28, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+    
+    { 
+      "name": "S Chitina Siding Points", 
+      "type": "switch_right_down", 
+      "x":10, "y":28, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+    
+    { 
+      "name": "N Chitina Yard Points", 
+      "type": "switch_right_up", 
+      "x":33, "y":28, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+    
+    { 
+      "name": "N Chitina Siding Points", 
+      "type": "switch_right_down", 
+      "x":35, "y":28, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+
+
+    { "name": "S Strelna Points", 
+      "type": "switch_right_up", 
+      "x":53, "y":28, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+    { 
+      "name": "N Strelna Points", 
+      "type": "switch_left_up",  
+      "x":66, "y":28, 
+      "sensorNormal":"0x38,S,12:4", 
+      "sensorReverse":"0x38,S,12:5", 
+      "sensorManual":"0x38,S,12:3", 
+      "sensorOccupancy":"0x38,S,10:0",
+      "commandNormal": "0x38,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x02,0x44,0x58"
+    },
+    
+    
+    { 
+      "name": "McCarthy Yard Points", 
+      "type": "switch_right_up", 
+      "x":31, "y":40, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+    
+    { 
+      "name": "McCarthy Main 2 Points", 
+      "type": "switch_right_down", 
+      "x":33, "y":40, 
+      "sensorNormal":"0x37,S,12:4", 
+      "sensorReverse":"0x37,S,12:5", 
+      "sensorManual":"0x37,S,12:3", 
+      "sensorOccupancy":"0x37,S,10:0",
+      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+    },
+
+
+    { "name": "Nicolai Main 1 S Points", 
+      "type": "switch_left_up", 
+      "x":51, "y":40, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+    },
+    { "name": "Nicolai Main 1 M Points", 
+      "type": "switch_right_up", 
+      "x":57, "y":40, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+    { "name": "Nicolai Main 1 N Points", 
+      "type": "switch_left_down", 
+      "x":59, "y":40, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+
+    },
+
+    { "name": "Nicolai Main 2 S Points", 
+      "type": "switch_right_down", 
+      "x":53, "y":42, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+    },
+    { "name": "Nicolai Main 2 N Points", 
+      "type": "switch_left_down", 
+      "x":55, "y":42, 
+      "sensorNormal":"0x38,S,11:4", 
+      "sensorReverse":"0x38,S,11:5", 
+      "sensorManual":"0x38,S,11:3", 
+      "sensorOccupancy":"0x38,S,10:1",
+      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
     }
+
+
   ],
 
   "controlPoints": [
@@ -294,7 +604,7 @@
     },
 
     {
-      "name":"Smelter",
+      "name":"Smelter Lead",
       "type":"standard",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
@@ -303,7 +613,8 @@
       "base_y":2,
       "cells": [
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
-        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"}
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
+        { "type": "horiz_rightgap", "x":"+3", "y":"+0"}
       ]
     },
 
@@ -468,6 +779,557 @@
         { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
         { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"}
       ]
+    },
+    
+    {
+      "name":"Round Island Block",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":68,
+      "base_y":4,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+3" }, { "type": "horiz", "x":"3", "y":"+12", "x_end":"5" }, { "type": "horiz_rightgap", "x":"6", "y":"+12"}
+      ]
+    },
+
+    {
+      "name":"Katalla Junction",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:0",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":7,
+      "base_y":16,
+      "cells": [
+        { "type": "diag_right_up", "x":"+2", "y":"-1"},
+        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+3"}
+      ]
+     },
+
+    {
+      "name":"Katalla Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":12,
+      "base_y":14,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0" }, { "type": "horiz_rightgap", "x":"+2", "y":"+0"}
+      ]
+    },
+
+     
+    {
+      "name":"Miles Glacier Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "rightAdjoiningBlockName":"Copper River Block",
+      "base_x":12,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Copper River Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Miles Glacier Block",
+      "base_x":20,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}
+      ]
+    },
+    
+    {
+      "name":"South Abercrombie",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":28,
+      "base_y":16,
+      "cells": [
+        { "type": "diag_right_up", "x":"+2", "y":"-1"},
+        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+3"}
+      ]
+    },
+    
+    {
+      "name":"Abercrombie Main",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":33,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
+      ]
+    },
+    
+    
+    {
+      "name":"Abercrombie Siding",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:2",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":33,
+      "base_y":14,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"North Abercrombie",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:0",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":39,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "diag_left_up", "x":"+2", "y":"-1"},
+        { "type": "angle_right_down", "x":"+1", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"}
+      ]
+    },
+
+    {
+      "name":"Bremner Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "rightAdjoiningBlockName":"Tiekel Block",
+      "base_x":44,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+8" }, { "type": "horiz_rightgap", "x":"+9", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Tiekel Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Miles Glacier Block",
+      "rightAdjoiningBlockName":"Uranatina Block",
+      "base_x":54,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+8" }, { "type": "horiz_rightgap", "x":"+9", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Uranatina Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Tiekel Block",
+      "base_x":64,
+      "base_y":16,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+7" }, { "type": "horiz", "x":"3", "y":"+12", "x_end":"5" }, { "type": "horiz_rightgap", "x":"6", "y":"+12"}
+      ]
+    },
+    
+    
+    {
+      "name":"South Chitina",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":7,
+      "base_y":28,
+      "cells": [
+        { "type": "diag_right_up", "x":"+2", "y":"-1"},
+        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"+2"},
+       { "type": "horiz", "x":"+4", "y":"-2", "x_end":"+5"},
+ 
+        { "type": "horiz", "x":"+2", "y":"+0"},
+        { "type": "horiz", "x":"+4", "y":"+0", "x_end":"+5"},
+        { "type": "angle_left_up", "x":"+5", "y":"+2"},
+
+        { "type": "diag_left_up", "x":"+4", "y":"+1"}
+
+      ]
+    },
+
+
+    {
+      "name":"Chitina Yard",
+      "type":"standard",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":16,
+      "base_y":24,
+      "cells": [
+        { "type": "diag_right_up", "x":"+0", "y":"+1"}, { "type": "angle_left_down", "x":"+1", "y":"+0"}, { "type": "horiz_rightgap", "x":"+2", "y":"+0"}, { "type": "horiz_leftgap", "x":"+7", "y":"+0"}, { "type": "angle_right_down", "x":"+8", "y":"+0"}, { "type": "diag_left_up", "x":"+9", "y":"+1"}
+      ]
+    },
+
+    
+    {
+      "name":"Chitina Yard Siding",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":14,
+      "base_y":26,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+14" }, { "type": "horiz_rightgap", "x":"+15", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Chitina Main",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":14,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+14" }, { "type": "horiz_rightgap", "x":"+15", "y":"+0"}
+      ]
+    },
+
+    
+    {
+      "name":"Chitina Lake Siding",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":14,
+      "base_y":30,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+14" }, { "type": "horiz_rightgap", "x":"+15", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"North Chitina",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":30,
+      "base_y":28,
+      "cells": [
+        { "type": "angle_right_down", "x":"+3", "y":"-2"},
+        { "type": "diag_left_up", "x":"+4", "y":"-1"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"+0"},
+
+        { "type": "horiz_leftgap", "x":"+0", "y":"-2"},
+
+        { "type": "horiz", "x":"+1", "y":"-2", "x_end":"+2"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
+
+
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+2"},
+ 
+        { "type": "horiz", "x":"+4", "y":"+0"},
+        { "type": "angle_right_up", "x":"+1", "y":"+2"},
+
+        { "type": "diag_right_up", "x":"+2", "y":"+1"}
+
+      ]
+    },
+
+    {
+      "name":"Third Crossing Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "rightAdjoiningBlockName":"Kotsina Block",
+      "base_x":37,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Kotsina Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Third Crossing Block",
+      "base_x":45,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+5" }, { "type": "horiz_rightgap", "x":"+6", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"South Strelna",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":52,
+      "base_y":28,
+      "cells": [
+        { "type": "diag_right_up", "x":"+2", "y":"-1"},
+        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+3"}
+      ]
+    },
+    
+    {
+      "name":"Strelna Main",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":57,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
+      ]
+    },
+    
+    
+    {
+      "name":"Strelna Siding",
+      "type":"standard",
+      "sensorOccupancy":"0x38,S,10:2",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":57,
+      "base_y":26,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+4" }, { "type": "horiz_rightgap", "x":"+5", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"North Strelna",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:0",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":63,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "diag_left_up", "x":"+2", "y":"-1"},
+        { "type": "angle_right_down", "x":"+1", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"}
+      ]
+    },
+
+    {
+      "name":"Kuskulana Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "rightAdjoiningBlockName":"Chokosna Block",
+      "base_x":68,
+      "base_y":28,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+3" }, { "type": "horiz", "x":"3", "y":"+12", "x_end":"10" }, { "type": "horiz_rightgap", "x":"11", "y":"+12"}
+      ]
+    },
+
+    {
+      "name":"Chokosna Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Kuskulana Block",
+      "rightAdjoiningBlockName":"Gilahina Block",
+      "base_x":12,
+      "base_y":40,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+7" }, { "type": "horiz_rightgap", "x":"+8", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"Gilahina Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "leftAdjoiningBlockName":"Chokosna Block",
+      "base_x":21,
+      "base_y":40,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+7" }, { "type": "horiz_rightgap", "x":"+8", "y":"+0"}
+      ]
+    }, 
+    
+    {
+      "name":"McCarthy",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":30,
+      "base_y":40,
+      "cells": [
+        { "type": "diag_right_up", "x":"+2", "y":"-1"},
+        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"-2"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"+0"},
+        { "type": "horiz_rightgap", "x":"+6", "y":"+2"},
+        { "type": "horiz", "x":"+4", "y":"-2", "x_end":"+5"},
+ 
+        { "type": "horiz", "x":"+2", "y":"+0"},
+        { "type": "horiz", "x":"+4", "y":"+0", "x_end":"+5"},
+        { "type": "angle_left_up", "x":"+5", "y":"+2"},
+
+        { "type": "diag_left_up", "x":"+4", "y":"+1"}
+
+      ]
+    },
+
+    {
+      "name":"McCarthy Yard Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":37,
+      "base_y":38,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0" }, { "type": "horiz_rightgap", "x":"+2", "y":"+0"}
+      ]
+    }, 
+    
+    {
+      "name":"McCarthy Main 1",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":37,
+      "base_y":40,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+11" }, { "type": "horiz_rightgap", "x":"+12", "y":"+0"}
+      ]
+    },
+
+    {
+      "name":"McCarthy Main 2",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":37,
+      "base_y":42,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+11" }, { "type": "horiz_rightgap", "x":"+12", "y":"+0"}
+      ]
+    },
+    
+    
+    {
+      "name":"Nicolai Jct Main 1",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":50,
+      "base_y":40,
+      "cells": [
+        { "type": "diag_left_up", "x":"+2", "y":"+1"},
+
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz", "x":"+8", "y":"+0"},
+
+        { "type": "angle_left_down", "x":"+11", "y":"-2"},
+
+        { "type": "diag_right_up", "x":"+10", "y":"-1"},
+        { "type": "horiz_rightgap", "x":"+12", "y":"-2"},
+        { "type": "horiz", "x":"+10", "y":"+0", "x_end":"+11"},
+
+        { "type": "horiz_rightgap", "x":"+12", "y":"+0"},
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+6"}
+      ]
+    },
+
+    {
+      "name":"Nicolai Jct Main 2",
+      "type":"controlpoint",
+      "sensorOccupancy":"0x38,S,10:1",
+      "sensorManual":"0x38,S,11:3",
+      "sensorPower":"0x10,S,7:5",
+      "base_x":50,
+      "base_y":42,
+      "cells": [
+        { "type": "diag_right_up", "x":"+6", "y":"-1"},
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
+        { "type": "horiz", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+6", "y":"+0", "x_end":"+7"},
+        { "type": "angle_right_down", "x":"+8", "y":"+0"},
+        { "type": "diag_left_up", "x":"+9", "y":"+1"},
+        { "type": "diag_left_up", "x":"+10", "y":"+2"},
+        { "type": "angle_left_up", "x":"+11", "y":"+3"},
+
+        { "type": "horiz_rightgap", "x":"+12", "y":"+3"}
+      ]
+    }, 
+
+    {
+      "name":"Kennecott Main 1 Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":63,
+      "base_y":38,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}, { "type":"diag_left_up", "x":"+5", "y":"+1" } 
+      ]
+    }, 
+    
+    {
+      "name":"Kennecott Main 2 Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":63,
+      "base_y":40,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}
+      ]
+    }, 
+    
+    {
+      "name":"Nizina Block",
+      "type":"standard",
+      "sensorOccupancy":"0x27,S,7:0",
+      "sensorPower":"0x10,S,7:4",
+      "base_x":63,
+      "base_y":45,
+      "cells": [
+        { "type": "horiz_leftgap", "x":"+0", "y":"+0"}, { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+6" }, { "type": "horiz_rightgap", "x":"+7", "y":"+0"}
+      ]
     }
+
+
+
   ]
 }

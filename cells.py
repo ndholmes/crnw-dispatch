@@ -148,7 +148,7 @@ class TextCell(TrackCell):
     if text != self.text:
       self.text = text
       self.changedSinceRefresh = True
-    
+
   def draw(self, dc):
     dc.SetBrush(wx.Brush('#000'))
     dc.SetPen(wx.Pen("#000"))
