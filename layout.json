@@ -263,35 +263,35 @@
       "name": "Katalla Jct Points", 
       "type": "switch_right_up", 
       "x":8, "y":16, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x36,S,9:4", 
+      "sensorReverse":"0x36,S,9:5", 
+      "sensorManual":"0x36,S,9:3", 
+      "sensorOccupancy":"0x36,S,10:0",
+      "commandNormal": "0x36,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x36,0x43,0x01,0x44,0x58"
     },
 
     { "name": "S Abercrombie Points", 
       "type": "switch_right_up", 
       "x":29, "y":16, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+      "sensorNormal":"0x35,S,11:4", 
+      "sensorReverse":"0x35,S,11:5", 
+      "sensorManual":"0x35,S,11:3", 
+      "sensorOccupancy":"0x35,S,10:1",
+      "commandNormal": "0x35,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x35,0x43,0x01,0x44,0x58"
 
     },
     { 
       "name": "N Abercrombie Points", 
       "type": "switch_left_up",  
       "x":42, "y":16, 
-      "sensorNormal":"0x38,S,12:4", 
-      "sensorReverse":"0x38,S,12:5", 
-      "sensorManual":"0x38,S,12:3", 
-      "sensorOccupancy":"0x38,S,10:0",
-      "commandNormal": "0x38,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x35,S,12:4", 
+      "sensorReverse":"0x35,S,12:5", 
+      "sensorManual":"0x35,S,12:3", 
+      "sensorOccupancy":"0x35,S,10:0",
+      "commandNormal": "0x35,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x35,0x43,0x02,0x44,0x58"
     },
 
     
@@ -347,24 +347,24 @@
     { "name": "S Strelna Points", 
       "type": "switch_right_up", 
       "x":53, "y":28, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+      "sensorNormal":"0x33,S,11:4", 
+      "sensorReverse":"0x33,S,11:5", 
+      "sensorManual":"0x33,S,11:3", 
+      "sensorOccupancy":"0x33,S,10:1",
+      "commandNormal": "0x33,0x43,0x01,0x4D,0x58",
+      "commandReverse": "0x33,0x43,0x01,0x44,0x58"
 
     },
     { 
       "name": "N Strelna Points", 
       "type": "switch_left_up",  
       "x":66, "y":28, 
-      "sensorNormal":"0x38,S,12:4", 
-      "sensorReverse":"0x38,S,12:5", 
-      "sensorManual":"0x38,S,12:3", 
-      "sensorOccupancy":"0x38,S,10:0",
-      "commandNormal": "0x38,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x33,S,12:4", 
+      "sensorReverse":"0x33,S,12:5", 
+      "sensorManual":"0x33,S,12:3", 
+      "sensorOccupancy":"0x33,S,10:0",
+      "commandNormal": "0x33,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x33,0x43,0x02,0x44,0x58"
     },
     
     
@@ -544,9 +544,8 @@
     {
       "name":"Ore Yard Approach",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x29,S,7:1",
+      "sensorPower":"0x10,S,7:7",
       "base_x":4,
       "base_y":2,
       "cells": [
@@ -558,9 +557,8 @@
     {
       "name":"Dock Yard Approach",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x29,S,7:0",
+      "sensorPower":"0x10,S,7:7",
       "base_x":4,
       "base_y":4,
       "cells": [
@@ -606,9 +604,8 @@
     {
       "name":"Smelter Lead",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x29,S,7:2",
+      "sensorPower":"0x10,S,7:6",
       "base_x":15,
       "base_y":2,
       "cells": [
@@ -620,10 +617,9 @@
 
 
     {
-      "name":"Eyak River Block",
+      "name":"Eyak Lake Block",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
+      "sensorOccupancy":"0x29,S,6:2",
       "sensorPower":"0x10,S,7:5",
       "base_x":15,
       "base_y":4,
@@ -784,8 +780,8 @@
     {
       "name":"Round Island Block",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x27,S,7:2",
+      "sensorPower":"0x10,S,7:4",
       "base_x":68,
       "base_y":4,
       "cells": [
@@ -796,8 +792,8 @@
     {
       "name":"Katalla Junction",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:0",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x36,S,8:0",
+      "sensorPower":"0x10,S,7:3",
       "base_x":7,
       "base_y":16,
       "cells": [
@@ -814,7 +810,7 @@
       "name":"Katalla Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:3",
       "base_x":12,
       "base_y":14,
       "cells": [
@@ -826,8 +822,8 @@
     {
       "name":"Miles Glacier Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorOccupancy":"0x25,S,7:2",
+      "sensorPower":"0x10,S,7:3",
       "rightAdjoiningBlockName":"Copper River Block",
       "base_x":12,
       "base_y":16,
@@ -839,8 +835,8 @@
     {
       "name":"Copper River Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorOccupancy":"0x25,S,7:1",
+      "sensorPower":"0x10,S,7:3",
       "leftAdjoiningBlockName":"Miles Glacier Block",
       "base_x":20,
       "base_y":16,
@@ -852,9 +848,9 @@
     {
       "name":"South Abercrombie",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x35,S,10:1",
+      "sensorManual":"0x35,S,11:3",
+      "sensorPower":"0x10,S,7:3",
       "base_x":28,
       "base_y":16,
       "cells": [
@@ -870,8 +866,8 @@
     {
       "name":"Abercrombie Main",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x35,S,10:3",
+      "sensorPower":"0x10,S,7:3",
       "base_x":33,
       "base_y":16,
       "cells": [
@@ -883,8 +879,8 @@
     {
       "name":"Abercrombie Siding",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:2",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x35,S,10:2",
+      "sensorPower":"0x10,S,7:3",
       "base_x":33,
       "base_y":14,
       "cells": [
@@ -895,8 +891,9 @@
     {
       "name":"North Abercrombie",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:0",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x35,S,10:0",
+      "sensorManual":"0x35,S,12:3",
+      "sensorPower":"0x10,S,7:3",
       "base_x":39,
       "base_y":16,
       "cells": [
@@ -912,8 +909,8 @@
     {
       "name":"Bremner Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorOccupancy":"0x26,S,6:0",
+      "sensorPower":"0x10,S,6:0",
       "rightAdjoiningBlockName":"Tiekel Block",
       "base_x":44,
       "base_y":16,
@@ -925,8 +922,8 @@
     {
       "name":"Tiekel Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorOccupancy":"0x26,S,6:1",
+      "sensorPower":"0x10,S,6:0",
       "leftAdjoiningBlockName":"Miles Glacier Block",
       "rightAdjoiningBlockName":"Uranatina Block",
       "base_x":54,
@@ -939,8 +936,8 @@
     {
       "name":"Uranatina Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorOccupancy":"0x26,S,6:2",
+      "sensorPower":"0x10,S,6:0",
       "leftAdjoiningBlockName":"Tiekel Block",
       "base_x":64,
       "base_y":16,
@@ -955,7 +952,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorPower":"0x10,S,6:2",
       "base_x":7,
       "base_y":28,
       "cells": [
@@ -980,7 +977,7 @@
     {
       "name":"Chitina Yard",
       "type":"standard",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:2",
       "base_x":16,
       "base_y":24,
       "cells": [
@@ -993,7 +990,7 @@
       "name":"Chitina Yard Siding",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":26,
       "cells": [
@@ -1005,7 +1002,7 @@
       "name":"Chitina Main",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":28,
       "cells": [
@@ -1018,7 +1015,7 @@
       "name":"Chitina Lake Siding",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":30,
       "cells": [
@@ -1031,7 +1028,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorPower":"0x10,S,6:2",
       "base_x":30,
       "base_y":28,
       "cells": [
@@ -1060,7 +1057,7 @@
       "name":"Third Crossing Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:2",
       "rightAdjoiningBlockName":"Kotsina Block",
       "base_x":37,
       "base_y":28,
@@ -1073,7 +1070,7 @@
       "name":"Kotsina Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:1",
       "leftAdjoiningBlockName":"Third Crossing Block",
       "base_x":45,
       "base_y":28,
@@ -1085,9 +1082,9 @@
     {
       "name":"South Strelna",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x33,S,10:1",
+      "sensorManual":"0x33,S,11:3",
+      "sensorPower":"0x10,S,6:1",
       "base_x":52,
       "base_y":28,
       "cells": [
@@ -1103,8 +1100,8 @@
     {
       "name":"Strelna Main",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x33,S,10:3",
+      "sensorPower":"0x10,S,6:1",
       "base_x":57,
       "base_y":28,
       "cells": [
@@ -1116,8 +1113,8 @@
     {
       "name":"Strelna Siding",
       "type":"standard",
-      "sensorOccupancy":"0x38,S,10:2",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x33,S,10:2",
+      "sensorPower":"0x10,S,6:1",
       "base_x":57,
       "base_y":26,
       "cells": [
@@ -1128,8 +1125,9 @@
     {
       "name":"North Strelna",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:0",
-      "sensorPower":"0x10,S,7:5",
+      "sensorOccupancy":"0x33,S,10:0",
+      "sensorManual":"0x33,S,12:3",
+      "sensorPower":"0x10,S,6:1",
       "base_x":63,
       "base_y":28,
       "cells": [
@@ -1146,7 +1144,7 @@
       "name":"Kuskulana Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:1",
       "rightAdjoiningBlockName":"Chokosna Block",
       "base_x":68,
       "base_y":28,
@@ -1159,7 +1157,7 @@
       "name":"Chokosna Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,6:1",
       "leftAdjoiningBlockName":"Kuskulana Block",
       "rightAdjoiningBlockName":"Gilahina Block",
       "base_x":12,
@@ -1173,7 +1171,7 @@
       "name":"Gilahina Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "leftAdjoiningBlockName":"Chokosna Block",
       "base_x":21,
       "base_y":40,
@@ -1187,7 +1185,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorPower":"0x10,S,7:1",
       "base_x":30,
       "base_y":40,
       "cells": [
@@ -1212,7 +1210,7 @@
       "name":"McCarthy Yard Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:2",
       "base_x":37,
       "base_y":38,
       "cells": [
@@ -1224,7 +1222,7 @@
       "name":"McCarthy Main 1",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":37,
       "base_y":40,
       "cells": [
@@ -1236,7 +1234,7 @@
       "name":"McCarthy Main 2",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":37,
       "base_y":42,
       "cells": [
@@ -1250,7 +1248,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorPower":"0x10,S,7:1",
       "base_x":50,
       "base_y":40,
       "cells": [
@@ -1275,7 +1273,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:1",
       "sensorManual":"0x38,S,11:3",
-      "sensorPower":"0x10,S,7:5",
+      "sensorPower":"0x10,S,7:1",
       "base_x":50,
       "base_y":42,
       "cells": [
@@ -1297,7 +1295,7 @@
       "name":"Kennecott Main 1 Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":63,
       "base_y":38,
       "cells": [
@@ -1309,7 +1307,7 @@
       "name":"Kennecott Main 2 Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:1",
       "base_x":63,
       "base_y":40,
       "cells": [
@@ -1321,7 +1319,7 @@
       "name":"Nizina Block",
       "type":"standard",
       "sensorOccupancy":"0x27,S,7:0",
-      "sensorPower":"0x10,S,7:4",
+      "sensorPower":"0x10,S,7:0",
       "base_x":63,
       "base_y":45,
       "cells": [
