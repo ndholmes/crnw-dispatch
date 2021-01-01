@@ -266,7 +266,7 @@
       "sensorNormal":"0x36,S,9:4", 
       "sensorReverse":"0x36,S,9:5", 
       "sensorManual":"0x36,S,9:3", 
-      "sensorOccupancy":"0x36,S,10:0",
+      "sensorOccupancy":"0x36,S,8:0",
       "commandNormal": "0x36,0x43,0x01,0x4D,0x58",
       "commandReverse": "0x36,0x43,0x01,0x44,0x58"
     },
@@ -321,8 +321,8 @@
     
     { 
       "name": "N Chitina Yard Points", 
-      "type": "switch_right_up", 
-      "x":33, "y":28, 
+      "type": "switch_left_up", 
+      "x":35, "y":28, 
       "sensorNormal":"0x37,S,12:4", 
       "sensorReverse":"0x37,S,12:5", 
       "sensorManual":"0x37,S,12:3", 
@@ -333,8 +333,8 @@
     
     { 
       "name": "N Chitina Siding Points", 
-      "type": "switch_right_down", 
-      "x":35, "y":28, 
+      "type": "switch_left_down", 
+      "x":33, "y":28, 
       "sensorNormal":"0x37,S,12:4", 
       "sensorReverse":"0x37,S,12:5", 
       "sensorManual":"0x37,S,12:3", 
@@ -625,8 +625,29 @@
         { "role":"sensorLinedLeft", "source":"0x33,S,12:0"},
         { "role":"sensorLinedRight", "source":"0x33,S,12:1"}
         ]
-    }
+    },
 
+    { 
+      "name":"CP Katalla Jct", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"main", "name":"Katalla Jct Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"Katalla Jct"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"Katalla Jct Points Signal", "cmd": "0x36,0x43,0x01,0x58,0x57", "clr_cmd": "0x36,0x43,0x01,0x58,0x58" }, 
+        {"role":"siding", "name":"Katalla Jct Siding Signal", "cmd": "0x36,0x43,0x01,0x44,0x45", "clr_cmd": "0x36,0x43,0x01,0x58,0x58"},
+        {"role":"main", "name":"Katalla Jct Main Signal", "cmd": "0x36,0x43,0x01,0x4D,0x45", "clr_cmd": "0x36,0x43,0x01,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x36,S,9:0"},
+        { "role":"sensorLinedRight", "source":"0x36,S,9:1"}
+        ]
+    }
 
 
 
@@ -770,6 +791,7 @@
       "name":"North Eyak",
       "type":"controlpoint",
       "sensorOccupancy":"0x38,S,10:0",
+      "sensorManual":"0x38,S,12:3",
       "sensorPower":"0x10,S,7:5",
       "base_x":35,
       "base_y":4,
@@ -815,6 +837,7 @@
       "name":"South Alaganik",
       "type":"controlpoint",
       "sensorOccupancy":"0x37,S,10:1",
+      "sensorManual":"0x37,S,11:3",
       "sensorPower":"0x10,S,7:4",
       "base_x":52,
       "base_y":4,
@@ -857,6 +880,7 @@
       "name":"North Alaganik",
       "type":"controlpoint",
       "sensorOccupancy":"0x37,S,10:0",
+      "sensorManual":"0x37,S,12:3",
       "sensorPower":"0x10,S,7:4",
       "base_x":63,
       "base_y":4,
@@ -883,9 +907,10 @@
     },
 
     {
-      "name":"Katalla Junction",
+      "name":"Katalla Jct",
       "type":"controlpoint",
       "sensorOccupancy":"0x36,S,8:0",
+      "sensorManual":"0x36,S,9:3",
       "sensorPower":"0x10,S,7:3",
       "base_x":7,
       "base_y":16,
@@ -1002,7 +1027,7 @@
     {
       "name":"Bremner Block",
       "type":"standard",
-      "sensorOccupancy":"0x26,S,6:0",
+      "sensorOccupancy":"0x26,S,6:2",
       "sensorPower":"0x10,S,6:0",
       "rightAdjoiningBlockName":"Tiekel Block",
       "base_x":44,
@@ -1015,7 +1040,7 @@
     {
       "name":"Tiekel Block",
       "type":"standard",
-      "sensorOccupancy":"0x26,S,6:1",
+      "sensorOccupancy":"0x26,S,6:3",
       "sensorPower":"0x10,S,6:0",
       "leftAdjoiningBlockName":"Miles Glacier Block",
       "rightAdjoiningBlockName":"Uranatina Block",
@@ -1029,7 +1054,7 @@
     {
       "name":"Uranatina Block",
       "type":"standard",
-      "sensorOccupancy":"0x26,S,6:2",
+      "sensorOccupancy":"0x26,S,6:0",
       "sensorPower":"0x10,S,6:0",
       "leftAdjoiningBlockName":"Tiekel Block",
       "base_x":64,
@@ -1043,8 +1068,7 @@
     {
       "name":"South Chitina",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
+      "sensorOccupancy":"0x24,S,6:1",
       "sensorPower":"0x10,S,6:2",
       "base_x":7,
       "base_y":28,
@@ -1082,7 +1106,7 @@
     {
       "name":"Chitina Yard Siding",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x24,S,6:3",
       "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":26,
@@ -1094,7 +1118,7 @@
     {
       "name":"Chitina Main",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x24,S,6:2",
       "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":28,
@@ -1107,7 +1131,7 @@
     {
       "name":"Chitina Lake Siding",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x24,S,7:0",
       "sensorPower":"0x10,S,6:2",
       "base_x":14,
       "base_y":30,
@@ -1119,8 +1143,7 @@
     {
       "name":"North Chitina",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
+      "sensorOccupancy":"0x24,S,6:0",
       "sensorPower":"0x10,S,6:2",
       "base_x":30,
       "base_y":28,
@@ -1149,7 +1172,7 @@
     {
       "name":"Third Crossing Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x24,S,7:1",
       "sensorPower":"0x10,S,6:2",
       "rightAdjoiningBlockName":"Kotsina Block",
       "base_x":37,
@@ -1162,7 +1185,7 @@
     {
       "name":"Kotsina Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x22,S,6:2",
       "sensorPower":"0x10,S,6:1",
       "leftAdjoiningBlockName":"Third Crossing Block",
       "base_x":45,
@@ -1236,7 +1259,7 @@
     {
       "name":"Kuskulana Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x22,S,6:1",
       "sensorPower":"0x10,S,6:1",
       "rightAdjoiningBlockName":"Chokosna Block",
       "base_x":68,
@@ -1249,7 +1272,7 @@
     {
       "name":"Chokosna Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x22,S,6:0",
       "sensorPower":"0x10,S,6:1",
       "leftAdjoiningBlockName":"Kuskulana Block",
       "rightAdjoiningBlockName":"Gilahina Block",
@@ -1263,7 +1286,7 @@
     {
       "name":"Gilahina Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x21,S,6:3",
       "sensorPower":"0x10,S,7:1",
       "leftAdjoiningBlockName":"Chokosna Block",
       "base_x":21,
@@ -1276,8 +1299,7 @@
     {
       "name":"McCarthy",
       "type":"controlpoint",
-      "sensorOccupancy":"0x38,S,10:1",
-      "sensorManual":"0x38,S,11:3",
+      "sensorOccupancy":"0x21,S,6:1",
       "sensorPower":"0x10,S,7:1",
       "base_x":30,
       "base_y":40,
@@ -1302,7 +1324,6 @@
     {
       "name":"McCarthy Yard Block",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
       "sensorPower":"0x10,S,7:2",
       "base_x":37,
       "base_y":38,
@@ -1314,7 +1335,7 @@
     {
       "name":"McCarthy Main 1",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x21,S,6:0",
       "sensorPower":"0x10,S,7:1",
       "base_x":37,
       "base_y":40,
@@ -1326,7 +1347,7 @@
     {
       "name":"McCarthy Main 2",
       "type":"standard",
-      "sensorOccupancy":"0x27,S,7:0",
+      "sensorOccupancy":"0x21,S,6:2",
       "sensorPower":"0x10,S,7:1",
       "base_x":37,
       "base_y":42,
