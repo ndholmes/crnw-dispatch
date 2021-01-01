@@ -537,7 +537,100 @@
         { "role":"sensorLinedLeft", "source":"0x37,S,12:0"},
         { "role":"sensorLinedRight", "source":"0x37,S,12:1"}
         ]
+    },
+    
+    { 
+      "name":"CP South Abercrombie", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"main", "name":"S Abercrombie Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"South Abercrombie"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"S Abercrombie Points Signal", "cmd": "0x35,0x43,0x01,0x58,0x57", "clr_cmd": "0x35,0x43,0x01,0x58,0x58" }, 
+        {"role":"siding", "name":"S Abercrombie Siding Signal", "cmd": "0x35,0x43,0x01,0x44,0x45", "clr_cmd": "0x35,0x43,0x01,0x58,0x58"},
+        {"role":"main", "name":"S Abercrombie Main Signal", "cmd": "0x35,0x43,0x01,0x4D,0x45", "clr_cmd": "0x35,0x43,0x01,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x35,S,11:0"},
+        { "role":"sensorLinedRight", "source":"0x35,S,11:1"}
+        ]
+    },
+
+    { 
+      "name":"CP North Abercrombie", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",      
+      "switches": [
+        {"role":"main", "name":"N Abercrombie Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"North Abercrombie"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"N Abercrombie Points Signal", "cmd": "0x35,0x43,0x02,0x58,0x45", "clr_cmd": "0x35,0x43,0x02,0x58,0x58" }, 
+        {"role":"siding", "name":"N Abercrombie Siding Signal", "cmd": "0x35,0x43,0x02,0x44,0x57", "clr_cmd": "0x35,0x43,0x02,0x58,0x58"},
+        {"role":"main", "name":"N Abercrombie Main Signal", "cmd": "0x35,0x43,0x02,0x4D,0x57", "clr_cmd": "0x35,0x43,0x02,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x35,S,12:0"},
+        { "role":"sensorLinedRight", "source":"0x35,S,12:1"}
+        ]
+    }, 
+
+    { 
+      "name":"CP South Strelna", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"main", "name":"S Strelna Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"South Strelna"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"S Strelna Points Signal", "cmd": "0x33,0x43,0x01,0x58,0x57", "clr_cmd": "0x33,0x43,0x01,0x58,0x58" }, 
+        {"role":"siding", "name":"S Strelna Siding Signal", "cmd": "0x33,0x43,0x01,0x44,0x45", "clr_cmd": "0x33,0x43,0x01,0x58,0x58"},
+        {"role":"main", "name":"S Strelna Main Signal", "cmd": "0x33,0x43,0x01,0x4D,0x45", "clr_cmd": "0x33,0x43,0x01,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x33,S,11:0"},
+        { "role":"sensorLinedRight", "source":"0x33,S,11:1"}
+        ]
+    },
+
+    { 
+      "name":"CP North Strelna", 
+      "type":"siding_end",
+      "timeoutSeconds":"20",      
+      "switches": [
+        {"role":"main", "name":"N Strelna Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"North Strelna"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"N Strelna Points Signal", "cmd": "0x33,0x43,0x02,0x58,0x45", "clr_cmd": "0x33,0x43,0x02,0x58,0x58" }, 
+        {"role":"siding", "name":"N Strelna Siding Signal", "cmd": "0x33,0x43,0x02,0x44,0x57", "clr_cmd": "0x33,0x43,0x02,0x58,0x58"},
+        {"role":"main", "name":"N Strelna Main Signal", "cmd": "0x33,0x43,0x02,0x4D,0x57", "clr_cmd": "0x33,0x43,0x02,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x33,S,12:0"},
+        { "role":"sensorLinedRight", "source":"0x33,S,12:1"}
+        ]
     }
+
+
+
+
+
   ],
 
   "blocks": [
