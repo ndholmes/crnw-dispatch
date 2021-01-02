@@ -60,6 +60,7 @@ from switch import Switch
 from block import Block
 from signal import Signal
 from controlpoint import ControlPoint
+from controlpoint_cp3 import ControlPoint_CP3
 import datetime
 
 
@@ -350,7 +351,10 @@ class DispatchConsole(wx.Frame):
       self.cellXY[(cell.cell_x,cell.cell_y)] = cell
 
     for cpconfig in self.layoutData['controlPoints']:
-      newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
+      if cpconfig['type'] == 'cp3':
+        newCP = ControlPoint_CP3(cpconfig, self.txPacket, self.getRailroadObject)
+      else:
+        newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
       self.controlpoints.append(newCP)
 
     # and a status bar in a pear tree! :)

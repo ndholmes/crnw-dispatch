@@ -2,7 +2,7 @@ from cells import SignalCell,TrackCellColors,TrackCellType
 from mrbusUtils import MRBusBit,MRBusPacket
 import datetime
 
-class ControlPoint:
+class ControlPoint_CP3:
   def __init__(self, config, txCallback, getItemCallback):
     self.name = config['name']
     self.lined = "none"
@@ -94,13 +94,6 @@ class ControlPoint:
 
   # This is probably the function that gets overridden in the case of other than siding ends
   def lineRoute(self, entranceSignal):
-    if self.type == "siding_end":
-      self.lineRoute_siding_end(entranceSignal)
-    elif self.type == "cp3":
-      self.lineRoute_cp3(entranceSignal)
-
-
-  def lineRoute_cp3(self, entranceSignal):
     reqSignalRole = None
 
     for role in self.signals.keys():
@@ -143,44 +136,6 @@ class ControlPoint:
       return False  # Points lined against main C
 
     print("Sending lining command")
-
-    # Okay, things look fine, let's go ahead and line things
-    self.txCallback(self.routeCmds[reqSignalRole])
-    return True
-
-
-  def lineRoute_siding_end(self, entranceSignal):
-    reqSignalRole = None
-
-    for role in self.signals.keys():
-      signal = self.signals[role]
-      if (signal.name == entranceSignal):
-        reqSignalRole = role
-        break
-
-    if reqSignalRole == None:  # Can't figure out what signal asked us for something
-      return False
-
-    print("Signal [%s] has asked to line CP [%s]" % (entranceSignal, self.name))    
-
-    if self.lined != "none":
-      return False  # Already lined, can't line another route
-
-    osOccupied = False
-    for blockName in self.blocks.keys():
-      block = self.blocks[blockName]
-      if block.isOccupied() or block.isManual():
-        osOccupied = True
-        break
-
-    if osOccupied:  # Permission to line route denied, OS is occupied
-      return False
-
-    if self.switches['main'].positionReverse and reqSignalRole == 'main':
-      return False # Points lined against main
-      
-    if self.switches['main'].positionNormal and reqSignalRole == 'siding':
-      return False # Points lined against siding
 
     # Okay, things look fine, let's go ahead and line things
     self.txCallback(self.routeCmds[reqSignalRole])
@@ -234,8 +189,9 @@ class ControlPoint:
     
     if self.lined == "run_time":
       self.signals['points'].setIndication(False, False, True)
-      self.signals['main'].setIndication(False, False, True)
-      self.signals['siding'].setIndication(False, False, True)
+      self.signals['main_a'].setIndication(False, False, True)
+      self.signals['main_b'].setIndication(False, False, True)
+      self.signals['main_c'].setIndication(False, False, True)
       self.clearRouteTrace()
       
     elif self.sensors['sensorLinedLeft'].getState():
@@ -247,59 +203,86 @@ class ControlPoint:
       #else:
       #  print("Points is rightbound")
       
-      self.switches['main'].setLock()
+      self.switches['switch_AB'].setLock()
+      self.switches['switch_BC'].setLock()
+  #def setIndication(self, green, unverified=False, blinky=False):
+
       if self.signals['points'].leftBound:  # doesn't matter how points are set
         (x,y) = self.signals['points'].getTrackXY()
         self.signals['points'].setIndication(True, False)
-        self.signals['main'].setIndication(False, False)
-        self.signals['siding'].setIndication(False, False)
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(False, False)
 
-      elif self.switches['main'].positionNormal:
-        (x,y) = self.signals['main'].getTrackXY()
+      elif self.switches['switch_AB'].positionReverse:
+        (x,y) = self.signals['main_a'].getTrackXY()
         self.signals['points'].setIndication(False, False)
-        self.signals['main'].setIndication(True, False)
-        self.signals['siding'].setIndication(False, False)
+        self.signals['main_a'].setIndication(True, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(False, False)
 
-      elif self.switches['main'].positionReverse:
-        (x,y) = self.signals['siding'].getTrackXY()
+      elif self.switches['switch_AB'].positionNormal and self.switches['switch_BC'].positionNormal:
+        (x,y) = self.signals['main_b'].getTrackXY()
         self.signals['points'].setIndication(False, False)
-        self.signals['main'].setIndication(False, False)
-        self.signals['siding'].setIndication(True, False)
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(True, False)
+        self.signals['main_c'].setIndication(False, False)
+
+      elif self.switches['switch_AB'].positionNormal and self.switches['switch_BC'].positionReverse:
+        (x,y) = self.signals['main_c'].getTrackXY()
+        self.signals['points'].setIndication(False, False)
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(True, False)
 
       self.setRouteTrace(True, x, y)
 
     elif self.sensors['sensorLinedRight'].getState():
       #print("Sensor is lined right/north/west")
       self.lined = "right"
-      self.switches['main'].setLock()
+      self.switches['switch_AB'].setLock()
+      self.switches['switch_BC'].setLock()
 
       if not self.signals['points'].leftBound:  # doesn't matter how points are set
         (x,y) = self.signals['points'].getTrackXY()
         self.signals['points'].setIndication(True, False)
-        self.signals['main'].setIndication(False, False)
-        self.signals['siding'].setIndication(False, False)
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(False, False)
 
-      elif self.switches['main'].positionNormal:
-        (x,y) = self.signals['main'].getTrackXY()
+      elif self.switches['switch_AB'].positionReverse:
+        (x,y) = self.signals['main_a'].getTrackXY()
         self.signals['points'].setIndication(False, False)
-        self.signals['main'].setIndication(True, False)
-        self.signals['siding'].setIndication(False, False)
+        self.signals['main_a'].setIndication(True, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(False, False)
 
-      elif self.switches['main'].positionReverse:
-        (x,y) = self.signals['siding'].getTrackXY()
+      elif self.switches['switch_AB'].positionNormal and self.switches['switch_BC'].positionNormal:
+        (x,y) = self.signals['main_b'].getTrackXY()
         self.signals['points'].setIndication(False, False)
-        self.signals['main'].setIndication(False, False)
-        self.signals['siding'].setIndication(True, False)
-        
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(True, False)
+        self.signals['main_c'].setIndication(False, False)
+
+      elif self.switches['switch_AB'].positionNormal and self.switches['switch_BC'].positionReverse:
+        (x,y) = self.signals['main_c'].getTrackXY()
+        self.signals['points'].setIndication(False, False)
+        self.signals['main_a'].setIndication(False, False)
+        self.signals['main_b'].setIndication(False, False)
+        self.signals['main_c'].setIndication(True, False)
+       
       self.setRouteTrace(False, x, y)
 
     else:
       self.lined = "none"
       #print("No lined route on [%s]" % (self.name))
-      self.switches['main'].clearLock()
+      self.switches['switch_AB'].clearLock()
+      self.switches['switch_BC'].clearLock()
+      
       self.signals['points'].setIndication(False, False)
-      self.signals['main'].setIndication(False, False)
-      self.signals['siding'].setIndication(False, False)
+      self.signals['main_a'].setIndication(False, False)
+      self.signals['main_b'].setIndication(False, False)
+      self.signals['main_c'].setIndication(False, False)
       self.clearRouteTrace()
 
 

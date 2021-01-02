@@ -371,25 +371,25 @@
     { 
       "name": "McCarthy Yard Points", 
       "type": "switch_right_up", 
-      "x":31, "y":40, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "x":33, "y":40, 
+      "sensorNormal":"0x32,S,10:6", 
+      "sensorReverse":"0x32,S,10:7", 
+      "sensorManual":"0x32,S,10:3", 
+      "sensorOccupancy":"0x21,S,6:1",
+      "commandNormal": "0x32,0x54,0x02,0x4D",
+      "commandReverse": "0x32,0x54,0x02,0x44"
     },
     
     { 
       "name": "McCarthy Main 2 Points", 
       "type": "switch_right_down", 
-      "x":33, "y":40, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "x":31, "y":40, 
+      "sensorNormal":"0x32,S,10:4", 
+      "sensorReverse":"0x32,S,10:5", 
+      "sensorManual":"0x32,S,10:3", 
+      "sensorOccupancy":"0x21,S,6:1",
+      "commandNormal": "0x32,0x54,0x01,0x4D",
+      "commandReverse": "0x32,0x54,0x01,0x44"
     },
 
 
@@ -647,9 +647,31 @@
         { "role":"sensorLinedLeft", "source":"0x36,S,9:0"},
         { "role":"sensorLinedRight", "source":"0x36,S,9:1"}
         ]
+    },
+
+    { 
+      "name":"CP McCarthy", 
+      "type":"cp3",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"switch_AB", "name":"McCarthy Main 2 Points"},
+        {"role":"switch_BC", "name":"McCarthy Yard Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"McCarthy"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"McCarthy Points Signal", "cmd": "0x32,0x43,0x01,0x58,0x58,0x57", "clr_cmd": "0x32,0x43,0x01,0x58,0x58,0x58" }, 
+        {"role":"main_b", "name":"McCarthy Main 1 Signal", "cmd": "0x32,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x32,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_a", "name":"McCarthy Main 2 Signal", "cmd": "0x32,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x32,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_c", "name":"McCarthy Yard Signal", "cmd": "0x32,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x32,0x43,0x01,0x58,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x32,S,10:0"},
+        { "role":"sensorLinedRight", "source":"0x32,S,10:1"}
+        ]
     }
-
-
 
 
   ],
@@ -1304,19 +1326,18 @@
       "base_x":30,
       "base_y":40,
       "cells": [
-        { "type": "diag_right_up", "x":"+2", "y":"-1"},
-        { "type": "angle_left_down", "x":"+3", "y":"-2"},
+        { "type": "diag_right_up", "x":"+4", "y":"-1"},
+        { "type": "angle_left_down", "x":"+5", "y":"-2"},
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
         { "type": "horiz_rightgap", "x":"+6", "y":"-2"},
         { "type": "horiz_rightgap", "x":"+6", "y":"+0"},
         { "type": "horiz_rightgap", "x":"+6", "y":"+2"},
-        { "type": "horiz", "x":"+4", "y":"-2", "x_end":"+5"},
+        { "type": "horiz", "x":"+4", "y":"+2", "x_end":"+5"},
  
         { "type": "horiz", "x":"+2", "y":"+0"},
         { "type": "horiz", "x":"+4", "y":"+0", "x_end":"+5"},
-        { "type": "angle_left_up", "x":"+5", "y":"+2"},
-
-        { "type": "diag_left_up", "x":"+4", "y":"+1"}
+        { "type": "angle_left_up", "x":"+3", "y":"+2"},
+        { "type": "diag_left_up", "x":"+2", "y":"+1"}
 
       ]
     },
