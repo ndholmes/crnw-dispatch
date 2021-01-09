@@ -91,7 +91,7 @@ class DispatchConsole(wx.Frame):
   fcAddress = 0
   secondTicker = 0
   pktsLastSecond = 0
-  
+
   def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
     super().__init__(None)
     self.layoutData = railroadLayoutData
@@ -110,7 +110,7 @@ class DispatchConsole(wx.Frame):
     print("Sending [%s]  [%s]" % (topic, message))
     self.mqttClient.publish(topic=topic, payload=message)
     print("Sent")
-    
+
   def doDisplayUpdate(self):
     dc = wx.ClientDC(self)
     # Since the cells all know if they changed since last time,
@@ -122,7 +122,7 @@ class DispatchConsole(wx.Frame):
   def applyPacket(self, pkt):
     for i in range(0, len(self.blocks)):
       self.blocks[i].processPacket(pkt)
-        
+
     for i in range(0, len(self.switches)):
       self.switches[i].processPacket(pkt)
 
@@ -150,13 +150,13 @@ class DispatchConsole(wx.Frame):
       self.realFastClockUpdate(pkt)
     except Exception as e:
       print(e)
-      
-  
+
+
   def realFastClockUpdate(self, pkt):
     print("Doing FC Update")
     if pkt.src != self.fcAddress or pkt.cmd != ord('T') or len(pkt.data) < 12:
       return
-    
+
     flags = pkt.data[3]
     try:
       fastTime = datetime.time(pkt.data[4], pkt.data[5], pkt.data[6])
@@ -173,7 +173,7 @@ class DispatchConsole(wx.Frame):
     displayRealAMPM = False;
     if (flags & 0x04) != 0:
       displayRealAMPM = True
-    
+
     displayFastAMPM = False;
     if (flags & 0x08) != 0:
       displayFastAMPM = True
@@ -203,7 +203,7 @@ class DispatchConsole(wx.Frame):
 
 
     self.SetStatusText(fastTimeStr)
-  
+
   def panelToPNG(self):
     #Create a DC for the whole screen area
     dcScreen = wx.ClientDC(self)
@@ -234,13 +234,13 @@ class DispatchConsole(wx.Frame):
     memDC.SelectObject(wx.NullBitmap)
     img = bmp.ConvertToImage()
     fileName = "myImage.png"
-    img.SaveFile(fileName, wx.BITMAP_TYPE_PNG) 
-  
+    img.SaveFile(fileName, wx.BITMAP_TYPE_PNG)
+
   def OnTimer(self, event):
     self.timerCnt += 1
     self.blinkCnt += 1
     self.secondTicker += 1
-    
+
     if self.blinkCnt > 5:
       self.blinkCnt = 0
       self.blinkState = not self.blinkState
@@ -253,15 +253,21 @@ class DispatchConsole(wx.Frame):
       self.secondTicker = 0
       self.pktsLastSecond = 0
       #self.panelToPNG()
-    
-    while not self.mqttMRBus.incomingPkts.empty():
-      try:
-        pkt = self.mqttMRBus.incomingPkts.get_nowait()
-        self.pktsLastSecond += 1
-        #print("pkt: %s" % (pkt))
-        self.applyPacket(pkt)
-      except:
-        pass
+
+    if self.mqttClient.is_connected():
+      self.SetStatusText("MQTT Connection Established", 1)
+    else:
+      self.SetStatusText("No MQTT Connection", 1)
+
+    if self.mqttMRBus is not None:
+      while not self.mqttMRBus.incomingPkts.empty():
+        try:
+          pkt = self.mqttMRBus.incomingPkts.get_nowait()
+          self.pktsLastSecond += 1
+          #print("pkt: %s" % (pkt))
+          self.applyPacket(pkt)
+        except:
+          pass
 
     if self.terminate:
       self.close()
@@ -270,12 +276,12 @@ class DispatchConsole(wx.Frame):
     if cellType in ['signal_left', 'signal_right']:
       return True
     return False
-    
+
   def isSwitchCell(self, cellType):
     if cellType in ['switch_left_up', 'switch_left_down', 'switch_right_up', 'switch_right_down']:
       return True
     return False
-    
+
   def isTrackCell(self, cellType):
     if cellType in ['switch_left_up', 'switch_left_down', 'switch_right_up', 'switch_right_down']:
       return True
@@ -283,25 +289,25 @@ class DispatchConsole(wx.Frame):
 
   def getRailroadObject(self, objectType, objectName):
     objectList = {'switch':self.switches, 'signal':self.signals, 'block':self.blocks}
-    
+
     if objectType not in objectList.keys():
       return None
-    
+
     for i in range(0, len(objectList[objectType])):
       if objectList[objectType][i].name == objectName:
         return objectList[objectType][i]
 
     return None
-    
+
   def InitUI(self):
     self.Bind(wx.EVT_PAINT, self.OnPaint)
     self.Bind(wx.EVT_SIZE, self.OnPaint)
     self.Bind(wx.EVT_LEFT_DOWN, self.OnLeftDown)
-    
+
     titleName = "MRBus Dispatch Console"
-    if 'layoutName' in self.layoutData:
+    if self.layoutData is not None and 'layoutName' in self.layoutData:
       titleName = self.layoutData['layoutName']
-    
+
     self.SetTitle(titleName)
     self.SetSize((1200,900))
     self.Centre()
@@ -309,16 +315,30 @@ class DispatchConsole(wx.Frame):
     # create a menu bar
     self.makeMenuBar()
 
+    # and a status bar in a pear tree! :)
+    self.statusbar = self.CreateStatusBar(3)
+    self.statusbar.SetStatusWidths([-1,-1,200])
+    self.statusbar.SetStatusText("Field 1")
+    self.statusbar.SetStatusText("Field 2", 1)
+    self.statusbar.SetStatusText("Field 3", 2)
+
+    self.ReInitUI()
+
+
+  def ReInitUI(self):
+    if self.layoutData is None:
+      return
+
+    if 'layoutName' in self.layoutData:
+      self.SetTitle(self.layoutData['layoutName'])
+
     if "gridOn" in self.layoutData.keys():
       if 1 == self.layoutData['gridOn']:
         self.gridOn = True
-    
+
     if "fastClockAddress" in self.layoutData.keys():
       self.fcAddress = int(str(self.layoutData['fastClockAddress']), 0)
-        
-    
-    
-    
+
     for text in self.layoutData['text']:
       newCell = TextCell()
       newCell.setText(text['value'])
@@ -357,13 +377,6 @@ class DispatchConsole(wx.Frame):
         newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
       self.controlpoints.append(newCP)
 
-    # and a status bar in a pear tree! :)
-    self.statusbar = self.CreateStatusBar(3)
-    self.statusbar.SetStatusWidths([-1,-1,200])
-    self.statusbar.SetStatusText("Field 1")
-    self.statusbar.SetStatusText("Field 2", 1)
-    self.statusbar.SetStatusText("Field 3", 2)
-
 
   def OnLeftDown(self, e):
     x,y = e.GetPosition()
@@ -371,11 +384,11 @@ class DispatchConsole(wx.Frame):
     block_y = y//16
 
     ctrlState = wx.GetKeyState(wx.WXK_CONTROL)
-    
+
     m = (block_x, block_y)
     if m in self.clickables:
       self.clickables[m](ctrl=ctrlState)
-  
+
 #      dc = wx.PaintDC(self)
 #      self.cells[0].setSwitchPosition([1,0][self.cells[0].getSwitchPosition()])
 #      self.cells[0].draw(wx.PaintDC(self))
@@ -415,6 +428,9 @@ class DispatchConsole(wx.Frame):
     # the same event
     helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H",
       "Help string shown in status bar for this menu item")
+
+    open_item = fileMenu.Append(-1, "&Open")
+
     fileMenu.AppendSeparator()
     # When using a stock ID we don't need to specify the menu item's
     # label
@@ -439,12 +455,100 @@ class DispatchConsole(wx.Frame):
     # each of the menu items. That means that when that menu item is
     # activated then the associated handler function will be called.
     self.Bind(wx.EVT_MENU, self.OnHello, helloItem)
+    self.Bind(wx.EVT_MENU, self.OnMenuItemFileLoad, open_item)
     self.Bind(wx.EVT_MENU, self.OnExit,  exitItem)
     self.Bind(wx.EVT_MENU, self.OnAbout, aboutItem)
 
+  def load_layout_data(self, file_name):
+    if self.mqttClient.is_connected():
+      self.mqttClient.disconnect()
+
+    try:
+      with open(file_name) as file:
+        self.layoutData = json.load(file)
+    except json.JSONDecodeError as e:
+      wx.MessageBox("Cannot load layout configuration file")
+      print(e)
+      print("Cannot load layout.json configuration file")
+      raise
+    self.connect()
+
+  def connect(self):
+    if self.layoutData is None:
+      return
+
+    if self.mqttClient.is_connected():
+      self.mqttClient.disconnect()
+
+    mqtt_host = "crnw.drgw.net"
+    mqtt_port = 1883
+    mqtt_user = None
+    mqtt_pass = None
+
+    if 'mqttHost' in self.layoutData.keys():
+      mqtt_host = self.layoutData['mqttHost']
+    else:
+      dialog = wx.TextEntryDialog(self, "Host Name", caption="MQTT Connection Information", value=mqtt_host, style=wx.OK | wx.CANCEL)
+      if dialog.ShowModal() == wx.ID_OK:
+        mqtt_host = dialog.GetValue()
+      else:
+        return
+
+    if 'mqttPort' in self.layoutData.keys():
+      mqtt_port = int(self.layoutData['mqttPort'])
+    else:
+      dialog = wx.TextEntryDialog(self, "Host Port", caption="MQTT Connection Information", value=str(mqtt_port), style=wx.OK | wx.CANCEL)
+      if dialog.ShowModal() == wx.ID_OK:
+        mqtt_port = dialog.GetValue()
+      else:
+        return
+
+    if 'mqttUser' in self.layoutData.keys():
+      mqtt_user = int(self.layoutData['mqttUser'])
+    else:
+      dialog = wx.TextEntryDialog(self, "User Name", caption="MQTT Connection Information", value="", style=wx.OK | wx.CANCEL)
+      if dialog.ShowModal() == wx.ID_OK:
+        mqtt_user = dialog.GetValue()
+      else:
+        return
+
+    if 'mqttPass' in self.layoutData.keys():
+      mqtt_pass = int(self.layoutData['mqttPass'])
+    else:
+      dialog = wx.TextEntryDialog(self, "Password", caption="MQTT Connection Information", value="", style=wx.OK | wx.CANCEL | wx.TE_PASSWORD)
+      if dialog.ShowModal() == wx.ID_OK:
+        mqtt_pass = dialog.GetValue()
+      else:
+        return
+
+    self.mqttClient.username_pw_set(mqtt_user, mqtt_pass)
+    self.mqttClient.connect(mqtt_host, mqtt_port, 60)
+    self.mqttClient.loop_start()
+    self.mqttClient.subscribe("crnw/raw")
+
+
   def OnExit(self, event):
     """Close the frame, terminating the application."""
+    if self.mqttClient.is_connected():
+      self.mqttClient.disconnect()
+
     self.Close(True)
+
+
+  def OnMenuItemFileLoad(self, event):
+    """Load a new configuration file"""
+    with wx.FileDialog(self, "Open layout configuration file", wildcard="JSON files (*.json)|*.json",
+                       style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+
+      if fileDialog.ShowModal() == wx.ID_CANCEL:
+        return  # the user changed their mind
+
+      pathname = fileDialog.GetPath()
+      try:
+        self.load_layout_data(pathname)
+      except Exception as e:
+        return
+      self.ReInitUI()
 
 
   def OnHello(self, event):
@@ -495,37 +599,18 @@ def mqtt_onConnect(client, userdata, flags, rc):
     print("ERROR: MQTT Other Failure %d" % (rc))
     client.connected_flag = False
 
-def main():
-  
-  mqttMRBus = MqttMRBus()
-  try:
-    with open('layout.json') as f:
-      layoutData = json.load(f)
-  except Exception as e:
-    print(e)
-    print("Cannot load layout.json configuration file")
-    sys.exit(-1)
 
-  udata = { 'mrbus':mqttMRBus }
-  clientName = socket.getfqdn()
-  mqttClient = mqtt.Client(clientName, userdata=udata)
-  mqttClient.on_message=mqtt_onMessage
-  mqttClient.on_connect=mqtt_onConnect
-  
-  mqttHost = "crnw.drgw.net"
-  mqttPort = 1883
-  
-  if 'mqttHost' in layoutData.keys():
-    mqttHost = layoutData['mqttHost']
-  if 'mqttPort' in layoutData.keys():
-    mqttPort = int(layoutData['mqttPort'])
-  
-  mqttClient.connect(mqttHost, mqttPort, 60)
-  mqttClient.loop_start()
-  mqttClient.subscribe("crnw/raw")
+def main():
+  mqttMRBus = MqttMRBus()
+  user_data = {'mrbus': mqttMRBus}
+  client_name = socket.getfqdn()
+  mqtt_client = mqtt.Client(client_name, userdata=user_data)
+  mqtt_client.on_message = mqtt_onMessage
+  mqtt_client.on_connect = mqtt_onConnect
 
   app = wx.App()
-  ex = DispatchConsole(layoutData, mqttMRBus, mqttClient)
+  #ex = DispatchConsole(layoutData, mqttMRBus, mqttClient)
+  ex = DispatchConsole(None, mqttMRBus, mqtt_client)
   ex.Show()
   app.MainLoop()
 
