@@ -669,7 +669,31 @@
         { "role":"sensorLinedLeft", "source":"0x32,S,10:0"},
         { "role":"sensorLinedRight", "source":"0x32,S,10:1"}
         ]
+    },
+
+    { 
+      "name":"CP North Cordova", 
+      "type":"xo2",
+      "debug": 0,
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"switch_e_xover_1", "name":"N Cordova Main 1 S Points"},
+        {"role":"switch_e_xover_2", "name":"N Cordova Main 2 S Points"},
+        {"role":"switch_w_xover_1", "name":"N Cordova Main 1 N Points"},
+        {"role":"switch_w_xover_2", "name":"N Cordova Main 2 N Points"}
+        ], 
+      "blocks":[
+        {"role":"main_1", "name":"North Cordova Main 1"},
+        {"role":"main_2", "name":"North Cordova Main 2"}
+        ], 
+      "entranceSignals": [
+        {"role":"main_2_w", "name":"N Cordova Smelter Signal", "cmd": "0x39,0x43,0x47,0x03,0x53", "clr_cmd": "0x39,0x43,0x47,0x03,0x43", "sensor":"0x39,S,6:5" }, 
+        {"role":"main_2_e", "name":"N Cordova Ore Yard Signal", "cmd": "0x39,0x43,0x47,0x04,0x53", "clr_cmd": "0x39,0x43,0x47,0x04,0x43", "sensor":"0x39,S,6:4"  },
+        {"role":"main_1_w", "name":"N Cordova Main Signal", "cmd": "0x39,0x43,0x47,0x01,0x53", "clr_cmd": "0x39,0x43,0x47,0x01,0x43", "sensor":"0x39,S,6:3"  },
+        {"role":"main_1_e", "name":"N Cordova Yard Signal", "cmd": "0x39,0x43,0x47,0x02,0x53", "clr_cmd": "0x39,0x43,0x47,0x02,0x43", "sensor":"0x39,S,6:2"  }
+        ]
     }
+
 
 
   ],

@@ -88,8 +88,7 @@ class Signal:
       self.recalculateState()
 
   def recalculateState(self):
-    print("Recalculating state for [%s]" % (self.name))
-    
+#    print("Recalculating state for [%s]" % (self.name))
     signalColor = TrackCellColors.getColor('signal_unknown')
 
     if self.unverified:
@@ -99,7 +98,7 @@ class Signal:
     else:
       signalColor = TrackCellColors.getColor('signal_normal')
     self.cell.setColor(signalColor, self.blinky)
-    print("Setting signal [%s] to %s" % (self.name, signalColor))
+#    print("Setting signal [%s] to %s" % (self.name, signalColor))
 
 
   def getCells(self):

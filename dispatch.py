@@ -61,6 +61,7 @@ from block import Block
 from signal import Signal
 from controlpoint import ControlPoint
 from controlpoint_cp3 import ControlPoint_CP3
+from controlpoint_xo2 import ControlPoint_XO2
 import datetime
 
 
@@ -353,6 +354,8 @@ class DispatchConsole(wx.Frame):
     for cpconfig in self.layoutData['controlPoints']:
       if cpconfig['type'] == 'cp3':
         newCP = ControlPoint_CP3(cpconfig, self.txPacket, self.getRailroadObject)
+      elif cpconfig['type'] == 'xo2':
+        newCP = ControlPoint_XO2(cpconfig, self.txPacket, self.getRailroadObject)
       else:
         newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
       self.controlpoints.append(newCP)

@@ -108,7 +108,7 @@ class Switch:
     self.recalculateState()
     
   def recalculateState(self):
-    print("Recalculating state for [%s]" % (self.name))
+    #print("Recalculating state for [%s]" % (self.name))
     
     defaultColor = TrackCellColors.getColor('switch_unknown')
     # Compute switch square color

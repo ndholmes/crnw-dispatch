@@ -16,12 +16,16 @@ class ControlPoint:
     self.timelock = datetime.datetime.utcnow()
     self.getItemCallback = getItemCallback
     self.timeoutSeconds = 20
+    self.debug = False
     self.type = "Unknown"
     
     if 'timeoutSeconds' in config.keys():
       self.timeoutSeconds = int(str(config['timeoutSeconds']), 0)
     
     self.type = config['type']
+    
+    if 'debug' in config.keys() and int(config['debug']) == 1:
+      self.debug = True
     
     for entranceSignal in config['entranceSignals']:
       self.signals[entranceSignal['role']] = getItemCallback('signal', entranceSignal['name'])
@@ -117,8 +121,6 @@ class ControlPoint:
     if self.lined != "none":
       return False  # Already lined, can't line another route
 
-    print("CP [%s] Checkpoint 2" % (self.name))
-
     osOccupied = False
     for blockName in self.blocks.keys():
       block = self.blocks[blockName]
@@ -126,12 +128,11 @@ class ControlPoint:
         osOccupied = True
         break
 
-    print("CP [%s] Checkpoint 3" % (self.name))
-
     if osOccupied:  # Permission to line route denied, OS is occupied
       return False
     
-    print("CP [%s] sigrole [%s] AB=%s/%s  BC=%s/%s" % (self.name, reqSignalRole, self.switches['switch_AB'].positionNormal, self.switches['switch_AB'].positionReverse, self.switches['switch_BC'].positionNormal, self.switches['switch_BC'].positionReverse))
+    if self.debug:
+      print("CP [%s] sigrole [%s] AB=%s/%s  BC=%s/%s" % (self.name, reqSignalRole, self.switches['switch_AB'].positionNormal, self.switches['switch_AB'].positionReverse, self.switches['switch_BC'].positionNormal, self.switches['switch_BC'].positionReverse))
     
     if reqSignalRole == 'main_a' and self.switches['switch_AB'].positionNormal:
       return False  # Points lined against main A
@@ -142,7 +143,8 @@ class ControlPoint:
     if reqSignalRole == 'main_c' and not (self.switches['switch_AB'].positionNormal and self.switches['switch_BC'].positionReverse):
       return False  # Points lined against main C
 
-    print("Sending lining command")
+    if self.debug:
+      print("Sending lining command to %s" % (self.name))
 
     # Okay, things look fine, let's go ahead and line things
     self.txCallback(self.routeCmds[reqSignalRole])
@@ -230,7 +232,8 @@ class ControlPoint:
       print(e)
 
   def recalculateStateReal(self):
-    print("Starting recalculateState for [%s]" % (self.name))
+    if self.debug:
+      print("Starting recalculateState for [%s]" % (self.name))
     
     if self.lined == "run_time":
       self.signals['points'].setIndication(False, False, True)
@@ -308,5 +311,5 @@ class ControlPoint:
       
     for switch in self.switches.values():
       switch.recalculateState()
-
-    print("Ending recalculateState for [%s]" % (self.name))
+    if self.debug:
+      print("Ending recalculateState for [%s]" % (self.name))

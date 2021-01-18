@@ -17,12 +17,16 @@ class ControlPoint_CP3:
     self.getItemCallback = getItemCallback
     self.timeoutSeconds = 20
     self.type = "Unknown"
+    self.debug = False
     
     if 'timeoutSeconds' in config.keys():
       self.timeoutSeconds = int(str(config['timeoutSeconds']), 0)
     
     self.type = config['type']
-    
+
+    if 'debug' in config.keys() and int(config['debug']) == 1:
+      self.debug = True
+
     for entranceSignal in config['entranceSignals']:
       self.signals[entranceSignal['role']] = getItemCallback('signal', entranceSignal['name'])
       if None == self.signals[entranceSignal['role']]:
@@ -173,7 +177,7 @@ class ControlPoint_CP3:
     nextBlockName = self.blocks['main'].setRoute(leftBound, x, y)
     while (None != nextBlockName):
       nextBlock = self.getItemCallback('block', nextBlockName)
-      #print("Next block left is %s" % (nextBlock.name))
+      print("Next block left is %s" % (nextBlock.name))
       if None == nextBlock or nextBlock.cp == True:
         break
       nextBlockName = nextBlock.setRoute(leftBound)
@@ -185,7 +189,8 @@ class ControlPoint_CP3:
       print(e)
 
   def recalculateStateReal(self):
-    print("Starting recalculateState for [%s]" % (self.name))
+    if self.debug:
+      print("Starting recalculateState for [%s]" % (self.name))
     
     if self.lined == "run_time":
       self.signals['points'].setIndication(False, False, True)
@@ -292,4 +297,5 @@ class ControlPoint_CP3:
     for switch in self.switches.values():
       switch.recalculateState()
 
-    print("Ending recalculateState for [%s]" % (self.name))
+    if self.debug:
+      print("Ending recalculateState for [%s]" % (self.name))
