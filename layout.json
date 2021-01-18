@@ -1320,6 +1320,7 @@
       "name":"McCarthy",
       "type":"controlpoint",
       "sensorOccupancy":"0x21,S,6:1",
+      "sensorManual":"0x32,S,10:3",
       "sensorPower":"0x10,S,7:1",
       "base_x":30,
       "base_y":40,
