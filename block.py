@@ -202,7 +202,7 @@ class Block:
     return False  # Blocks don't respond to clicks
 
   def recalculateState(self):
-    print("Recalculating state for [%s]" % (self.name))
+    #print("Recalculating state for [%s]" % (self.name))
     trackColor = TrackCellColors.getColor('track_unknown')
 
     # Compute track color
