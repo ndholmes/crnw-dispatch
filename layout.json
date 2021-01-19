@@ -391,58 +391,59 @@
     },
 
 
-    { "name": "Nicolai Main 1 S Points", 
-      "type": "switch_left_up", 
-      "x":51, "y":40, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
-    },
-    { "name": "Nicolai Main 1 M Points", 
+    { "name": "Nicolai Main 1 Main 3 Points", 
       "type": "switch_right_up", 
-      "x":57, "y":40, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
-
-    },
-    { "name": "Nicolai Main 1 N Points", 
-      "type": "switch_left_down", 
       "x":59, "y":40, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
-
+      "sensorNormal":"0x30,S,8:0", 
+      "sensorReverse":"0x30,S,8:1", 
+      "sensorManual":"0x30,S,8:2", 
+      "sensorOccupancy":"0x30,S,6:0",
+      "commandNormal": "0x30,0x43,0x54,0x02,0x4D",
+      "commandReverse": "0x30,0x43,0x54,0x02,0x44"
     },
 
-    { "name": "Nicolai Main 2 S Points", 
-      "type": "switch_right_down", 
-      "x":53, "y":42, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
-    },
-    { "name": "Nicolai Main 2 N Points", 
+    { "name": "Nicolai Main 1 S Points", 
       "type": "switch_left_down", 
-      "x":55, "y":42, 
-      "sensorNormal":"0x38,S,11:4", 
-      "sensorReverse":"0x38,S,11:5", 
-      "sensorManual":"0x38,S,11:3", 
-      "sensorOccupancy":"0x38,S,10:1",
-      "commandNormal": "0x38,0x43,0x01,0x4D,0x58",
-      "commandReverse": "0x38,0x43,0x01,0x44,0x58"
+      "x":53, "y":40, 
+      "sensorNormal":"0x30,S,7:0", 
+      "sensorReverse":"0x30,S,7:1",
+      "sensorManual":"0x30,S,7:2", 
+      "sensorOccupancy":"0x30,S,6:0",
+      "commandNormal": "0x30,0x43,0x54,0x00,0x4D",
+      "commandReverse": "0x30,0x43,0x54,0x00,0x44"
+    },
+    { "name": "Nicolai Main 2 S Points", 
+      "type": "switch_right_up", 
+      "x":51, "y":42, 
+      "sensorNormal":"0x30,S,7:0",
+      "sensorReverse":"0x30,S,7:1",
+      "sensorManual":"0x30,S,7:2", 
+      "sensorOccupancy":"0x30,S,6:1",
+      "commandNormal": "0x30,0x43,0x54,0x00,0x4D",
+      "commandReverse": "0x30,0x43,0x54,0x00,0x44"
+    },
+
+
+    { "name": "Nicolai Main 1 N Points", 
+      "type": "switch_right_down", 
+      "x":55, "y":40, 
+      "sensorNormal":"0x30,S,7:4", 
+      "sensorReverse":"0x30,S,7:5", 
+      "sensorManual":"0x30,S,7:6", 
+      "sensorOccupancy":"0x30,S,6:0",
+      "commandNormal": "0x30,0x43,0x54,0x01,0x4D",
+      "commandReverse": "0x30,0x43,0x54,0x01,0x44"
+    },
+
+    { "name": "Nicolai Main 2 N Points", 
+      "type": "switch_left_up", 
+      "x":57, "y":42, 
+      "sensorNormal":"0x30,S,7:4", 
+      "sensorReverse":"0x30,S,7:5", 
+      "sensorManual":"0x30,S,7:6", 
+      "sensorOccupancy":"0x30,S,6:1",
+      "commandNormal": "0x30,0x43,0x54,0x01,0x4D",
+      "commandReverse": "0x30,0x43,0x54,0x01,0x44"
     }
 
 
@@ -691,6 +692,31 @@
         {"role":"main_2_e", "name":"N Cordova Ore Yard Signal", "cmd": "0x39,0x43,0x47,0x04,0x53", "clr_cmd": "0x39,0x43,0x47,0x04,0x43", "sensor":"0x39,S,6:4"  },
         {"role":"main_1_w", "name":"N Cordova Main Signal", "cmd": "0x39,0x43,0x47,0x01,0x53", "clr_cmd": "0x39,0x43,0x47,0x01,0x43", "sensor":"0x39,S,6:3"  },
         {"role":"main_1_e", "name":"N Cordova Yard Signal", "cmd": "0x39,0x43,0x47,0x02,0x53", "clr_cmd": "0x39,0x43,0x47,0x02,0x43", "sensor":"0x39,S,6:2"  }
+        ]
+    },
+    
+    { 
+      "name":"CP Nicolai Jct", 
+      "type":"xo3",
+      "debug": 1,
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"switch_e_xover_1", "name":"Nicolai Main 1 S Points"},
+        {"role":"switch_e_xover_2", "name":"Nicolai Main 2 S Points"},
+        {"role":"switch_w_xover_1", "name":"Nicolai Main 1 N Points"},
+        {"role":"switch_w_xover_2", "name":"Nicolai Main 2 N Points"},
+        {"role":"switch_m1_m3", "name":"Nicolai Main 1 Main 3 Points"}
+        ], 
+      "blocks":[
+        {"role":"main_1", "name":"Nicolai Jct Main 1"},
+        {"role":"main_2", "name":"Nicolai Jct Main 2"}
+        ], 
+      "entranceSignals": [
+        {"role":"main_3_w", "name":"Kennecott Main 1 Signal", "cmd": "0x30,0x43,0x47,0x05,0x53", "clr_cmd": "0x30,0x43,0x47,0x05,0x43", "sensor":"0x30,S,6:6"  },
+        {"role":"main_2_w", "name":"Nizina Branch Signal", "cmd": "0x30,0x43,0x47,0x03,0x53", "clr_cmd": "0x30,0x43,0x47,0x03,0x43", "sensor":"0x30,S,6:5" }, 
+        {"role":"main_2_e", "name":"Nicolai Main 2 Signal", "cmd": "0x30,0x43,0x47,0x04,0x53", "clr_cmd": "0x30,0x43,0x47,0x04,0x43", "sensor":"0x30,S,6:4"  },
+        {"role":"main_1_w", "name":"Kennecott Main 2 Signal", "cmd": "0x30,0x43,0x47,0x01,0x53", "clr_cmd": "0x30,0x43,0x47,0x01,0x43", "sensor":"0x30,S,6:3"  },
+        {"role":"main_1_e", "name":"Nicolai Main 1 Signal", "cmd": "0x30,0x43,0x47,0x02,0x53", "clr_cmd": "0x30,0x43,0x47,0x02,0x43", "sensor":"0x30,S,6:2"  }
         ]
     }
 
@@ -1410,19 +1436,19 @@
       "base_x":50,
       "base_y":40,
       "cells": [
-        { "type": "diag_left_up", "x":"+2", "y":"+1"},
-
+        { "type": "diag_right_up", "x":"+2", "y":"+1"},
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
-        { "type": "horiz", "x":"+8", "y":"+0"},
-
+        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
+        { "type": "horiz", "x":"+4", "y":"+0"},
+        { "type": "horiz", "x":"+6", "y":"+0", "x_end":"+7"},
         { "type": "angle_left_down", "x":"+11", "y":"-2"},
 
         { "type": "diag_right_up", "x":"+10", "y":"-1"},
         { "type": "horiz_rightgap", "x":"+12", "y":"-2"},
+        { "type": "horiz", "x":"+8", "y":"+0"},
         { "type": "horiz", "x":"+10", "y":"+0", "x_end":"+11"},
+        { "type": "horiz_rightgap", "x":"+12", "y":"+0"}
 
-        { "type": "horiz_rightgap", "x":"+12", "y":"+0"},
-        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+6"}
       ]
     },
 
@@ -1435,16 +1461,13 @@
       "base_x":50,
       "base_y":42,
       "cells": [
-        { "type": "diag_right_up", "x":"+6", "y":"-1"},
+        { "type": "diag_left_up", "x":"+6", "y":"-1"},
         { "type": "horiz_leftgap", "x":"+0", "y":"+0"},
-        { "type": "horiz", "x":"+1", "y":"+0", "x_end":"+2"},
-        { "type": "horiz", "x":"+4", "y":"+0"},
-        { "type": "horiz", "x":"+6", "y":"+0", "x_end":"+7"},
         { "type": "angle_right_down", "x":"+8", "y":"+0"},
         { "type": "diag_left_up", "x":"+9", "y":"+1"},
         { "type": "diag_left_up", "x":"+10", "y":"+2"},
         { "type": "angle_left_up", "x":"+11", "y":"+3"},
-
+        { "type": "horiz", "x":"+2", "y":"+0", "x_end":"+6"},
         { "type": "horiz_rightgap", "x":"+12", "y":"+3"}
       ]
     }, 

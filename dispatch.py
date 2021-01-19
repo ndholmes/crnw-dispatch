@@ -62,6 +62,7 @@ from signal import Signal
 from controlpoint import ControlPoint
 from controlpoint_cp3 import ControlPoint_CP3
 from controlpoint_xo2 import ControlPoint_XO2
+from controlpoint_xo3 import ControlPoint_XO3
 import datetime
 
 
@@ -154,7 +155,7 @@ class DispatchConsole(wx.Frame):
       
   
   def realFastClockUpdate(self, pkt):
-    print("Doing FC Update")
+    #print("Doing FC Update")
     if pkt.src != self.fcAddress or pkt.cmd != ord('T') or len(pkt.data) < 12:
       return
     
@@ -356,6 +357,8 @@ class DispatchConsole(wx.Frame):
         newCP = ControlPoint_CP3(cpconfig, self.txPacket, self.getRailroadObject)
       elif cpconfig['type'] == 'xo2':
         newCP = ControlPoint_XO2(cpconfig, self.txPacket, self.getRailroadObject)
+      elif cpconfig['type'] == 'xo3':
+        newCP = ControlPoint_XO3(cpconfig, self.txPacket, self.getRailroadObject)
       else:
         newCP = ControlPoint(cpconfig, self.txPacket, self.getRailroadObject)
       self.controlpoints.append(newCP)
