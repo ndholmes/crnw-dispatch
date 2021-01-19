@@ -94,16 +94,21 @@ class DispatchConsole(wx.Frame):
   secondTicker = 0
   pktsLastSecond = 0
 
-  def __init__(self, railroadLayoutData, mqttMRBus, mqttClient):
+  def __init__(self, layoutDataFile, mqttMRBus, mqttClient):
     super().__init__(None)
-    self.layoutData = railroadLayoutData
-    self.InitUI()
+    self.layoutData = None
     self.mqttClient = mqttClient
     self.mqttMRBus = mqttMRBus
+
+    if layoutDataFile != None:
+      self.load_layout_data(layoutDataFile)
+
+    self.InitUI()
 
     self.pktTimer = wx.Timer(self, 1)
     self.Bind(wx.EVT_TIMER, self.OnTimer)
     self.pktTimer.Start(100)
+
     print(wx.version())
 
   def txPacket(self, pkt):
@@ -331,6 +336,14 @@ class DispatchConsole(wx.Frame):
     if self.layoutData is None:
       return
 
+    self.cells = []
+    self.blocks = [ ]
+    self.signals = []
+    self.switches = []
+    self.controlpoints = []
+    self.clickables = { }
+    self.cellXY = { }
+
     if 'layoutName' in self.layoutData:
       self.SetTitle(self.layoutData['layoutName'])
 
@@ -432,10 +445,13 @@ class DispatchConsole(wx.Frame):
     fileMenu = wx.Menu()
     # The "\t..." syntax defines an accelerator key that also triggers
     # the same event
-    helloItem = fileMenu.Append(-1, "&Hello...\tCtrl-H",
-      "Help string shown in status bar for this menu item")
 
-    open_item = fileMenu.Append(-1, "&Open")
+    connectMenu = wx.Menu()
+    
+    connect_item = connectMenu.Append(-1, "&Connect MQTT")
+    disconnect_item = connectMenu.Append(-1, "&Disconnect MQTT")
+
+    open_item = fileMenu.Append(-1, "&Open New Layout Config")
 
     fileMenu.AppendSeparator()
     # When using a stock ID we don't need to specify the menu item's
@@ -452,18 +468,26 @@ class DispatchConsole(wx.Frame):
     # triggered from the keyboard.
     menuBar = wx.MenuBar()
     menuBar.Append(fileMenu, "&File")
-    menuBar.Append(helpMenu, "&Help")
-
+    menuBar.Append(connectMenu, "&Network")
+    
     # Give the menu bar to the frame
     self.SetMenuBar(menuBar)
 
     # Finally, associate a handler function with the EVT_MENU event for
     # each of the menu items. That means that when that menu item is
     # activated then the associated handler function will be called.
-    self.Bind(wx.EVT_MENU, self.OnHello, helloItem)
     self.Bind(wx.EVT_MENU, self.OnMenuItemFileLoad, open_item)
     self.Bind(wx.EVT_MENU, self.OnExit,  exitItem)
     self.Bind(wx.EVT_MENU, self.OnAbout, aboutItem)
+
+    self.Bind(wx.EVT_MENU, self.OnMenuItemMQTTConnect, connect_item)
+    self.Bind(wx.EVT_MENU, self.OnMenuItemMQTTDisconnect, disconnect_item)
+
+  def OnMenuItemMQTTConnect(self, event):
+    self.connect(True)
+
+  def OnMenuItemMQTTDisconnect(self, event):
+    self.disconnect()
 
   def load_layout_data(self, file_name):
     if self.mqttClient.is_connected():
@@ -479,55 +503,61 @@ class DispatchConsole(wx.Frame):
       raise
     self.connect()
 
-  def connect(self):
-    if self.layoutData is None:
-      return
-
+  def disconnect(self):
     if self.mqttClient.is_connected():
       self.mqttClient.disconnect()
+    self.mqttClient.loop_stop()
+
+  def connect(self, promptForInfo = False):
+    self.disconnect()
 
     mqtt_host = "crnw.drgw.net"
     mqtt_port = 1883
     mqtt_user = None
     mqtt_pass = None
 
-    if 'mqttHost' in self.layoutData.keys():
-      mqtt_host = self.layoutData['mqttHost']
-    else:
+    if self.layoutData is not None:
+      print("Have layout data")
+      if 'mqttHost' in self.layoutData.keys():
+        mqtt_host = self.layoutData['mqttHost']
+        print("mqtt_host=[%s]" % (mqtt_host))
+      if 'mqttPort' in self.layoutData.keys():
+        mqtt_port = int(self.layoutData['mqttPort'])
+      if 'mqttUser' in self.layoutData.keys():
+        mqtt_user = int(self.layoutData['mqttUser'])
+      if 'mqttPass' in self.layoutData.keys():
+        mqtt_pass = int(self.layoutData['mqttPass'])
+
+    if promptForInfo:
       dialog = wx.TextEntryDialog(self, "Host Name", caption="MQTT Connection Information", value=mqtt_host, style=wx.OK | wx.CANCEL)
       if dialog.ShowModal() == wx.ID_OK:
         mqtt_host = dialog.GetValue()
       else:
         return
 
-    if 'mqttPort' in self.layoutData.keys():
-      mqtt_port = int(self.layoutData['mqttPort'])
-    else:
       dialog = wx.TextEntryDialog(self, "Host Port", caption="MQTT Connection Information", value=str(mqtt_port), style=wx.OK | wx.CANCEL)
       if dialog.ShowModal() == wx.ID_OK:
-        mqtt_port = dialog.GetValue()
+        mqtt_port = int(dialog.GetValue())
       else:
         return
 
-    if 'mqttUser' in self.layoutData.keys():
-      mqtt_user = int(self.layoutData['mqttUser'])
-    else:
       dialog = wx.TextEntryDialog(self, "User Name", caption="MQTT Connection Information", value="", style=wx.OK | wx.CANCEL)
       if dialog.ShowModal() == wx.ID_OK:
         mqtt_user = dialog.GetValue()
       else:
         return
 
-    if 'mqttPass' in self.layoutData.keys():
-      mqtt_pass = int(self.layoutData['mqttPass'])
-    else:
       dialog = wx.TextEntryDialog(self, "Password", caption="MQTT Connection Information", value="", style=wx.OK | wx.CANCEL | wx.TE_PASSWORD)
       if dialog.ShowModal() == wx.ID_OK:
         mqtt_pass = dialog.GetValue()
       else:
         return
 
-    self.mqttClient.username_pw_set(mqtt_user, mqtt_pass)
+    print("Starting MQTT connection user=[%s], pass=[%s], host=[%s], port=[%d]" % (mqtt_user, mqtt_pass, mqtt_host, mqtt_port))
+
+    if mqtt_user != None:
+      self.mqttClient.username_pw_set(mqtt_user, mqtt_pass)
+
     self.mqttClient.connect(mqtt_host, mqtt_port, 60)
     self.mqttClient.loop_start()
     self.mqttClient.subscribe("crnw/raw")
@@ -616,7 +646,8 @@ def main():
 
   app = wx.App()
   #ex = DispatchConsole(layoutData, mqttMRBus, mqttClient)
-  ex = DispatchConsole(None, mqttMRBus, mqtt_client)
+
+  ex = DispatchConsole("layout.json", mqttMRBus, mqtt_client)
   ex.Show()
   app.MainLoop()
 

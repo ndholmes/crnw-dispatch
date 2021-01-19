@@ -99,7 +99,7 @@ class Block:
           newCell.setOwner(self)
           newCell.setXY(cell_x, cell_y)
           if cell['type'] in cellType.keys():
-            print("Placing cell of type [%s] at (%d,%d)" % (cell['type'], cell_x, cell_y))
+            #print("Placing cell of type [%s] at (%d,%d)" % (cell['type'], cell_x, cell_y))
             newCell.setType(cellType[cell['type']])
           else:
             print("Warnings - cell type %s not known at (%d,%d)" % (cell['type'], x, y))
