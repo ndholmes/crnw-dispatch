@@ -99,6 +99,10 @@ class DispatchConsole(wx.Frame):
     self.layoutData = None
     self.mqttClient = mqttClient
     self.mqttMRBus = mqttMRBus
+    
+    icon = wx.EmptyIcon()
+    icon.CopyFromBitmap(wx.Bitmap("dispatch.ico", wx.BITMAP_TYPE_ANY))
+    self.SetIcon(icon)
 
     if layoutDataFile != None:
       self.load_layout_data(layoutDataFile)
