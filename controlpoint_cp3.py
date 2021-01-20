@@ -177,7 +177,7 @@ class ControlPoint_CP3:
     nextBlockName = self.blocks['main'].setRoute(leftBound, x, y)
     while (None != nextBlockName):
       nextBlock = self.getItemCallback('block', nextBlockName)
-      print("Next block left is %s" % (nextBlock.name))
+      #print("Next block left is %s" % (nextBlock.name))
       if None == nextBlock or nextBlock.cp == True:
         break
       nextBlockName = nextBlock.setRoute(leftBound)
