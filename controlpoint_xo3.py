@@ -285,15 +285,15 @@ class ControlPoint_XO3:
 
       (x,y) = self.signals['main_1_e'].getTrackXY()
       if self.switches['switch_e_xover_1'].positionNormal and self.switches['switch_e_xover_2'].positionNormal \
-        and self.switches['switch_w_xover_1'].positionNormal and self.switches['switch_w_xover_2'].positionNormal \
-        and self.switches['switch_m1_m3'].positionNormal:
+        and self.switches['switch_w_xover_1'].positionNormal and self.switches['switch_w_xover_2'].positionNormal:
         self.lockAllSwitches()
         self.signals['main_3_w'].setIndication(False, False)
         self.signals['main_1_w'].setIndication(False, False)
         self.signals['main_1_e'].setIndication(True, False)
         self.lined['main_1'] = 'right'
         self.setRouteTrace('main_1', False, x, y)
-                
+
+
       elif self.switches['switch_e_xover_1'].positionReverse and self.switches['switch_e_xover_2'].positionReverse:
         self.lockAllSwitches()
         self.signals['main_1_w'].setIndication(False, False)
