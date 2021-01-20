@@ -297,48 +297,48 @@
       "name": "S Chitina Yard Points", 
       "type": "switch_right_up", 
       "x":8, "y":28, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x34,S,12:4", 
+      "sensorReverse":"0x34,S,12:5", 
+      "sensorManual":"0x34,S,12:3", 
+      "sensorOccupancy":"0x34,S,10:0",
+      "commandNormal": "0x34,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x34,0x43,0x02,0x44,0x58"
     },
     
     { 
       "name": "S Chitina Siding Points", 
       "type": "switch_right_down", 
       "x":10, "y":28, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x34,S,12:4", 
+      "sensorReverse":"0x34,S,12:5", 
+      "sensorManual":"0x34,S,12:3", 
+      "sensorOccupancy":"0x34,S,10:0",
+      "commandNormal": "0x34,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x34,0x43,0x02,0x44,0x58"
     },
     
     { 
       "name": "N Chitina Yard Points", 
       "type": "switch_left_up", 
       "x":35, "y":28, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x31,S,12:4", 
+      "sensorReverse":"0x31,S,12:5", 
+      "sensorManual":"0x31,S,12:3", 
+      "sensorOccupancy":"0x31,S,10:0",
+      "commandNormal": "0x31,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x31,0x43,0x02,0x44,0x58"
     },
     
     { 
       "name": "N Chitina Siding Points", 
       "type": "switch_left_down", 
       "x":33, "y":28, 
-      "sensorNormal":"0x37,S,12:4", 
-      "sensorReverse":"0x37,S,12:5", 
-      "sensorManual":"0x37,S,12:3", 
-      "sensorOccupancy":"0x37,S,10:0",
-      "commandNormal": "0x37,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x37,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x31,S,12:4", 
+      "sensorReverse":"0x31,S,12:5", 
+      "sensorManual":"0x31,S,12:3", 
+      "sensorOccupancy":"0x31,S,10:0",
+      "commandNormal": "0x31,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x31,0x43,0x02,0x44,0x58"
     },
 
 
@@ -698,7 +698,7 @@
     { 
       "name":"CP Nicolai Jct", 
       "type":"xo3",
-      "debug": 1,
+      "debug": 0,
       "timeoutSeconds":"20",
       "switches": [
         {"role":"switch_e_xover_1", "name":"Nicolai Main 1 S Points"},
