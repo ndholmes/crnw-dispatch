@@ -255,16 +255,18 @@ class DispatchConsole(wx.Frame):
       if blinkiesExist:  # don't do all the display update stuff if there are no blinking elements
         self.doDisplayUpdate()
 
+
     if self.secondTicker >= 10:
-      self.SetStatusText("PPS: %d" % self.pktsLastSecond, 2)
+      # Anything that happens once per second happens here
+      if self.mqttClient.is_connected():
+        self.SetStatusText("PPS: %d" % self.pktsLastSecond, 2)
+      else:
+        self.SetStatusText("Disconnected", 2)
+
       self.secondTicker = 0
       self.pktsLastSecond = 0
       #self.panelToPNG()
 
-    if self.mqttClient.is_connected():
-      self.SetStatusText("MQTT Connection Established", 1)
-    else:
-      self.SetStatusText("No MQTT Connection", 1)
 
     if self.mqttMRBus is not None:
       while not self.mqttMRBus.incomingPkts.empty():
