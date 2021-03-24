@@ -297,50 +297,49 @@
       "name": "S Chitina Yard Points", 
       "type": "switch_right_up", 
       "x":8, "y":28, 
-      "sensorNormal":"0x34,S,12:4", 
-      "sensorReverse":"0x34,S,12:5", 
-      "sensorManual":"0x34,S,12:3", 
-      "sensorOccupancy":"0x34,S,10:0",
-      "commandNormal": "0x34,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x34,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x3A,S,12:4", 
+      "sensorReverse":"0x3A,S,12:5", 
+      "sensorManual":"0x3A,S,12:3", 
+      "sensorOccupancy":"0x3A,S,10:0",
+      "commandNormal": "0x3A,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x3A,0x43,0x02,0x44,0x58"
     },
     
     { 
       "name": "S Chitina Siding Points", 
       "type": "switch_right_down", 
       "x":10, "y":28, 
-      "sensorNormal":"0x34,S,12:4", 
-      "sensorReverse":"0x34,S,12:5", 
-      "sensorManual":"0x34,S,12:3", 
-      "sensorOccupancy":"0x34,S,10:0",
-      "commandNormal": "0x34,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x34,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x3A,S,12:4", 
+      "sensorReverse":"0x3A,S,12:5", 
+      "sensorManual":"0x3A,S,12:3", 
+      "sensorOccupancy":"0x3A,S,10:0",
+      "commandNormal": "0x3A,0x43,0x02,0x4D,0x58",
+      "commandReverse": "0x3A,0x43,0x02,0x44,0x58"
     },
     
     { 
       "name": "N Chitina Yard Points", 
       "type": "switch_left_up", 
       "x":35, "y":28, 
-      "sensorNormal":"0x31,S,12:4", 
-      "sensorReverse":"0x31,S,12:5", 
-      "sensorManual":"0x31,S,12:3", 
-      "sensorOccupancy":"0x31,S,10:0",
-      "commandNormal": "0x31,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x31,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x34,S,10:4", 
+      "sensorReverse":"0x34,S,10:5", 
+      "sensorManual":"0x34,S,10:3", 
+      "sensorOccupancy":"0x24,S,6:0",
+      "commandNormal": "0x34,0x43,0x54,0x01,0x4D",
+      "commandReverse": "0x34,0x43,0x54,0x01,0x44"
     },
     
     { 
       "name": "N Chitina Siding Points", 
       "type": "switch_left_down", 
       "x":33, "y":28, 
-      "sensorNormal":"0x31,S,12:4", 
-      "sensorReverse":"0x31,S,12:5", 
-      "sensorManual":"0x31,S,12:3", 
-      "sensorOccupancy":"0x31,S,10:0",
-      "commandNormal": "0x31,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x31,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x34,S,10:6", 
+      "sensorReverse":"0x34,S,10:7", 
+      "sensorManual":"0x34,S,10:3", 
+      "sensorOccupancy":"0x24,S,6:0",
+      "commandNormal": "0x34,0x43,0x54,0x02,0x4D",
+      "commandReverse": "0x34,0x43,0x54,0x02,0x44"
     },
-
 
     { "name": "S Strelna Points", 
       "type": "switch_right_up", 
@@ -581,6 +580,34 @@
         { "role":"sensorLinedRight", "source":"0x35,S,12:1"}
         ]
     }, 
+
+
+    { 
+      "name":"CP N Chitina", 
+      "type":"cp3",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"switch_AB", "name":"N Chitina Yard Points"},
+        {"role":"switch_BC", "name":"N Chitina Siding Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"North Chitina"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"N Chitina Points Signal", "cmd": "0x34,0x43,0x01,0x58,0x58,0x57", "clr_cmd": "0x34,0x43,0x01,0x58,0x58,0x58" }, 
+        {"role":"main_b", "name":"N Chitina Main Signal", "cmd": "0x34,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x34,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_a", "name":"N Chitina Yard Siding Signal", "cmd": "0x34,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x34,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_c", "name":"N Chitina Siding Signal", "cmd": "0x34,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x34,0x43,0x01,0x58,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x34,S,10:1"},
+        { "role":"sensorLinedRight", "source":"0x34,S,10:0"}
+        ]
+    },
+
+
+
 
     { 
       "name":"CP South Strelna", 
@@ -1215,6 +1242,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x24,S,6:0",
       "sensorPower":"0x10,S,6:2",
+      "sensorManual":"0x34,S,10:3",
       "base_x":30,
       "base_y":28,
       "cells": [
@@ -1431,7 +1459,7 @@
       "name":"Nicolai Jct Main 1",
       "type":"controlpoint",
       "sensorOccupancy":"0x20,S,7:1",
-      "sensorManual":"0x39,S,11:3",
+      "sensorManual":"0x30,S,8:2", 
       "sensorPower":"0x10,S,7:1",
       "base_x":50,
       "base_y":40,
@@ -1456,7 +1484,7 @@
       "name":"Nicolai Jct Main 2",
       "type":"controlpoint",
       "sensorOccupancy":"0x20,S,7:0",
-      "sensorManual":"0x39,S,11:3",
+      "sensorManual":"0x30,S,8:2", 
       "sensorPower":"0x10,S,7:1",
       "base_x":50,
       "base_y":42,

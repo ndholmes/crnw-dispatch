@@ -1,5 +1,6 @@
 from cells import SwitchCell,TrackCellColors,TrackCellType
 from mrbusUtils import MRBusBit,MRBusPacket
+import datetime
 
 class Switch:
   def __init__(self, config, txCallback):
@@ -12,7 +13,7 @@ class Switch:
     self.lined = False
     self.txCallback = txCallback
     self.cp = None
-
+    self.commandLastSent = None
     self.commandNormal = None
     self.commandReverse = None
 
@@ -61,6 +62,9 @@ class Switch:
     changed = self.sensorManual.testPacket(pkt) or changed
     changed = self.sensorOccupancy.testPacket(pkt) or changed
 
+    if self.positionNormal == False and self.positionReverse == False and (self.commandLastSent != None and (datetime.datetime.utcnow() - self.commandLastSent).total_seconds() > 3):
+      changed = True
+
     if changed:
       self.positionNormal = self.sensorNormal.getState()
       self.positionReverse = self.sensorReverse.getState()
@@ -92,6 +96,7 @@ class Switch:
 
     if None != pkt:
       print("Sending switch change pkt to %s\n[%s]" % (self.name, pkt))
+      self.commandLastSent = datetime.datetime.utcnow()
       self.txCallback(pkt)
 
     # Change switch state to indeterminant
