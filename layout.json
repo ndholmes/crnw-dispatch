@@ -297,24 +297,24 @@
       "name": "S Chitina Yard Points", 
       "type": "switch_right_up", 
       "x":8, "y":28, 
-      "sensorNormal":"0x3A,S,12:4", 
-      "sensorReverse":"0x3A,S,12:5", 
-      "sensorManual":"0x3A,S,12:3", 
-      "sensorOccupancy":"0x3A,S,10:0",
-      "commandNormal": "0x3A,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x3A,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x3A,S,10:4", 
+      "sensorReverse":"0x3A,S,10:5", 
+      "sensorManual":"0x3A,S,10:3", 
+      "sensorOccupancy":"0x24,S,6:1",
+      "commandNormal": "0x3A,0x43,0x54,0x01,0x4D",
+      "commandReverse": "0x3A,0x43,0x54,0x01,0x44"
     },
     
     { 
       "name": "S Chitina Siding Points", 
       "type": "switch_right_down", 
       "x":10, "y":28, 
-      "sensorNormal":"0x3A,S,12:4", 
-      "sensorReverse":"0x3A,S,12:5", 
-      "sensorManual":"0x3A,S,12:3", 
-      "sensorOccupancy":"0x3A,S,10:0",
-      "commandNormal": "0x3A,0x43,0x02,0x4D,0x58",
-      "commandReverse": "0x3A,0x43,0x02,0x44,0x58"
+      "sensorNormal":"0x3A,S,10:6", 
+      "sensorReverse":"0x3A,S,10:7", 
+      "sensorManual":"0x3A,S,10:3", 
+      "sensorOccupancy":"0x24,S,6:1",
+      "commandNormal": "0x3A,0x43,0x54,0x02,0x4D",
+      "commandReverse": "0x3A,0x43,0x54,0x02,0x44"
     },
     
     { 
@@ -580,10 +580,35 @@
         { "role":"sensorLinedRight", "source":"0x35,S,12:1"}
         ]
     }, 
+    
+    { 
+      "name":"CP South Chitina", 
+      "type":"cp3",
+      "timeoutSeconds":"20",
+      "switches": [
+        {"role":"switch_AB", "name":"S Chitina Yard Points"},
+        {"role":"switch_BC", "name":"S Chitina Siding Points"}
+        ], 
+      "blocks":[
+        {"role":"main", "name":"South Chitina"}
+        ], 
+      "entranceSignals": [
+        {"role":"points", "name":"S Chitina Points Signal", "cmd": "0x3A,0x43,0x01,0x58,0x58,0x57", "clr_cmd": "0x3A,0x43,0x01,0x58,0x58,0x58" }, 
+        {"role":"main_b", "name":"S Chitina Main Signal", "cmd": "0x3A,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x3A,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_a", "name":"S Chitina Yard Siding Signal", "cmd": "0x3A,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x3A,0x43,0x01,0x58,0x58,0x58"},
+        {"role":"main_c", "name":"S Chitina Siding Signal", "cmd": "0x3A,0x43,0x01,0x58,0x58,0x45", "clr_cmd": "0x3A,0x43,0x01,0x58,0x58,0x58" }
+        ],
+      
+      "sensors": [
+        { "role":"sensorLinedLeft", "source":"0x3A,S,10:0"},
+        { "role":"sensorLinedRight", "source":"0x3A,S,10:1"}
+        ]
+    },
+
 
 
     { 
-      "name":"CP N Chitina", 
+      "name":"CP North Chitina", 
       "type":"cp3",
       "timeoutSeconds":"20",
       "switches": [
@@ -1139,7 +1164,7 @@
       "type":"standard",
       "sensorOccupancy":"0x26,S,6:3",
       "sensorPower":"0x10,S,6:0",
-      "leftAdjoiningBlockName":"Miles Glacier Block",
+      "leftAdjoiningBlockName":"Bremner Block",
       "rightAdjoiningBlockName":"Uranatina Block",
       "base_x":54,
       "base_y":16,
@@ -1167,6 +1192,7 @@
       "type":"controlpoint",
       "sensorOccupancy":"0x24,S,6:1",
       "sensorPower":"0x10,S,6:2",
+      "sensorManual":"0x3A,S,10:3",
       "base_x":7,
       "base_y":28,
       "cells": [
